@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CappyTheDev
 
-## Getting Started
+A playful, responsive freelance portfolio built with Astro, TypeScript, GSAP and Lenis. Original SVG cats, local fonts, real supplied pricing, WhatsApp enquiries and configurable video showcases.
 
-First, run the development server:
+The animation revision follows the supplied pet-playlist reference: articulated cat rigs, oversized illustrated petting hands, moving blue/green waves, a selectable service cast and an interactive energy slider. Desktop includes a short scroll-controlled playground scene; phone layouts use unpinned scenes. Full motion is always enabled as requested by the owner. Motion code is in `src/scripts/choreography.ts`, with its visual system in `src/styles/motion.css`.
 
-```bash
+The Motion switch has been removed. Animation, cursor effects and Lenis smooth scrolling stay on automatically, ignoring old saved off preferences. Browser/system settings themselves are unchanged. `node tests/motion-preference.mjs` verifies that full motion remains active with a reduced-motion browser, an old saved preference and reloads.
+
+## Run
+
+```sh
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Production:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+npm run build
+npm run preview
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The production preview is http://localhost:4400. Static files are generated in `dist/` and can be hosted on Netlify, Vercel, Cloudflare Pages or any static host. Build command: `npm run build`. Output directory: `dist`. No server or database is required.
 
-## Learn More
+## Add your showcase videos
 
-To learn more about Next.js, take a look at the following resources:
+1. Put MP4 (H.264 recommended) or WebM files in `public/videos/`.
+2. Open `src/data/showcase.ts`.
+3. Set the matching `src`, for example `src: '/videos/my-website-showcase.mp4'`.
+4. Set `placeholder: false`, edit the title/description and optionally replace the poster with an image of your work.
+5. Rebuild. The illustrated placeholder becomes a working video play button and accessible player dialog.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The “Preview your video here” button lets you try a local file. It does not upload, save or publish the video. The supplied sample2 video is only a design reference and is never presented as portfolio work.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Edit services, pricing and contact
 
-## Deploy on Vercel
+All packages and add-ons are in `src/data/site.mjs`. The nine prices and scope come from the supplied `png/` price sheets, supplemented by `poster/` artwork. `enquiryUrl` generates WhatsApp messages using 60178478597. Original optimised artwork lives in `public/artwork/`. The included service artwork is labelled as service artwork, not invented client projects.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Before publishing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Set the environment variable `SITE_URL` to your real HTTPS domain (for example `https://your-domain.com`) before building. This enables absolute canonical URLs, social image URLs and the sitemap. A domain was not supplied, so none is invented. Add `Sitemap: https://your-domain.com/sitemap.xml` to `public/robots.txt` once known. Review your contact number and replace the empty showcase videos. Local fonts are Bricolage Grotesque and DM Sans from Google Fonts, distributed under the SIL Open Font License; licenses are in `public/fonts/`.
+
+## Verify
+
+```sh
+npm test
+npm run build
+```
+
+With the production preview running, `node tests/motion.mjs` checks independent tail movement, character selection, the energy slider, petting and reduced motion. `node tests/browser.mjs` checks the rest of the portfolio.
+
+Design decisions and reference interpretation are recorded in `DESIGN.md`. Browser QA checks desktop, phone, keyboard navigation, service switching, enquiry links, video previews, reduced motion and accessibility. There is no public deployment in this folder until a hosting destination is selected.
+

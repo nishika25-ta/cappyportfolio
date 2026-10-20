@@ -1,0 +1,38 @@
+---
+import {ClientRouter} from 'astro:transitions';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import {site} from '../data/site.mjs';
+import '../styles/global.css';
+import '../styles/motion.css';
+import '../styles/header.css';
+interface Props { title?: string; description?: string; }
+const {title='Small business. Big purr-sonality.',description=site.description}=Astro.props;
+const siteUrl=import.meta.env.SITE_URL;
+const canonical=siteUrl ? new URL(Astro.url.pathname,siteUrl).href : undefined;
+---
+<!doctype html>
+<html lang="en" data-motion="full" transition:animate="none">
+  <head>
+    <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>{title} | CappyTheDev</title><meta name="description" content={description}/>
+    <meta name="theme-color" content="#f8e5a7"/>
+    {canonical && <link rel="canonical" href={canonical}/>}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+    <link rel="preload" href="/fonts/bricolage-400_800-normal.woff2" as="font" type="font/woff2" crossorigin/>
+    <link rel="preload" href="/fonts/dm-sans-400_700-normal.woff2" as="font" type="font/woff2" crossorigin/>
+    <meta property="og:title" content={`${title} | CappyTheDev`}/><meta property="og:description" content={description}/><meta property="og:type" content="website"/>
+    <meta property="og:image" content={siteUrl ? new URL('/og.png',siteUrl).href : '/og.png'}/>{canonical && <meta property="og:url" content={canonical}/>}
+    <meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content={`${title} | CappyTheDev`}/><meta name="twitter:description" content={description}/><meta name="twitter:image" content={siteUrl ? new URL('/og.png',siteUrl).href : '/og.png'}/>
+    <script type="application/ld+json" set:html={JSON.stringify({'@context':'https://schema.org','@type':'ProfessionalService',name:site.name,description:site.description,telephone:'+60178478597',address:{'@type':'PostalAddress',addressLocality:'Miri',addressRegion:'Sarawak',addressCountry:'MY'},...(siteUrl?{url:siteUrl}:{}),priceRange:'RM15–RM599',areaServed:'MY'})}/>
+    <ClientRouter/>
+  </head>
+  <body id="top">
+    <div class="scroll-progress" aria-hidden="true"></div>
+    <noscript><style is:global>@media(max-width:800px){.site-header{height:auto;flex-wrap:wrap;padding-block:20px}.site-header nav{display:flex!important;position:static;flex-direction:row;flex-wrap:wrap;width:100%;padding:0;gap:10px 20px;background:none;border:0;box-shadow:none}.site-header nav .nav-link{font-size:12px;font-family:'DM Sans',sans-serif}.menu-toggle{display:none!important}}</style></noscript>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header/><main id="main" tabindex="-1" transition:name="studio-page" transition:animate="none"><slot/></main><Footer/>
+    <div id="cursor-buddy" aria-hidden="true"><svg viewBox="0 0 32 32" fill="currentColor"><ellipse cx="16" cy="22" rx="8" ry="6"/><ellipse cx="6" cy="13" rx="3" ry="4" transform="rotate(-25 6 13)"/><ellipse cx="13" cy="8" rx="3" ry="4"/><ellipse cx="21" cy="9" rx="3" ry="4"/><ellipse cx="27" cy="15" rx="3" ry="4" transform="rotate(25 27 15)"/></svg></div>
+    <script>import '../scripts/main';</script>
+  </body>
+</html>

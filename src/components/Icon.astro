@@ -1,0 +1,16 @@
+---
+interface Props { name?: string; class?: string; }
+const {name='arrow',class:cls=''} = Astro.props;
+---
+<svg class:list={['icon',cls]} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  {name==='arrow' && <><path d="M5 12h14M13 6l6 6-6 6"/></>}
+  {name==='diagonal' && <path d="M6 18 18 6M6 6h12v12"/>}
+  {name==='code' && <><rect x="2" y="3" width="20" height="15" rx="3"/><path d="m9 8-3 3 3 3m6-6 3 3-3 3M7 22h10m-5-4v4"/></>}
+  {name==='document' && <><path d="M14 2H5v20h14V7Z"/><path d="M14 2v6h5M8 12h8M8 16h8"/></>}
+  {name==='camera' && <><path d="m8 5 2-3h4l2 3h4a2 2 0 0 1 2 2v12H2V7a2 2 0 0 1 2-2Z"/><circle cx="12" cy="12" r="4"/></>}
+  {name==='play' && <path d="m9 5 11 7-11 7Z" fill="currentColor" stroke="none"/>}
+  {name==='paw' && <><ellipse cx="12" cy="16" rx="5.7" ry="4.5" fill="currentColor" stroke="none"/><ellipse cx="4.7" cy="9" rx="2.4" ry="3" fill="currentColor" stroke="none" transform="rotate(-25 4.7 9)"/><ellipse cx="10" cy="5.8" rx="2.3" ry="3" fill="currentColor" stroke="none"/><ellipse cx="16" cy="6" rx="2.3" ry="3" fill="currentColor" stroke="none"/><ellipse cx="21" cy="10" rx="2.2" ry="3" fill="currentColor" stroke="none" transform="rotate(25 21 10)"/></>}
+  {name==='star' && <path d="m12 1 2.8 7.2L23 12l-8.2 2.8L12 23l-2.8-8.2L1 12l8.2-3.8Z" fill="currentColor" stroke="none"/>}
+  {name==='check' && <path d="m5 12 4 4L19 6"/>}
+  {name==='whatsapp' && <><path d="M20.5 11.5a8.5 8.5 0 0 1-12.7 7.4L3 20l1.2-4.6a8.5 8.5 0 1 1 16.3-3.9Z"/><path d="M8 7.5c0 4 2.5 6.5 6.5 7l1.2-2-2.7-1-.8 1c-1.5-.5-2.5-1.5-3-3l1-.8L9 6.5Z"/></>}
+</svg>

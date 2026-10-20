@@ -1,0 +1,10 @@
+---
+import Cat from './Cat.astro';
+import Icon from './Icon.astro';
+import {enquiryUrl} from '../data/site.mjs';
+---
+<footer id="contact" class="site-footer">
+  <div class="wrap contact-top"><span class="location"><span class="status-dot"></span> From Miri, with a little extra personality.</span><a class="back-top" href="#top">Back to top ↑</a></div>
+  <div class="wrap contact-main"><div><h2>Got a little<br/>big idea<span class="coral-text">?</span></h2><p>Tell me about it. I’ll bring the ideas.<br/>The cats will bring moral support.</p><a class="button button-dark" href={enquiryUrl()} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp"/> Let’s make it happen <Icon name="diagonal"/></a></div><div class="contact-cat"><span class="hand-note">your next creative buddy ↙</span><Cat variant="orange"/></div></div>
+  <div class="wrap footer-bottom"><a class="wordmark" href="/"><Icon name="paw"/>CappyTheDev.</a><p>Independent creative services · Miri, Sarawak</p><span>© {new Date().getFullYear()} CappyTheDev</span></div>
+</footer>

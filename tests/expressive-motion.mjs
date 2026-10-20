@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {launch} from '../skills/awwwards/scripts/browser.mjs';
+const browser=await launch();fs.mkdirSync('.shots/expressive',{recursive:true});
+try{
+  const page=await browser.newPage({viewport:{width:1440,height:900}});
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.goto('http://localhost:4400/',{waitUntil:'networkidle'});
+  assert.equal(await page.locator('.celebration-layer').count(),1);
+  await page.locator('#services').scrollIntoViewIfNeeded();await page.waitForTimeout(1400);
+  const cat=page.locator('.service-cat .cat').first();const pose=await cat.getAttribute('style');
+  await page.waitForTimeout(350);assert.notEqual(await cat.getAttribute('style'),pose,'Service cats bounce while the scene is in view.');
+  await page.locator('[data-pick-service="food"]').click();await page.waitForTimeout(100);
+  assert.equal(await page.locator('.celebration-particle').count(),9,'Clicks emit a decorative burst.');
+  await page.screenshot({path:'.shots/expressive/service-burst.png'});
+  await page.waitForTimeout(1000);assert.equal(await page.locator('.celebration-particle').count(),0,'Particles are removed when their motion ends.');
+  await page.mouse.wheel(0,500);await page.waitForTimeout(100);
+  const wind=await page.locator('html').evaluate(el=>Number(getComputedStyle(el).getPropertyValue('--scroll-wind')));
+  assert.ok(Math.abs(wind)>.01,'Scroll velocity drives artwork sway.');
+  await page.waitForTimeout(2100);
+  const settled=await page.locator('html').evaluate(el=>Number(getComputedStyle(el).getPropertyValue('--scroll-wind')));
+  assert.ok(Math.abs(settled)<.1,'Artwork settles after scrolling stops.');
+  await page.locator('.site-header a[href="/about/"]').click();await page.waitForTimeout(900);
+  assert.equal(await page.locator('.celebration-layer').count(),1,'Navigation cleans up the old effect layer.');
+  await page.locator('.site-header .wordmark').click();await page.waitForTimeout(900);
+  assert.equal(await page.locator('.celebration-layer').count(),1);
+  assert.deepEqual(errors,[]);
+  fs.writeFileSync('.shots/expressive/results.json',JSON.stringify({passed:true,wind,settled,errors},null,2));
+  console.log('PASS service-cat bounce, click bursts, particle cleanup, velocity sway/settling and navigation cleanup.');
+}finally{await browser.close();}
