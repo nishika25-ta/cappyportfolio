@@ -3,6 +3,7 @@ dist/
 .astro/
 .shots/
 .references/
+.vercel/
 skills/
 sample1/
 sample2/
