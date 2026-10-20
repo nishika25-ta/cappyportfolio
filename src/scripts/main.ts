@@ -4,6 +4,7 @@ import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
 import {createChoreography} from './choreography';
 import {syncMotionPreference} from './motion-preference';
+import {createFrameCoalescer} from './frame-coalescer.mjs';
 gsap.registerPlugin(ScrollTrigger);
 
 let dispose: (()=>void) | undefined;
@@ -15,7 +16,16 @@ function mountPage() {
   const enabled=syncMotionPreference();
   const cleanups: (()=>void)[]=[];
   const controller=new AbortController();
+  let refreshFrame=0;
   const listen=(el:EventTarget,type:string,handler:EventListener)=>el.addEventListener(type,handler,{signal:controller.signal});
+  function scheduleScrollRefresh(){
+    if(refreshFrame)return;
+    refreshFrame=requestAnimationFrame(()=>{
+      refreshFrame=0;
+      ScrollTrigger.refresh();
+    });
+  }
+  cleanups.push(()=>{if(refreshFrame)cancelAnimationFrame(refreshFrame);});
   let lenis:Lenis|undefined;
   let choreography:ReturnType<typeof createChoreography>|undefined;
   let videoObjectUrl='';
@@ -60,7 +70,7 @@ function mountPage() {
     if(status&&labels[id])status.textContent=`Your ${labels[id]} buddy is ready to make something good.`;
     choreography?.selectCharacter(id);
     choreography?.swap(`#pricing-${id} .package`);
-    ScrollTrigger.refresh();
+    scheduleScrollRefresh();
   }
   const showcaseTabs=setupTabs('[data-showcase]',activateShowcase);
   function activateShowcase(id:string) {
@@ -94,12 +104,14 @@ function mountPage() {
   listen(window,'hashchange',activateHash);
 
   const energy=document.querySelector<HTMLInputElement>('#creative-energy');
+  const energyMotion=createFrameCoalescer(()=>choreography?.setEnergy(Number(energy?.value??55)));
+  cleanups.push(()=>energyMotion.cancel());
   if(energy)listen(energy,'input',()=>{
     const value=Number(energy.value);
     const state=document.getElementById('energy-state');
     if(state)state.textContent=value<28?'Quietly clever':value<80?'Feeling playful':'Full purr-sonality';
     energy.style.setProperty('--energy',`${value}%`);
-    choreography?.setEnergy(value);
+    energyMotion.schedule();
   });
   document.querySelectorAll('[data-pet-cat]').forEach(button=>listen(button,'click',()=>choreography?.pet()));
 

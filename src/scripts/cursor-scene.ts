@@ -4,9 +4,11 @@ type Listen=(el:EventTarget,type:string,handler:EventListener)=>void;
 export function createCursorScene(listen:Listen){
   if(!matchMedia('(hover:hover) and (pointer:fine)').matches)return;
   document.querySelectorAll<HTMLElement>('.button,.pet-button,.motion-toggle').forEach(button=>{
-    const x=gsap.quickTo(button,'x',{duration:.55,ease:'power3.out'});
-    const y=gsap.quickTo(button,'y',{duration:.55,ease:'power3.out'});
-    listen(button,'pointermove',(raw)=>{const e=raw as PointerEvent;const r=button.getBoundingClientRect();x((e.clientX-r.left-r.width/2)*.12);y((e.clientY-r.top-r.height/2)*.18);});
+    const x=gsap.quickTo(button,'x',{duration:.38,ease:'power3.out'});
+    const y=gsap.quickTo(button,'y',{duration:.38,ease:'power3.out'});
+    let centerX=0,centerY=0;
+    listen(button,'pointerenter',()=>{const r=button.getBoundingClientRect();centerX=r.left+r.width/2;centerY=r.top+r.height/2;});
+    listen(button,'pointermove',(raw)=>{const e=raw as PointerEvent;x((e.clientX-centerX)*.12);y((e.clientY-centerY)*.18);});
     listen(button,'pointerleave',()=>{x(0);y(0);});
   });
   const hero=document.querySelector<HTMLElement>('.hero');

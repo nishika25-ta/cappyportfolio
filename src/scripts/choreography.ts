@@ -18,7 +18,8 @@ export function createChoreography(listen:Listen) {
   let energy=55;
   let character='websites';
   let petting:gsap.core.Timeline|undefined;
-  let energyReaction:gsap.core.Timeline|undefined;
+  let energyTarget:Element|null=null;
+  let energyPose:{y:(value:number)=>void;scaleX:(value:number)=>void;scaleY:(value:number)=>void;rotation:(value:number)=>void}|undefined;
   const observer=new IntersectionObserver(entries=>{
     for(const entry of entries){
       const actor=actors.get(entry.target);
@@ -113,9 +114,10 @@ export function createChoreography(listen:Listen) {
     gsap.set('.orbit-item',{autoAlpha:0,scale:.1,rotation:-70});
     gsap.set('.orbit-spark,.orbit-paws>span',{scale:0,autoAlpha:0});
     gsap.set('.hero-ticker',{autoAlpha:0,y:80,rotation:-3});
-    const orbitX=()=>Math.min(innerWidth*(innerWidth<=600 ? .26 : .22),225);
+    const orbitX=()=>innerWidth<=600?innerWidth*.36:innerWidth<=800?innerWidth*.3:Math.min(innerWidth*.22,225);
     const orbitY=()=>innerWidth<=600?85:110;
-    gsap.timeline({scrollTrigger:{trigger:'.hero',start:'top top',end:()=>`+=${innerHeight*(innerWidth<=600?1.4:1.65)}`,pin:innerHeight>650,scrub:.65,invalidateOnRefresh:true}})
+    const compactHero=innerWidth<=800;
+    gsap.timeline({scrollTrigger:{trigger:'.hero',start:'top top',end:()=>`+=${innerHeight*(compactHero?.82:1.65)}`,pin:!compactHero&&innerHeight>650,scrub:.65,invalidateOnRefresh:true}})
       .to('.hero-type',{y:-95,rotation:-5,scale:.9,autoAlpha:0,duration:.3,ease:'power2.in'},0)
       .to('.hero-copy,.hero-button,.motion-hint,.hero-meta,.hero-bottom,.cat-note,.miri-stamp',{y:-35,autoAlpha:0,duration:.2,ease:'power2.in'},0)
       .to('.hero-cat-left',{y:-75,rotation:-15,scale:.8,duration:.2,ease:'power2.out'},0)
@@ -189,23 +191,28 @@ export function createChoreography(listen:Listen) {
   });
 
   function energySpeed(){return .3+energy/55;}
+  function bindEnergyPose(){
+    const target=document.querySelector(`[data-playground-character="${character}"] > .cat`);
+    if(target===energyTarget)return;
+    if(energyTarget)gsap.killTweensOf(energyTarget);
+    energyTarget=target;
+    energyPose=target?{
+      y:gsap.quickTo(target,'y',{duration:.32,ease:'power3.out',overwrite:true}),
+      scaleX:gsap.quickTo(target,'scaleX',{duration:.32,ease:'power3.out',overwrite:true}),
+      scaleY:gsap.quickTo(target,'scaleY',{duration:.32,ease:'power3.out',overwrite:true}),
+      rotation:gsap.quickTo(target,'rotation',{duration:.32,ease:'power3.out',overwrite:true})
+    }:undefined;
+  }
   function setEnergy(value:number){
-    energy=value;
+    energy=gsap.utils.clamp(0,100,value);
     if(reduced)return;
     actors.forEach((actor,cat)=>{if(cat.closest('.playground-section'))actor.timeline.timeScale(energySpeed());});
-    ctx.add(()=>{
-      energyReaction?.kill();
-      const target=document.querySelector(`[data-playground-character="${character}"] > .cat`);
-      if(!target)return;
-      const level=energy/100;
-      energyReaction=gsap.timeline();
-      if(energy>=80){
-        energyReaction.fromTo(target,{y:10,scaleX:1.15,scaleY:.82},{y:-36,scaleX:.95,scaleY:1.08,rotation:4,duration:.28,yoyo:true,repeat:3,ease:'sine.inOut',overwrite:'auto'})
-          .to(target,{y:0,scaleX:1,scaleY:1,rotation:0,duration:.45,ease:'power3.out'});
-      }else{
-        energyReaction.to(target,{y:(1-level)*8,scaleY:.96+level*.04,scaleX:1.025-level*.025,rotation:(1-level)*-3,transformOrigin:'50% 90%',duration:.55,ease:'power3.out',overwrite:'auto'});
-      }
-    });
+    if(!energyPose)ctx.add(bindEnergyPose);
+    const level=energy/100;
+    energyPose?.y(8-level*25);
+    energyPose?.scaleY(.96+level*.06);
+    energyPose?.scaleX(1.025-level*.04);
+    energyPose?.rotation((1-level)*-3);
   }
   function selectCharacter(id:string){
     character=id;
@@ -215,8 +222,8 @@ export function createChoreography(listen:Listen) {
       if(selected)gsap.fromTo(selected,{scaleX:1.16,scaleY:.8},{scaleX:1,scaleY:1,duration:.85,ease:'elastic.out(1,.5)',overwrite:'auto'});
       const stage=document.querySelector(`[data-playground-character="${id}"]`);
       if(stage)gsap.fromTo(stage,{y:65,scale:.7,rotation:-12},{y:0,scale:1,rotation:0,duration:.9,ease:'elastic.out(1,.6)',overwrite:true});
+      bindEnergyPose();
     });
-    ScrollTrigger.refresh();
     setEnergy(energy);
   }
   function pet(){
@@ -234,5 +241,5 @@ export function createChoreography(listen:Listen) {
   }
   function swap(selector:string){if(reduced)return;ctx.add(()=>{gsap.fromTo(selector,{y:24},{y:0,duration:.5,stagger:.07,ease:'power3.out',clearProps:'transform',overwrite:true});});}
   listen(document,'visibilitychange',()=>{actors.forEach(actor=>actor.timeline.paused(document.hidden||!actor.visible));loopScenes.forEach((list,scene)=>{const r=scene.getBoundingClientRect();list.forEach(loop=>loop.paused(document.hidden||r.bottom<0||r.top>innerHeight));});});
-  return {setEnergy,selectCharacter,pet,swap,destroy(){observer.disconnect();petting?.kill();energyReaction?.kill();ctx.revert();textSplits.forEach(split=>split.revert());}};
+  return {setEnergy,selectCharacter,pet,swap,destroy(){observer.disconnect();petting?.kill();if(energyTarget)gsap.killTweensOf(energyTarget);ctx.revert();textSplits.forEach(split=>split.revert());}};
 }

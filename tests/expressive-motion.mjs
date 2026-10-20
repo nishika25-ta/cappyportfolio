@@ -10,10 +10,14 @@ try{
   await page.locator('#services').scrollIntoViewIfNeeded();await page.waitForTimeout(1400);
   const cat=page.locator('.service-cat .cat').first();const pose=await cat.getAttribute('style');
   await page.waitForTimeout(350);assert.notEqual(await cat.getAttribute('style'),pose,'Service cats bounce while the scene is in view.');
+  const particles=page.locator('.celebration-particle');
+  assert.equal(await particles.count(),6,'The click burst reuses a small particle pool.');
   await page.locator('[data-pick-service="food"]').click();await page.waitForTimeout(100);
-  assert.equal(await page.locator('.celebration-particle').count(),9,'Clicks emit a decorative burst.');
+  assert.ok(await particles.evaluateAll(nodes=>nodes.some(node=>Number(getComputedStyle(node).opacity)>.1)),'Clicks animate the pooled decorative burst.');
   await page.screenshot({path:'.shots/expressive/service-burst.png'});
-  await page.waitForTimeout(1000);assert.equal(await page.locator('.celebration-particle').count(),0,'Particles are removed when their motion ends.');
+  await page.waitForTimeout(1000);
+  assert.equal(await particles.count(),6,'Repeated interactions keep the DOM particle pool fixed.');
+  assert.ok(await particles.evaluateAll(nodes=>nodes.every(node=>Number(getComputedStyle(node).opacity)===0)),'The pooled particles are hidden when their motion ends.');
   await page.mouse.wheel(0,500);await page.waitForTimeout(100);
   const wind=await page.locator('html').evaluate(el=>Number(getComputedStyle(el).getPropertyValue('--scroll-wind')));
   assert.ok(Math.abs(wind)>.01,'Scroll velocity drives artwork sway.');
