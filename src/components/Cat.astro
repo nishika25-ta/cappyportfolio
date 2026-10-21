@@ -1,12 +1,13 @@
 ---
-interface Props { variant?: 'developer'|'orange'|'resume'|'chef'|'peek'; class?: string; }
-const { variant='orange', class:cls='' }=Astro.props;
+interface Props { variant?: 'developer'|'orange'|'resume'|'chef'|'peek'; class?: string; interactive?:boolean; }
+const { variant='orange', class:cls='',interactive=false }=Astro.props;
 const isBlack=variant==='developer';
 const isBuddy=variant==='orange'||variant==='peek';
 const color=isBlack?'#282b24':variant==='resume'?'#fbf8ed':variant==='chef'?'#bfd8db':'#e88973';
 ---
-<svg class:list={['cat',`cat-${variant}`,cls]} viewBox="0 0 360 360" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<svg class:list={['cat',`cat-${variant}`,cls,{'cat-interactive':interactive}]} viewBox="0 0 360 360" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <ellipse cx="179" cy="331" rx="130" ry="10" fill="#252820" opacity=".10"/>
+  <g class="cat-energy-rig">
   <g class="cat-body">
     <path class="cat-tail" d={isBuddy?'M245 296c44 29 88-4 70-38-10-20-36-18-37 0':'M245 296c85 27 112-58 62-83-31-16-36 14-16 20 29 9 11 44-30 35'} stroke={color} stroke-width={isBuddy?'26':'29'} stroke-linecap="round"/>
     <path d={isBuddy?'M120 217c-14 25-21 60-20 86 0 17 13 25 35 25h92c21 0 31-10 28-29-3-31-9-63-24-82Z':'M105 240c-6-51 26-84 70-85 55-1 92 29 90 82l9 76H89Z'} fill={color}/>
@@ -15,16 +16,34 @@ const color=isBlack?'#282b24':variant==='resume'?'#fbf8ed':variant==='chef'?'#bf
     <path d="m112 85-2-35 28 25m99 9 19-29 1 40" fill={isBlack?'#e88973':'#cc6d5b'}/>
     {isBuddy&&<g fill="#bd6650"><path d="M160 77q3 17 11 27l5-30m13 0 8 28q6-12 8-26"/><path d="m95 140 27 10-30 2m5 17 26 6-23 5m174-41-28 11 29 1m-3 17-26 7 22 4"/></g>}
     {variant==='chef' && <path d="m101 105 8-28 39 26M250 81l16 30-36-10" fill="#737d51"/>}
-    <g class="cat-eyes">
+    <g transform="translate(183 143)"><g class="cat-eye-expression"><g transform="translate(-183 -143)"><g class="cat-eyes">
       <ellipse cx="148" cy="143" rx="21" ry="25" fill="#fbf8ed"/><ellipse cx="218" cy="143" rx="21" ry="25" fill="#fbf8ed"/>
       <ellipse class="pupil" cx="153" cy="146" rx="8" ry="16" fill="#252820"/><ellipse class="pupil" cx="223" cy="146" rx="8" ry="16" fill="#252820"/>
       <circle cx="155" cy="139" r="3" fill="#fbf8ed"/><circle cx="225" cy="139" r="3" fill="#fbf8ed"/>
-    </g>
+    </g></g></g></g>
     <path d="m174 175 9 8 9-8Z" fill={isBlack?'#e88973':'#252820'}/>
     <g stroke={isBlack?'#fbf8ed':'#252820'} stroke-width="3" stroke-linecap="round">
-      <path d="M183 184v10m0-1c-7 12-17 6-19 0m19 0c6 11 16 6 18-1M129 179l-42-8m42 20-43 3m152-15 41-9m-41 21 44 3"/>
+      <path class="cat-mouth-normal" d="M183 184v10m0-1c-7 12-17 6-19 0m19 0c6 11 16 6 18-1"/>
+      <path d="M129 179l-42-8m42 20-43 3m152-15 41-9m-41 21 44 3"/>
     </g>
     <ellipse cx="145" cy="178" rx="10" ry="5" fill="#e88973" opacity={isBlack?'.7':'.4'}/><ellipse cx="222" cy="178" rx="10" ry="5" fill="#e88973" opacity={isBlack?'.7':'.4'}/>
+    {interactive&&<>
+      <g class="cat-playful-mouth">
+        <path d="M163 188q20 12 40 0c-1 17-9 26-20 26s-19-9-20-26Z" fill="#252820" stroke={isBlack?'#fbf8ed':'#252820'} stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M172 208q11-13 22 0-11 9-22 0Z" fill="#f2b6cb"/>
+      </g>
+      <g class="cat-calm-accessory cat-chill-hat" stroke="#252820" stroke-width="3" stroke-linejoin="round">
+        <path d="m145 50 15-16q22-8 45 0l16 16 10 35h-99Z" fill="#f8e5a7"/>
+        <path d="m140 64 85 0 5 18h-95Z" fill="#e88973"/>
+        <path d="M126 81q56 9 113 0l14 13q-70 18-140 0Z" fill="#f8e5a7"/>
+        <path d="m184 43 2 4 5 1-4 3 1 5-4-2-4 2 1-5-4-3 5-1Z" fill="#252820" stroke="none"/>
+      </g>
+      <g class="cat-calm-accessory cat-sunglasses" stroke="#f8e5a7" stroke-width="4" stroke-linejoin="round">
+        <path d="M117 128q25-8 51 0l-3 26q-21 19-41-1Zm81 0q25-8 51 0l-7 25q-20 20-41 1Z" fill="#252820"/>
+        <path d="M167 135q16-9 32 0m-82-5-16-6m148 6 15-6" stroke-linecap="round"/>
+        <path d="m133 133 14 13m-6-16 13 12m61-9 14 13m-6-16 12 12" stroke="#bfd8db" stroke-width="3" opacity=".8" stroke-linecap="round"/>
+      </g>
+    </>}
     </g>
     {isBuddy&&<g>
       <path d="M151 240q31 13 63 0l-10 31q-21 21-42 0Z" fill="#fbf8ed"/>
@@ -34,6 +53,7 @@ const color=isBlack?'#282b24':variant==='resume'?'#fbf8ed':variant==='chef'?'#bf
     </g>}
     {variant==='developer' && <g class="cat-prop"><path d="M75 250h155l-18 78H92Z" fill="#bfd8db" stroke="#252820" stroke-width="5" stroke-linejoin="round"/><path d="M85 328h151" stroke="#252820" stroke-width="7" stroke-linecap="round"/><path d="m139 275-12 11 12 11m30-22 12 11-12 11m-12-27-7 32" stroke="#252820" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><ellipse class="cat-paw-left" cx="76" cy="262" rx="20" ry="12" fill={color}/><ellipse class="cat-paw-right" cx="234" cy="265" rx="19" ry="12" fill={color}/></g>}
     {variant==='resume' && <g><path d="m176 235 9 13 11-13m-11 13-10 43 12 16 13-17-15-42" fill="#737d51"/><rect x="68" y="221" width="93" height="109" rx="8" fill="#f8e5a7" stroke="#252820" stroke-width="4" transform="rotate(-9 68 221)"/><path d="m86 246 7 7 12-17m-14 40 7 7 12-17m-14 40 7 7 12-17m4-46 27-4m-23 34 27-4m-22 33 27-4" stroke="#252820" stroke-width="3" stroke-linecap="round"/><ellipse cx="81" cy="268" rx="17" ry="12" fill={color}/></g>}
-    {variant==='chef' && <g><path d="M130 66v-25c-31 0-34-40-5-48 14-5 24 3 28 11 2-29 43-30 49-3 19-19 47-1 38 22-4 10-12 14-20 15v28Z" fill="#fbf8ed" stroke="#252820" stroke-width="3" transform="translate(0 22)"/><path d="M78 268h208c-7 44-41 65-104 65-60 0-94-21-104-65Z" fill="#f8e5a7" stroke="#252820" stroke-width="4"/><path d="M101 285h160" stroke="#e88973" stroke-width="7" stroke-linecap="round"/><ellipse cx="103" cy="265" rx="21" ry="12" fill={color}/><ellipse cx="260" cy="265" rx="21" ry="12" fill={color}/></g>}
+    {variant==='chef' && <g><path class="cat-chef-hat" d="M130 66v-25c-31 0-34-40-5-48 14-5 24 3 28 11 2-29 43-30 49-3 19-19 47-1 38 22-4 10-12 14-20 15v28Z" fill="#fbf8ed" stroke="#252820" stroke-width="3" transform="translate(0 22)"/><path d="M78 268h208c-7 44-41 65-104 65-60 0-94-21-104-65Z" fill="#f8e5a7" stroke="#252820" stroke-width="4"/><path d="M101 285h160" stroke="#e88973" stroke-width="7" stroke-linecap="round"/><ellipse cx="103" cy="265" rx="21" ry="12" fill={color}/><ellipse cx="260" cy="265" rx="21" ry="12" fill={color}/></g>}
+  </g>
   </g>
 </svg>

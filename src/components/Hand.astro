@@ -3,15 +3,15 @@ interface Props { class?: string; }
 const {class:cls=''}=Astro.props;
 ---
 <svg class:list={['illustrated-hand',cls]} viewBox="0 0 420 390" fill="none" aria-hidden="true">
-  <g class="hand-palm">
-    <!-- Rounded fingers gathered into a gentle stroking pose. -->
-    <path d="m432 354-115-20c-27-4-45-16-61-35l-40-49-39-32-68-28c-15-6-20-15-15-24 5-9 15-9 28-3l41 19-61-39c-15-9-18-20-11-28 7-8 18-6 30 2l58 38-49-47c-12-11-13-22-5-29 9-8 19-4 30 7l51 50-32-46c-9-13-8-24 1-29 10-6 20 0 28 12l49 68c11 15 20 29 24 47 15 11 26 24 36 41l20 34 109 24Z" fill="#f2b6cb"/>
-    <!-- A tucked thumb and just a few soft creases keep the silhouette clear. -->
-    <path d="M264 229c-9-13-20-23-31-27-13-5-24-1-27 9-3 9 5 17 17 24l18 14m-42-77 17 15m-47-39 13 12m49 82c8 2 16 6 21 13" stroke="#252820" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="m110 169 13 5m-20-48 13 7m17-42 11 11m34-29 8 12" stroke="#fbf8ed" stroke-width="4" stroke-linecap="round"/>
-    <!-- A little studio sweater cuff, with a stitched star. -->
-    <path d="m323 257 61 19-24 74-61-18Z" fill="#f8e5a7" stroke="#252820" stroke-width="2.5" stroke-linejoin="round"/>
-    <path d="m332 270-16 50m57-38-17 51" stroke="#252820" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
-    <path d="m343 288 3 8 8 3-8 3-3 8-3-8-8-3 8-3Z" fill="#252820"/>
+  <g class="hand-palm" transform="rotate(-30 210 215)">
+    <!-- A continuous silhouette: four tapered fingers, a separate thumb web, palm and wrist. -->
+    <path d="M172 398l2-132c-20-11-31-26-39-44l-35-46c-9-11-6-22 4-26 10-4 18 3 28 13l14 17-7-86c-2-14 6-22 16-17 5 3 7 8 8 17l14 57-5-89c-1-14 8-21 17-16 6 3 8 10 9 20l9 77 4-99c1-14 12-17 20-9 4 4 4 10 4 17l2 94 14-70c3-14 15-16 21-6 3 4 2 11 1 17l-11 91c9 31 5 55-10 76l14 144Z" fill="#f2b6cb" stroke="#252820" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M146 180q24 21 20 46m14-64 5 10m22-15 0 12m29-10-2 12m-52 70q28 8 48-5" stroke="#252820" stroke-width="2.2" stroke-linecap="round"/>
+    <g stroke="#fbf8ed" stroke-width="3" stroke-linecap="round">
+      <path d="m149 90 2 11m32-42 2 12m38-29v12m37 25-2 12m-151 72 8 10"/>
+    </g>
+    <path d="m173 290 84 2 6 51-91-3Z" fill="#f8e5a7" stroke="#252820" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="m183 301-1 28m64-26 3 28" stroke="#252820" stroke-width="1.5" stroke-linecap="round" opacity=".45"/>
+    <path d="m215 303 4 8 9 4-9 4-4 8-4-8-9-4 9-4Z" fill="#252820"/>
   </g>
 </svg>

@@ -27,23 +27,5 @@ export const showcase = [
     src: '/videos/tora-pro.mp4',
     poster: '/videos/tora-pro-poster.webp',
     placeholder: false
-  },
-  {
-    id: 'resumes',
-    label: 'Resumes',
-    title: 'Your story, looking sharper.',
-    description: 'A space for resume transformations, thoughtful layouts and a closer look at the process.',
-    src: '',
-    poster: '/artwork/resumes.webp',
-    placeholder: true
-  },
-  {
-    id: 'food',
-    label: 'Food visuals',
-    title: 'From good food to can’t-scroll-past.',
-    description: 'A space for real food photo transformations, editing breakdowns and menu-ready visuals.',
-    src: '',
-    poster: '/artwork/food.webp',
-    placeholder: true
   }
 ];

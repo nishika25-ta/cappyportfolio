@@ -1,0 +1,32 @@
+/* Expression and accessory layers sit outside the existing blinking and breathing rigs. */
+.cat-interactive .cat-calm-accessory,
+.cat-interactive .cat-playful-mouth{opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease,transform .4s var(--ease)}
+.cat-interactive .cat-calm-accessory{transform:translateY(-8px)}
+.cat-interactive .cat-eye-expression{transform-box:view-box;transform-origin:0 0;transition:transform .35s var(--ease),opacity .25s ease}
+.cat-interactive .cat-mouth-normal,
+.cat-interactive .cat-chef-hat{transition:opacity .25s ease}
+.cat-interactive .cat-energy-rig{transform-box:fill-box;transform-origin:50% 90%}
+
+[data-energy-mood=calm] .cat-interactive .cat-calm-accessory{opacity:1;visibility:visible;transform:translateY(0)}
+[data-energy-mood=calm] .cat-interactive .cat-chef-hat{opacity:0}
+[data-energy-mood=calm] .cat-interactive .cat-eye-expression{transform:scaleY(.8);opacity:0}
+
+[data-energy-mood=playful] .cat-interactive .cat-eye-expression{transform:scale(1.13,1.12)}
+[data-energy-mood=wild] .cat-interactive .cat-eye-expression{transform:scale(1.22,1.2)}
+[data-energy-mood=playful] .cat-interactive .cat-playful-mouth,
+[data-energy-mood=wild] .cat-interactive .cat-playful-mouth{opacity:1;visibility:visible}
+[data-energy-mood=playful] .cat-interactive .cat-mouth-normal,
+[data-energy-mood=wild] .cat-interactive .cat-mouth-normal{opacity:0}
+[data-energy-mood=playful] .cat-interactive .cat-energy-rig,
+[data-energy-mood=wild] .cat-interactive .cat-energy-rig{
+  animation:cat-happy-wiggle var(--cat-tempo,.35s) ease-in-out infinite;
+  animation-play-state:paused;
+}
+[data-energy-mood] .cat-interactive.is-in-view .cat-energy-rig{animation-play-state:running}
+
+@keyframes cat-happy-wiggle{
+  0%,100%{transform:translate(0,0) rotate(calc(var(--cat-jitter,2deg) * -1))}
+  25%{transform:translate(-2px,calc(var(--cat-bounce,4px) * -1)) rotate(var(--cat-jitter,2deg))}
+  50%{transform:translate(2px,0) rotate(calc(var(--cat-jitter,2deg) * -1))}
+  75%{transform:translate(0,calc(var(--cat-bounce,4px) * -.6)) rotate(var(--cat-jitter,2deg))}
+}

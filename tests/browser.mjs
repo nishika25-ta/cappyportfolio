@@ -31,7 +31,7 @@ try {
   await page.locator('[data-pick-service="resumes"]').click();
   assert.equal(await page.locator('#pricing-resumes').isVisible(),true);
   checks.push('Service character links select the matching package category.');
-  for(const id of ['resumes','food','websites']){
+  for(const id of ['websites','business','pro']){
     await page.locator(`[data-showcase="${id}"]`).click();
     assert.equal(await page.locator(`#showcase-${id}`).isVisible(),true);
     assert.equal(await page.locator('.showcase-scene:visible').count(),1);

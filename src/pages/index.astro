@@ -37,7 +37,7 @@ import {showcase} from '../data/showcase';
     <svg class="section-wave" viewBox="0 0 1440 85" preserveAspectRatio="none" aria-hidden="true"><path d="M0 45C300-30 460 110 790 45S1190 0 1440 40V85H0Z"/></svg>
     <div class="wrap"><div class="section-heading services-heading"><div><span class="section-kicker">A few things I’m pretty good at</span><h2 id="services-title">Pick your<br/>purr-fect match<span>.</span></h2></div></div>
       <div class="service-cats">
-        {services.map((service,i)=><button type="button" class:list={['service-cat',`service-${service.id}`]} data-pick-service={service.id} data-character={service.id} aria-pressed={i===0?'true':'false'}>
+        {services.map((service,i)=><button type="button" class:list={['service-cat',`service-${service.id}`]} data-pick-service={service.id} data-character={service.id} aria-pressed={i===0?'true':'false'} aria-controls={`playground-${service.id} pricing-${service.id}`}>
           <div class="service-cat-top"><span class="service-from">From RM{service.from}</span><span class="service-arrow"><Icon name="diagonal"/></span></div>
           <div class="service-illustration"><div class="service-cursor-rig"><Cat variant={i===0?'developer':i===1?'resume':'chef'}/></div></div>
           <div class="service-cat-label"><span class="service-name">{service.title}</span><span class="service-short">{service.short}</span></div>
@@ -50,17 +50,17 @@ import {showcase} from '../data/showcase';
   <section id="playground" class="playground-section" aria-labelledby="playground-title">
     <svg class="playground-sky" viewBox="0 0 1440 300" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0H1440V145C1120 40 1060 240 740 135S280 260 0 150Z" fill="currentColor"/></svg>
     <svg class="playground-doodles" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="3"><path d="M-20 290C180 40 240 390 50 430S-90 640 200 740"/><path d="M1100-40C880 140 1330 130 1250 330S1450 550 1500 690"/><path d="m100 90 25 15 15-35m1100 530 22 40 45-10"/><circle cx="290" cy="670" r="30"/><path d="m1140 550 45-40 40 45-45 40Z"/></g></svg>
-    <div class="playground-heading"><span class="section-kicker">A little creative chemistry</span><h2 id="playground-title">Turn up the<br/> purr-sonality.</h2></div>
+    <div class="playground-heading"><span class="section-kicker">A little creative chemistry</span><h2 id="playground-title" tabindex="-1">Turn up the<br/> purr-sonality.</h2></div>
     <div class="playground-stage">
-      <div class="playground-cast">
-      {services.map((s,i)=><div class="playground-character" data-playground-character={s.id} hidden={i!==0}><Cat variant={i===0?'developer':i===1?'resume':'chef'}/></div>)}
+      <div class="playground-cast" data-energy-mood="playful">
+      {services.map((s,i)=><div class="playground-character" id={`playground-${s.id}`} data-playground-character={s.id} hidden={i!==0}><Cat interactive variant={i===0?'developer':i===1?'resume':'chef'}/></div>)}
       <div class="playground-hand-track"><Hand class="playground-hand"/></div>
       <div class="pet-hearts" aria-hidden="true"><span>♡</span><span>♡</span><span>✦</span></div>
       </div>
     </div>
     <button class="pet-button" data-pet-cat type="button" aria-label="Pet your creative buddy"><Icon name="paw"/> A little head scratch?</button>
     <div class="energy-control"><div class="energy-labels"><label for="creative-energy">Creative energy</label><output id="energy-state" for="creative-energy">Feeling playful</output></div><input id="creative-energy" type="range" min="0" max="100" value="55" aria-label="Creative energy" aria-describedby="energy-help"/><div class="energy-extremes" aria-hidden="true"><span>Calm</span><span>Full of beans</span></div><p id="energy-help">Slide to change your buddy’s energy.</p></div>
-    <div class="playground-actions"><a class="button button-dark" href="#pricing" data-explore-packages>Explore website packages <Icon name="arrow"/></a><p id="playground-status" role="status" aria-live="polite">Your website buddy is ready to make something good.</p></div>
+    <div class="playground-actions"><a class="button button-dark" href="#pricing-websites" data-pick-service="websites" data-explore-packages>Explore website packages <Icon name="arrow"/></a><p id="playground-status" role="status" aria-live="polite">Your website buddy is ready to make something good.</p></div>
   </section>
 
   <section id="work" class="work-section wrap" aria-labelledby="work-title">
@@ -75,7 +75,7 @@ import {showcase} from '../data/showcase';
       </div>
       <div class="showcase-copy"><span class="hand-note">a front-row seat ↙</span><div class="showcase-tabs" role="tablist" aria-label="Showcase category">{showcase.map((clip,i)=><button id={`showcase-tab-${clip.id}`} role="tab" aria-selected={i===0?'true':'false'} aria-controls={`showcase-${clip.id}`} tabindex={i===0?0:-1} data-showcase={clip.id}>{clip.label}</button>)}</div>
         {showcase.map((clip,i)=><div id={`showcase-copy-${clip.id}`} data-showcase-copy={clip.id} hidden={i!==0}><h3>{clip.title}</h3><p>{clip.description}</p></div>)}
-        <button class="text-link" data-preview-video><span class="small-play"><Icon name="play"/></span> Preview your video here <Icon name="diagonal"/></button><p class="preview-help">Choose a video to try it in this space. Your preview stays on this device.</p><input id="local-video" type="file" accept="video/mp4,video/webm,video/quicktime" hidden/><p id="video-error" role="status" class="video-error"></p>
+        <button class="text-link" data-preview-video><span class="small-play"><Icon name="play"/></span> Preview your video here <Icon name="diagonal"/></button><input id="local-video" type="file" accept="video/mp4,video/webm,video/quicktime" hidden/><p id="video-error" role="status" class="video-error"></p>
       </div>
     </div>
     <div class="artwork-heading"><h3>A little taste of the services</h3><span>Original service artwork, made for this little studio.</span></div>
@@ -96,7 +96,6 @@ import {showcase} from '../data/showcase';
 
   <section class="about-section wrap" aria-labelledby="about-title"><div class="about-art"><span class="hand-note">small studio, big heart ♡</span><div class="about-postcard"><img src="/artwork/about.webp" alt="CappyTheDev about-me artwork: a friendly cat at a laptop with notes about website design, resumes and food visuals in Miri" width="1200" height="800" loading="lazy"/></div><span class="postcard-stamp">MADE IN MIRI <Icon name="paw"/></span></div><div class="about-copy"><span class="section-kicker">The human behind the paws</span><h2 id="about-title">Hey, I’m Cappy<span class="coral-text">.</span><br/>Your creative buddy.</h2><p>Just a freelancer in Miri who enjoys making useful, good-looking things. A website for your shop. A resume for your next move. Food photos that do your cooking justice.</p><p>You’ll work directly with me, from the first “hello” to the last little detail. Friendly chats, honest prices and something that feels like you.</p><a class="text-link" href="/about/">A little more about me <Icon name="diagonal"/></a><div class="about-tags"><span>Human-sized service</span><span>A little cat energy</span></div></div></section>
 
-  <section class="process-section"><div class="wrap process-inner"><h2>From “what if”<br/>to “here it is.”</h2><ol><li><span>01</span><div><h3>Say hello</h3><p>Send a WhatsApp. Tell me what you have in mind.</p></div></li><li><span>02</span><div><h3>Make a little plan</h3><p>We agree on your package, materials and timeline.</p></div></li><li><span>03</span><div><h3>Make it feel like you</h3><p>I create, we refine, and your next thing is ready.</p></div></li></ol></div></section>
 
   <section class="faq-section wrap" aria-labelledby="faq-title"><div><span class="section-kicker">Curiosity is very welcome here</span><h2 id="faq-title">A few good<br/>questions<span class="coral-text">.</span></h2><Cat variant="peek" class="faq-cat"/></div><div class="faq-list">{faqs.map(([q,a])=><details><summary>{q}<span class="faq-plus" aria-hidden="true">+</span></summary><p>{a.replaceAll('–',' to ')}</p></details>)}</div></section>
 

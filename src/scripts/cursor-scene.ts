@@ -1,7 +1,7 @@
 import gsap from 'gsap';
 type Listen=(el:EventTarget,type:string,handler:EventListener)=>void;
 
-export function createCursorScene(listen:Listen){
+export function createCursorScene(listen:Listen,bounds:(element:Element)=>DOMRect){
   if(!matchMedia('(hover:hover) and (pointer:fine)').matches)return;
   document.querySelectorAll<HTMLElement>('.button,.pet-button,.motion-toggle').forEach(button=>{
     const x=gsap.quickTo(button,'x',{duration:.38,ease:'power3.out'});
@@ -22,7 +22,7 @@ export function createCursorScene(listen:Listen){
     const titleX=gsap.quickTo(title,'rotationX',{duration:.9,ease:'power3.out'});
     const titleY=gsap.quickTo(title,'rotationY',{duration:.9,ease:'power3.out'});
     listen(hero,'pointermove',(raw)=>{
-      const e=raw as PointerEvent;const r=hero.getBoundingClientRect();
+      const e=raw as PointerEvent;const r=bounds(hero);
       const x=(e.clientX-r.left)/r.width-.5;const y=(e.clientY-r.top)/r.height-.5;
       rigs.forEach(rig=>{rig.x(x*85*rig.depth);rig.y(y*40);rig.rotate(x*15*rig.depth);rig.tilt(x*24);});
       titleX(-y*9);titleY(x*13);
@@ -35,7 +35,7 @@ export function createCursorScene(listen:Listen){
     const x=gsap.quickTo(art,'rotationY',{duration:.55,ease:'power3.out'});
     const y=gsap.quickTo(art,'rotationX',{duration:.55,ease:'power3.out'});
     const z=gsap.quickTo(art,'rotation',{duration:.55,ease:'power3.out'});
-    listen(card,'pointermove',(raw)=>{const e=raw as PointerEvent;const r=card.getBoundingClientRect();x(((e.clientX-r.left)/r.width-.5)*24);y(-((e.clientY-r.top)/r.height-.5)*20);z(((e.clientX-r.left)/r.width-.5)*8);});
+    listen(card,'pointermove',(raw)=>{const e=raw as PointerEvent;const r=bounds(card);x(((e.clientX-r.left)/r.width-.5)*24);y(-((e.clientY-r.top)/r.height-.5)*20);z(((e.clientX-r.left)/r.width-.5)*8);});
     listen(card,'pointerleave',()=>{x(0);y(0);z(0);});
   });
   const cursor=document.querySelector<HTMLElement>('#cursor-buddy');
@@ -44,9 +44,10 @@ export function createCursorScene(listen:Listen){
     const x=gsap.quickSetter(cursor,'x','px');
     const y=gsap.quickSetter(cursor,'y','px');
     const spin=gsap.quickTo(cursor,'rotation',{duration:.5,ease:'power3.out'});
+    const visibility=gsap.quickSetter(cursor,'autoAlpha');
     let lastX=0;
-    listen(document,'pointermove',(raw)=>{const e=raw as PointerEvent;x(e.clientX);y(e.clientY);spin(gsap.utils.clamp(-25,25,(e.clientX-lastX)*.3));lastX=e.clientX;gsap.set(cursor,{autoAlpha:1});});
-    listen(document,'pointerout',(raw)=>{if(!(raw as PointerEvent).relatedTarget)gsap.set(cursor,{autoAlpha:0});});
+    listen(document,'pointermove',(raw)=>{const e=raw as PointerEvent;x(e.clientX);y(e.clientY);spin(gsap.utils.clamp(-25,25,(e.clientX-lastX)*.3));lastX=e.clientX;visibility(1);});
+    listen(document,'pointerout',(raw)=>{if(!(raw as PointerEvent).relatedTarget)visibility(0);});
     listen(document,'pointerover',(raw)=>{const target=(raw.target as Element).closest('button,a,input');cursor.classList.toggle('is-interactive',!!target);});
   }
 }

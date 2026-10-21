@@ -4,6 +4,8 @@ import {SplitText} from 'gsap/SplitText';
 import {motionEnabled} from './motion-preference';
 import {createCursorScene} from './cursor-scene';
 import {createExpressiveMotion} from './expressive-motion';
+import {getEnergyState} from './energy-state.mjs';
+import {createGeometryCache} from './motion-performance.mjs';
 
 type Listen=(el:EventTarget,type:string,handler:EventListener)=>void;
 gsap.registerPlugin(SplitText);
@@ -20,10 +22,15 @@ export function createChoreography(listen:Listen) {
   let petting:gsap.core.Timeline|undefined;
   let energyTarget:Element|null=null;
   let energyPose:{y:(value:number)=>void;scaleX:(value:number)=>void;scaleY:(value:number)=>void;rotation:(value:number)=>void}|undefined;
+  const energyCast=document.querySelector<HTMLElement>('.playground-cast');
+  const geometry=createGeometryCache();
+  listen(window,'scroll',geometry.invalidate);
+  listen(window,'resize',geometry.invalidate);
+  ScrollTrigger.addEventListener('refresh',geometry.invalidate);
   const observer=new IntersectionObserver(entries=>{
     for(const entry of entries){
       const actor=actors.get(entry.target);
-      if(actor){actor.visible=entry.isIntersecting;actor.timeline.paused(!entry.isIntersecting||document.hidden);}
+      if(actor){actor.visible=entry.isIntersecting;actor.timeline.paused(!entry.isIntersecting||document.hidden);entry.target.classList.toggle('is-in-view',entry.isIntersecting&&!document.hidden);}
       loopScenes.get(entry.target)?.forEach(loop=>loop.paused(!entry.isIntersecting||document.hidden));
     }
   },{rootMargin:'80px'});
@@ -36,7 +43,7 @@ export function createChoreography(listen:Listen) {
   const ctx=gsap.context(()=>{
     if(reduced)return;
     const entrance=(selector:string,vars:gsap.TweenVars)=>{if(document.querySelector(selector))gsap.from(selector,vars);};
-    createCursorScene(listen);
+    createCursorScene(listen,geometry.read);
     createExpressiveMotion(listen);
     gsap.fromTo('.scroll-progress',{scaleX:0},{scaleX:1,ease:'none',scrollTrigger:{start:0,end:'max',scrub:.15}});
     document.querySelectorAll<HTMLElement>('main h2').forEach(heading=>{
@@ -173,7 +180,7 @@ export function createChoreography(listen:Listen) {
         const pupils=scene.querySelectorAll('.pupil');
         const x=gsap.quickTo(pupils,'x',{duration:.35,ease:'power3.out'});
         const y=gsap.quickTo(pupils,'y',{duration:.35,ease:'power3.out'});
-        listen(scene,'pointermove',(raw)=>{const e=raw as PointerEvent;const r=scene.getBoundingClientRect();x(((e.clientX-r.left)/r.width-.5)*13);y(((e.clientY-r.top)/r.height-.5)*9);});
+        listen(scene,'pointermove',(raw)=>{const e=raw as PointerEvent;const r=geometry.read(scene);x(((e.clientX-r.left)/r.width-.5)*13);y(((e.clientY-r.top)/r.height-.5)*9);});
         listen(scene,'pointerleave',()=>{x(0);y(0);});
       });
     }
@@ -183,7 +190,6 @@ export function createChoreography(listen:Listen) {
     entrance('.artwork-card',{y:90,rotation:7,scale:.9,duration:1.1,stagger:.13,ease:'power3.out',scrollTrigger:{trigger:'.artwork-gallery',start:'top 90%',once:true}});
     entrance('.pricing-tabs',{scaleX:.8,y:30,duration:1,ease:'elastic.out(1,.8)',scrollTrigger:{trigger:'.pricing-tabs',start:'top 90%',once:true}});
     entrance('.about-art',{rotation:5,y:80,ease:'none',scrollTrigger:{trigger:'.about-section',start:'top bottom',end:'center center',scrub:.5}});
-    entrance('.process-inner li',{y:45,scale:.85,duration:.9,stagger:.18,ease:'back.out(1.5)',scrollTrigger:{trigger:'.process-inner',start:'top 85%',once:true}});
     entrance('.faq-cat',{x:80,rotation:20,duration:1.3,ease:'elastic.out(1,.7)',scrollTrigger:{trigger:'.faq-section',start:'top 80%',once:true}});
     entrance('.contact-cat',{y:145,rotation:-18,scale:.65,duration:1.5,ease:'elastic.out(1,.75)',scrollTrigger:{trigger:'.contact-main',start:'top 85%',once:true}});
     entrance('.contact-main h2',{y:80,rotation:4,duration:1,ease:'power3.out',scrollTrigger:{trigger:'.contact-main',start:'top 85%',once:true}});
@@ -197,14 +203,22 @@ export function createChoreography(listen:Listen) {
     if(energyTarget)gsap.killTweensOf(energyTarget);
     energyTarget=target;
     energyPose=target?{
-      y:gsap.quickTo(target,'y',{duration:.32,ease:'power3.out',overwrite:true}),
-      scaleX:gsap.quickTo(target,'scaleX',{duration:.32,ease:'power3.out',overwrite:true}),
-      scaleY:gsap.quickTo(target,'scaleY',{duration:.32,ease:'power3.out',overwrite:true}),
-      rotation:gsap.quickTo(target,'rotation',{duration:.32,ease:'power3.out',overwrite:true})
+      y:gsap.quickTo(target,'y',{duration:.32,ease:'power3.out',overwrite:'auto'}),
+      scaleX:gsap.quickTo(target,'scaleX',{duration:.32,ease:'power3.out',overwrite:'auto'}),
+      scaleY:gsap.quickTo(target,'scaleY',{duration:.32,ease:'power3.out',overwrite:'auto'}),
+      rotation:gsap.quickTo(target,'rotation',{duration:.32,ease:'power3.out',overwrite:'auto'})
     }:undefined;
   }
   function setEnergy(value:number){
-    energy=gsap.utils.clamp(0,100,value);
+    const state=getEnergyState(value);
+    energy=state.energy;
+    const cast=energyCast;
+    if(cast){
+      if(cast.dataset.energyMood!==state.mood)cast.dataset.energyMood=state.mood;
+      cast.style.setProperty('--cat-jitter',`${1+state.level*3}deg`);
+      cast.style.setProperty('--cat-bounce',`${2+state.level*5}px`);
+      cast.style.setProperty('--cat-tempo',`${.5-state.level*.28}s`);
+    }
     if(reduced)return;
     actors.forEach((actor,cat)=>{if(cat.closest('.playground-section'))actor.timeline.timeScale(energySpeed());});
     if(!energyPose)ctx.add(bindEnergyPose);
@@ -240,6 +254,7 @@ export function createChoreography(listen:Listen) {
     });
   }
   function swap(selector:string){if(reduced)return;ctx.add(()=>{gsap.fromTo(selector,{y:24},{y:0,duration:.5,stagger:.07,ease:'power3.out',clearProps:'transform',overwrite:true});});}
-  listen(document,'visibilitychange',()=>{actors.forEach(actor=>actor.timeline.paused(document.hidden||!actor.visible));loopScenes.forEach((list,scene)=>{const r=scene.getBoundingClientRect();list.forEach(loop=>loop.paused(document.hidden||r.bottom<0||r.top>innerHeight));});});
-  return {setEnergy,selectCharacter,pet,swap,destroy(){observer.disconnect();petting?.kill();if(energyTarget)gsap.killTweensOf(energyTarget);ctx.revert();textSplits.forEach(split=>split.revert());}};
+  listen(document,'visibilitychange',()=>{actors.forEach((actor,cat)=>{actor.timeline.paused(document.hidden||!actor.visible);cat.classList.toggle('is-in-view',!document.hidden&&actor.visible);});loopScenes.forEach((list,scene)=>{const r=scene.getBoundingClientRect();list.forEach(loop=>loop.paused(document.hidden||r.bottom<0||r.top>innerHeight));});});
+  setEnergy(energy);
+  return {setEnergy,selectCharacter,pet,swap,destroy(){observer.disconnect();ScrollTrigger.removeEventListener('refresh',geometry.invalidate);petting?.kill();if(energyTarget)gsap.killTweensOf(energyTarget);ctx.revert();textSplits.forEach(split=>split.revert());}};
 }

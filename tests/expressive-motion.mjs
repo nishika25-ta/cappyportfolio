@@ -19,10 +19,10 @@ try{
   assert.equal(await particles.count(),6,'Repeated interactions keep the DOM particle pool fixed.');
   assert.ok(await particles.evaluateAll(nodes=>nodes.every(node=>Number(getComputedStyle(node).opacity)===0)),'The pooled particles are hidden when their motion ends.');
   await page.mouse.wheel(0,500);await page.waitForTimeout(100);
-  const wind=await page.locator('html').evaluate(el=>Number(getComputedStyle(el).getPropertyValue('--scroll-wind')));
+  const wind=await page.locator('.artwork-card').first().evaluate(el=>Number(getComputedStyle(el).getPropertyValue('--scroll-wind')));
   assert.ok(Math.abs(wind)>.01,'Scroll velocity drives artwork sway.');
   await page.waitForTimeout(2100);
-  const settled=await page.locator('html').evaluate(el=>Number(getComputedStyle(el).getPropertyValue('--scroll-wind')));
+  const settled=await page.locator('.artwork-card').first().evaluate(el=>Number(getComputedStyle(el).getPropertyValue('--scroll-wind')));
   assert.ok(Math.abs(settled)<.1,'Artwork settles after scrolling stops.');
   await page.locator('.site-header a[href="/about/"]').click();await page.waitForTimeout(900);
   assert.equal(await page.locator('.celebration-layer').count(),1,'Navigation cleans up the old effect layer.');
