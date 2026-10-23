@@ -8,7 +8,7 @@ export function enquiryUrl(name = '', price) {
 }
 export const services = [
   {
-    id:'websites', title:'Websites', label:'A home for your business.', short:'Small business. Big internet energy.',
+    id:'websites', title:'Websites', label:'A home for your business.', short:'Big online presence. Small price tag.',
     description:'Your shop deserves more than a link in a bio. Let’s give it a little corner of the internet that feels like you.',
     from:129, color:'butter', icon:'code', artwork:'/artwork/websites.webp', sheet:'/artwork/web-price.webp',
     packages:[
@@ -20,7 +20,7 @@ export const services = [
     note:'Domain, hosting and renewals billed separately unless quoted. Complex features priced separately. The 48-hour target applies to Kitty Starter after complete materials, subject to availability.'
   },
   {
-    id:'resumes',title:'Resumes / CVs',label:'Your next chapter starts here.',short:'Good people deserve good opportunities.',
+    id:'resumes',title:'Resumes / CVs',label:'Your next chapter starts here.',short:'Your experience. A sharper first impression.',
     description:'Clean, ATS-friendly resumes with the right words in the right places. Still you, just a little sharper.',
     from:19,color:'sky',icon:'document',artwork:'/artwork/resumes.webp',sheet:'/artwork/resume-price.webp',
     packages:[
@@ -31,7 +31,7 @@ export const services = [
     addons:[],note:'Send your existing CV or education/work details and target role. Final PDF and editable copy where agreed. Typical turnaround: 1–3 days, confirmed after reviewing your materials. No job or interview guarantees.'
   },
   {
-    id:'food',title:'Food visuals',label:'Good food. Great first impressions.',short:'Make them stop scrolling. Then hungry.',
+    id:'food',title:'Food visuals',label:'Good food. Great first impressions.',short:'Looks delicious. Still looks real.',
     description:'Your real food, looking its very best. Natural photo editing for menus, social feeds, cafés and home bakers.',
     from:15,color:'coral',icon:'camera',artwork:'/artwork/food.webp',sheet:'/artwork/food-price.webp',
     packages:[

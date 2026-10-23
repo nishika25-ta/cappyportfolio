@@ -1,0 +1,97 @@
+/* The second hero act opens a night-time creative solar system. */
+.hero-stage .creative-universe{--universe-center:44%;color:var(--paper);background:#242b27;overflow:hidden}
+.universe-atmosphere{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 44%,#647d522e,transparent 52%),radial-gradient(ellipse at 12% 83%,#6e969f22,transparent 45%),radial-gradient(ellipse at 89% 14%,#f2b6cb14,transparent 45%)}
+.universe-frame{position:absolute;inset:22px;border:1px solid #fbf8ed24;border-radius:28px;pointer-events:none}
+.universe-caption{position:absolute;left:45px;right:45px;top:43px;display:flex;justify-content:space-between;gap:20px;font-size:8px;font-weight:600;letter-spacing:.12em;color:#c3d4c5}
+.creative-universe .orbit-track{width:min(1120px,100%);height:auto;left:50%;top:var(--universe-center);translate:-50% -50%;color:#e8edce;opacity:.2;overflow:visible}
+.creative-universe .orbit-center{left:50%;top:var(--universe-center);width:min(34vw,450px);z-index:3;color:var(--paper)}
+.creative-universe .universe-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:8px;font-weight:600;letter-spacing:.14em;color:var(--butter)}
+.universe-eyebrow i{width:5px;height:5px;display:block;background:var(--scene-green);border-radius:50%;box-shadow:0 0 12px #37ed8980}
+.creative-universe .orbit-center p{font-size:clamp(44px,4.4vw,67px);font-weight:750;line-height:1;letter-spacing:-.06em;margin-top:19px;white-space:nowrap}
+.creative-universe .orbit-center em{display:inline-block;font-family:Georgia,serif;font-size:1.04em;letter-spacing:-.065em;font-weight:400;font-style:italic;background:none;border-radius:0;rotate:0deg;padding:0;color:var(--scene-pink);margin-top:8px}
+.creative-universe .orbit-center>small{font-size:10px;color:#c3d4c5;margin-top:19px;line-height:1.5}
+.universe-swatches{display:flex;justify-content:center;align-items:center;gap:0;margin-top:18px}
+.universe-swatches i{width:14px;height:14px;border:1px solid #242b27;border-radius:50%;margin-left:-3px;background:var(--butter)}
+.universe-swatches i:nth-child(2){background:var(--scene-pink)}
+.universe-swatches i:nth-child(3){background:var(--sky)}
+.universe-swatches span{font-size:8px;letter-spacing:.03em;margin-left:8px;color:#c3d4c5}
+.creative-universe .orbit-carousel{transform-origin:50% var(--universe-center)}
+.creative-universe .orbit-item{left:50%;top:var(--universe-center);width:166px;translate:-50% -50%;perspective:800px;z-index:4}
+.creative-universe .orbit-sticker{display:block;padding:0;min-height:0;border:0;border-radius:0;background:none;box-shadow:none}
+.planet-content{--planet-color:var(--butter);padding:11px 13px 13px;border:1.5px solid var(--ink);border-radius:16px;background:var(--planet-color);color:var(--ink);box-shadow:0 0 0 1px #fbf8ed45,7px 9px 0 #0004;text-align:left;transform-style:preserve-3d}
+.orbit-resume .planet-content{--planet-color:var(--scene-pink)}
+.orbit-food .planet-content{--planet-color:var(--sky)}
+.planet-meta{display:flex;justify-content:space-between;align-items:center;gap:3px;font-size:6px;font-weight:600;letter-spacing:.035em;border-bottom:1px solid #25282035;padding-bottom:7px}
+.planet-meta .icon{width:10px;height:10px;flex:0 0 10px}
+.planet-art{position:relative;height:74px;margin-top:6px}
+.planet-art::before{content:'';position:absolute;width:64px;height:64px;left:50%;top:3px;translate:-50% 0;border:1px solid #25282045;border-radius:50%;background:#fbf8ed40}
+.planet-cat{position:absolute;width:87px;height:87px;left:50%;top:-3px;translate:-50% 0}
+.planet-cat .cat{width:100%;height:100%}
+.planet-spark{position:absolute;right:6px;top:8px;font-size:15px;rotate:12deg}
+.creative-universe .planet-content>strong{display:block;font-family:Bricolage,sans-serif;font-size:24px;font-weight:750;line-height:1.05;letter-spacing:-.045em;margin-top:4px}
+.creative-universe .planet-content>small{display:block;font-size:9px;line-height:1.4;margin-top:5px}
+.creative-universe .orbit-spark-one{left:10%;top:62%;font-size:45px;color:var(--butter)}
+.creative-universe .orbit-spark-two{right:12%;top:19%;font-size:37px;color:var(--scene-pink)}
+.creative-universe .orbit-paws{left:4%;top:28%;opacity:.25;color:#bfd8db;scale:.6;transform-origin:left top}
+.universe-stars{position:absolute;inset:0;pointer-events:none}
+.universe-stars>span{position:absolute;left:calc(6% + mod(var(--star)*37,88)*1%);top:calc(10% + mod(var(--star)*23,71)*1%);rotate:calc(var(--star)*27deg);opacity:.35}
+.universe-stars .icon{width:9px;height:9px;color:#fbf8ed}
+.hero-stage .hero-ticker{bottom:14px;border-block:1px solid var(--ink);box-shadow:0 -7px 0 #0002;padding-block:11px;background:var(--scene-pink)}
+.hero-stage .hero-ticker span{font-size:clamp(20px,2.3vw,33px)}
+@media(min-width:801px) and (max-width:1100px){
+ .creative-universe .orbit-item{width:145px}
+ .planet-content{padding:10px 11px 12px}
+ .planet-art{height:64px}
+ .planet-cat{width:76px;height:76px}
+ .planet-art::before{width:56px;height:56px}
+ .creative-universe .planet-content>strong{font-size:21px}
+ .creative-universe .orbit-center{width:34vw}
+ .creative-universe .orbit-center p{font-size:4.35vw}
+}
+@media(max-width:800px){
+ .hero-stage .creative-universe{--universe-center:35%}
+ .universe-frame{inset:111px 14px 20px;border-radius:24px}
+ .universe-caption{top:133px;left:31px;right:31px;font-size:6px;letter-spacing:.06em}
+ .universe-caption>span:last-child{display:none}
+ .creative-universe .orbit-center{width:80%;max-width:360px}
+ .creative-universe .orbit-center p{font-size:clamp(38px,6.6vw,54px)}
+ .creative-universe .orbit-center>small{font-size:9px;margin-top:15px}
+ .creative-universe .universe-eyebrow{font-size:7px;letter-spacing:.09em}
+ .universe-swatches{margin-top:12px}
+ .universe-swatches span{font-size:7px}
+ .creative-universe .orbit-item{width:clamp(84px,26vw,140px)}
+ .planet-content{padding:9px;border-radius:12px;box-shadow:0 0 0 1px #fbf8ed45,4px 6px 0 #0004}
+ .planet-meta{font-size:5px;letter-spacing:0;padding-bottom:5px}
+ .planet-meta>span{white-space:nowrap}
+ .planet-meta .icon{width:8px;height:8px;flex-basis:8px}
+ .planet-art{height:62px;margin-top:5px}
+ .planet-art::before{width:48px;height:48px}
+ .planet-cat{width:70px;height:70px}
+ .planet-spark{font-size:10px;right:0;top:5px}
+ .creative-universe .planet-content>strong{font-size:clamp(16px,2.8vw,21px);margin-top:4px}
+ .creative-universe .planet-content>small{font-size:8px}
+ .creative-universe .orbit-track{width:860px;max-width:none;opacity:.14;top:47%}
+ .creative-universe .orbit-paws{left:5%;top:69%;scale:.4}
+ .creative-universe .orbit-spark-one{left:10%;top:44%;font-size:24px}
+ .creative-universe .orbit-spark-two{right:11%;top:23%;font-size:24px}
+ .hero-stage .hero-ticker{bottom:39px;padding-block:13px}
+ .hero-stage .hero-ticker span{font-size:23px}
+}
+
+/* On phones CSS owns the three columns; GSAP only adds a tiny bounded rock. */
+@media(max-width:800px){
+ .creative-universe .orbit-carousel{inset:auto 22px auto;top:71%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;align-items:stretch;transform-origin:center}
+ .creative-universe .orbit-item{position:relative;left:auto;top:auto;width:100%;min-width:0;translate:0 0;perspective:none}
+ .creative-universe .orbit-sticker{height:100%;min-width:0}
+ .creative-universe .planet-content{display:grid;grid-template-rows:auto 68px 36px auto;align-content:start;gap:4px;height:100%;min-width:0;padding:9px 8px 11px;box-shadow:0 0 0 1px #fbf8ed45,2px 4px 0 #0004}
+ .creative-universe .planet-meta{min-width:0;font-size:5px;overflow:hidden}
+ .creative-universe .planet-meta>span{white-space:normal;line-height:1.25}
+ .creative-universe .planet-art{height:68px;margin-top:0}
+ .creative-universe .planet-content>strong{font-size:clamp(14px,3.7vw,20px);line-height:1.08;margin-top:0;min-width:0;overflow-wrap:normal}
+ .creative-universe .planet-content>small{font-size:8px;margin-top:0}
+ .creative-universe .orbit-center{width:calc(100% - 48px);max-width:360px;top:48%}
+ .creative-universe .orbit-center p{font-size:clamp(30px,8vw,44px);white-space:normal;text-wrap:balance}
+ .creative-universe .orbit-center>small{display:block;max-width:260px;margin-inline:auto}
+ .creative-universe .universe-swatches{margin-top:14px}
+ .creative-universe .orbit-track{top:59%}
+}

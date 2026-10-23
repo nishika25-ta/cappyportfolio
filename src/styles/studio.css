@@ -1,0 +1,115 @@
+/* The playful atelier: paper, ink, soft stage lighting, precise little details. */
+.hero{background:radial-gradient(ellipse at 50% 15%,#b9d4cf55,transparent 65%),var(--scene-sky)}
+.studio-atmosphere{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:radial-gradient(ellipse at 14% 76%,#f8e5a72b,transparent 37%),radial-gradient(ellipse at 90% 66%,#f2b6cb2b,transparent 38%)}
+.studio-orbits{position:absolute;inset:0;width:100%;height:100%;color:#fbf8ed;opacity:.16;pointer-events:none}
+.studio-orbits g:first-child{stroke-width:1}
+.studio-eyebrow{position:relative;z-index:3;display:flex;justify-content:center;align-items:center;gap:10px;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);margin:0 auto 15px;padding-inline:24px}
+.studio-eyebrow>span{font-size:18px}
+.hero .hero-type{margin-top:0}
+.hero .personality{color:#fbfdf8}
+.hero .personality svg{color:var(--butter)}
+.hero .hero-actions{margin-top:50px;gap:15px}
+.hero-actions .button{min-height:56px;box-shadow:0 5px 0 #25282018;transition:box-shadow .3s,translate .4s var(--ease),background .3s,color .3s}
+.hero-actions .button-dark{box-shadow:0 4px 0 #f8e5a740,inset 0 1px 0 #ffffff18}
+.hero .miri-stamp{background:var(--paper);border:1px solid var(--ink);box-shadow:4px 5px 0 #25282020;padding:12px 8px;color:var(--ink);width:112px;height:112px;gap:5px;text-align:center}
+.hero .miri-stamp>.icon{width:16px;height:16px;margin:0;flex:0 0 16px}
+.hero .miri-stamp>span{font-size:11px;line-height:1.2;white-space:nowrap;flex:none}
+.hero .miri-stamp>small{font-size:6px;line-height:1.2;letter-spacing:.09em;white-space:nowrap;margin:0;flex:none}
+.header-shell{box-shadow:3px 5px 0 #25282080,inset 0 1px 0 #fff9}
+.site-header .header-cta{box-shadow:3px 4px 0 var(--scene-pink)}
+
+/* Tactile service cards; the illustration and headline are a single composition. */
+.services-section{padding-top:clamp(70px,7vw,110px);padding-bottom:50px}
+.services-section .service-cats{gap:22px}
+.services-section .service-cat{padding:18px 20px 10px;border:1px solid #25282030;border-radius:32px;background:#fbf8ed12;isolation:isolate;transition:background .35s,box-shadow .35s,border-color .35s}
+.services-section .service-cat::before{inset:0;border:0;border-radius:32px}
+.services-section .service-cat[aria-pressed=true]{background:#fbf8ed42;border-color:var(--ink);box-shadow:4px 6px 0 #2528201f}
+.services-section .service-cat-label{padding:24px 0 25px;min-height:190px}
+.services-section .service-short{font-size:clamp(26px,2.4vw,36px);max-width:15ch}
+.service-index{font-size:10px;letter-spacing:.09em;opacity:.6;margin-right:5px}
+.services-section .service-arrow{background:var(--paper);border-color:var(--ink);width:36px;height:36px}
+.services-section .service-arrow .icon{width:17px;height:17px}
+.services-section .section-kicker{letter-spacing:.1em;text-transform:uppercase;font-size:11px}
+.services-heading{min-width:0}
+.services-heading>div{width:100%;min-width:0}
+.services-section #services-title{white-space:nowrap;font-size:clamp(26px,5.1vw,76px);letter-spacing:-.05em}
+
+/* A darker screening room lets the actual work carry the luxury. */
+.work-section.wrap{position:relative;max-width:none;background:var(--ink);color:var(--paper);padding-block:clamp(65px,7vw,110px);border-radius:40px 40px 0 0}
+.work-section>.section-heading,.work-section>.showcase-layout,.work-section>.artwork-heading,.work-section>.artwork-gallery,.work-section>.private-examples{max-width:1440px;margin-inline:auto}
+.work-section>.section-heading{padding-bottom:42px;border-bottom:1px solid #fbf8ed30;margin-bottom:48px}
+.work-section .section-heading h2{font-size:clamp(54px,6.5vw,94px)}
+.work-section .section-kicker{color:var(--butter);letter-spacing:.1em;text-transform:uppercase;font-size:11px}
+.work-section .section-heading>p{color:#d2e4df}
+.work-section .coral-text{color:var(--scene-pink)}
+.work-section .showcase-player{border:1px solid #fbf8ed60;border-radius:22px;background:var(--paper);color:var(--ink);box-shadow:9px 12px 0 #0003}
+.work-section .player-top{background:var(--paper)}
+.work-section .player-bottom{background:var(--paper);padding-block:15px}
+.work-section .showcase-copy .hand-note{color:var(--butter)}
+.work-section .showcase-tabs button{border-color:#fbf8ed70;color:var(--paper);min-height:42px}
+.work-section .showcase-tabs button[aria-selected=true]{background:var(--scene-pink);border-color:var(--scene-pink);color:var(--ink)}
+.work-section .showcase-copy p:not(.preview-help):not(.video-error){color:#d2e4df}
+.work-section .showcase-copy .text-link{color:var(--paper)}
+.work-section .showcase-copy .small-play{background:var(--butter);color:var(--ink)}
+.work-section .artwork-heading{margin-top:70px}
+.work-section .artwork-heading>span{color:#d2e4df}
+.work-section .artwork-image{border:1px solid #fbf8ed40;border-radius:17px}
+.work-section .artwork-card>span{padding:4px 2px;font-size:13px}
+.work-section .private-examples{color:var(--ink);background:var(--butter);border-radius:24px;margin-top:40px}
+.work-section :focus-visible{outline-color:var(--butter)}
+.work-section .private-examples :focus-visible{outline-color:var(--ink)}
+
+/* Packages feel like a set of carefully printed studio cards. */
+.pricing-section{background:linear-gradient(180deg,#ece8d9,var(--paper) 240px)}
+.pricing-section .package{border-radius:26px;border-color:#25282045;box-shadow:0 8px 0 #25282008;transition:box-shadow .35s,border-color .35s}
+.pricing-section .package-featured{box-shadow:5px 7px 0 #25282024;border-color:var(--ink)}
+.pricing-section .package-meta{border-bottom:1px solid #2528202a;padding-bottom:18px;font-weight:600}
+.pricing-section .pricing-tabs{background:#fff5;padding:8px}
+.pricing-section .package .button{min-height:50px}
+.about-postcard{border:1px solid #25282050;box-shadow:7px 10px 0 #25282016}
+.faq-list details{transition:background .3s}
+.faq-list details[open]{background:#f8e5a730}
+
+@media(hover:hover){
+ .hero-actions .button:hover{translate:0 -4px;box-shadow:0 8px 0 #25282025}
+ .services-section .service-cat:hover{background:#fbf8ed55;border-color:var(--ink);box-shadow:5px 8px 0 #25282022}
+ .pricing-section .package:hover{border-color:var(--ink);box-shadow:5px 9px 0 #25282018}
+ .work-section .showcase-tabs button:hover{translate:0 -3px;box-shadow:0 3px 0 #fbf8ed35}
+}
+@media(min-width:601px) and (max-width:1000px){
+ .hero .miri-stamp{width:86px;height:86px;padding:8px 5px;gap:4px}
+ .hero .miri-stamp>span{font-size:9px}
+ .hero .miri-stamp>small{font-size:5px}
+ .services-section .service-cats{gap:12px}
+ .services-section .service-cat{padding:14px 12px 8px}
+ .services-section .service-short{font-size:26px}
+ .services-section .service-cat-label{min-height:205px}
+}
+@media(max-width:600px){
+ .services-section #services-title{font-size:clamp(21px,5.7vw,34px)}
+ .hero .miri-stamp{width:72px;height:72px;padding:7px 4px;gap:3px}
+ .hero .miri-stamp>.icon{width:12px;height:12px;flex-basis:12px}
+ .hero .miri-stamp>span{font-size:8px}
+ .hero .miri-stamp>small{font-size:4.5px;letter-spacing:.06em}
+ .studio-eyebrow{font-size:8px;letter-spacing:.07em;gap:7px;margin-bottom:15px}
+ .studio-eyebrow>span{font-size:14px}
+ .hero .hero-actions{margin-top:32px;gap:12px}
+ .hero-actions .button{min-height:48px}
+ .studio-orbits{opacity:.12}
+ .services-section{padding-top:65px;padding-bottom:35px}
+ .services-section .service-cats{gap:16px}
+ .services-section .service-cat{padding:16px;border-radius:26px}
+ .services-section .service-cat::before{border-radius:26px}
+ .services-section .service-cat-label{padding:10px 0 12px;min-height:0}
+ .services-section .service-short{font-size:clamp(23px,6vw,28px);max-width:none}
+ .services-section .service-arrow{width:30px;height:30px}
+ .service-index{font-size:9px;margin-right:2px}
+ .work-section.wrap{padding-block:55px;border-radius:28px 28px 0 0}
+ .work-section>.section-heading{padding-bottom:28px;margin-bottom:30px}
+ .work-section .section-heading h2{font-size:55px}
+ .work-section .showcase-player{box-shadow:4px 6px 0 #0003;border-radius:16px}
+ .work-section .artwork-heading{margin-top:45px}
+ .work-section .showcase-tabs button{min-height:40px}
+ .work-section .private-examples{margin-top:28px}
+ .pricing-section .package{border-radius:22px}
+}

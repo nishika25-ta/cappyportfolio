@@ -3,44 +3,42 @@ import Base from '../layouts/Base.astro';
 import Cat from '../components/Cat.astro';
 import Hand from '../components/Hand.astro';
 import Icon from '../components/Icon.astro';
+import CatPitch from '../components/CatPitch.astro';
+import HeroDetails from '../components/HeroDetails.astro';
+import CreativeUniverse from '../components/CreativeUniverse.astro';
 import {services,faqs,enquiryUrl} from '../data/site.mjs';
 import {showcase} from '../data/showcase';
 ---
 <Base>
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="hero-type"><h1 id="hero-title"><span>Small business.</span><span>Big <span class="personality">purr-sonality<svg viewBox="0 0 700 38" aria-hidden="true"><path d="M5 23C180 0 457 0 692 15M104 32c159-14 365-16 505-10" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"/></svg></span><span class="hero-period">.</span></span></h1></div>
-    <a class="button button-dark hero-button" href="#services">Find your thing <Icon name="arrow"/></a>
-    <div class="hero-cat hero-cat-left" data-cat-scene><span class="cat-note">the one who codes ↘</span><div class="cat-entry"><div class="cursor-rig" data-cursor-depth="-1"><Cat variant="developer"/></div></div></div>
-    <div class="hero-cat hero-cat-right" data-cat-scene><span class="cat-note">head of good vibes ↙</span><div class="cat-entry"><div class="cursor-rig" data-cursor-depth="1"><Cat variant="orange"/></div></div><span class="purr-heart" aria-hidden="true">♡</span></div>
+  <section class="hero hero-stage" aria-labelledby="hero-title">
+    <HeroDetails/>
+    <div class="studio-atmosphere" aria-hidden="true">
+      <svg class="studio-orbits" viewBox="0 0 1400 820" preserveAspectRatio="xMidYMid slice"><g fill="none" stroke="currentColor"><ellipse cx="700" cy="410" rx="620" ry="280" transform="rotate(-16 700 410)"/><ellipse cx="700" cy="410" rx="500" ry="365" transform="rotate(24 700 410)" stroke-dasharray="2 12"/></g><g class="studio-orbit-stars" fill="currentColor"><path d="M160 280l5 15 15 5-15 5-5 15-5-15-15-5 15-5zM1190 530l4 12 12 4-12 4-4 12-4-12-12-4 12-4z"/><circle cx="1145" cy="170" r="4"/><circle cx="290" cy="675" r="4"/></g></svg>
+    </div>
+    <div class="hero-type"><h1 id="hero-title"><span class="hero-title-small">Small business.</span><span class="hero-title-big"><span class="hero-big-word">Big</span> <span class="personality">purr-sonality<span class="hero-period">.</span><svg viewBox="0 0 700 38" aria-hidden="true"><path d="M5 23C180 0 457 0 692 15M104 32c159-14 365-16 505-10" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"/></svg></span></span></h1></div>
+    <div class="hero-actions"><a class="button button-dark hero-button" href="#pricing">See pricing <Icon name="arrow"/></a><a class="button button-outline hero-button" href="#work">View work <Icon name="arrow"/></a></div>
+    <div class="hero-cast">
+    <div class="hero-cat hero-cat-left" data-cat-scene><div class="cat-entry"><div class="hero-wiggle"><div class="cursor-rig" data-cursor-depth="-1"><Cat variant="developer"/><CatPitch speaker="developer"/></div></div></div></div>
+    <div class="hero-cat hero-cat-right" data-cat-scene><div class="cat-entry"><div class="hero-wiggle"><div class="cursor-rig" data-cursor-depth="1"><Cat variant="orange"/><CatPitch speaker="orange"/></div></div></div><span class="purr-heart" aria-hidden="true">♡</span></div>
+    </div>
     <div class="hero-satellite satellite-left" aria-hidden="true"><div class="satellite-entry"><Cat variant="resume"/></div></div><div class="hero-satellite satellite-right" aria-hidden="true"><div class="satellite-entry"><Cat variant="chef"/></div></div>
     <Hand class="hero-hand"/>
-    <div class="hero-float float-code" aria-hidden="true">&lt;/&gt;</div><div class="hero-float float-squiggle" aria-hidden="true">〰</div><div class="hero-float float-star" aria-hidden="true">✦</div>
+    <div class="hero-float float-code" aria-hidden="true">&lt;/&gt;</div><div class="hero-float float-squiggle" aria-hidden="true">〰</div>
     <svg class="hero-spark" viewBox="0 0 80 80" aria-hidden="true"><path d="M40 3v74M3 40h74M14 14l52 52m0-52L14 66" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg>
     <div class="miri-stamp"><Icon name="paw"/><span>A little studio.<br/>A lot of heart.</span><small>MIRI, SARAWAK</small></div>
     <div class="hero-bottom wrap"><span>Good ideas. Better together.</span></div>
-    <div class="hero-orbit" aria-hidden="true">
-      <svg class="orbit-track" viewBox="0 0 800 800"><circle cx="400" cy="400" r="320" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 12"/></svg>
-      <div class="orbit-center"><span>One curious creative.</span><p>Good ideas.<br/><em>Let’s play.</em></p><small>Keep scrolling. We’re just getting started. ↓</small></div>
-      <div class="orbit-carousel">
-        <div class="orbit-item orbit-web"><div class="orbit-sticker"><Icon name="code"/><strong>Websites</strong><small>Made to click.</small></div></div>
-        <div class="orbit-item orbit-resume"><div class="orbit-sticker"><Icon name="document"/><strong>Resumes</strong><small>Your next chapter.</small></div></div>
-        <div class="orbit-item orbit-food"><div class="orbit-sticker"><Icon name="camera"/><strong>Food visuals</strong><small>Made to crave.</small></div></div>
-      </div>
-      <span class="orbit-spark orbit-spark-one">✦</span><span class="orbit-spark orbit-spark-two">✳</span>
-      <div class="orbit-paws">{Array.from({length:5},(_,i)=><span style={`--paw:${i}`}><Icon name="paw"/></span>)}</div>
-    </div>
-    <div class="hero-ticker" aria-hidden="true"><div class="hero-ticker-track">{[0,1].map(()=><div><span>Good ideas in motion</span><Icon name="star"/><span>Made with purr-sonality</span><Icon name="star"/><span>Small studio. Big possibilities.</span><Icon name="star"/></div>)}</div></div>
+    <CreativeUniverse/>
     <svg class="hero-ground" viewBox="0 0 1440 180" preserveAspectRatio="none" aria-hidden="true"><path d="M0 75C280 5 480 160 760 80S1200 25 1440 65V180H0Z" fill="currentColor"/></svg>
   </section>
 
   <section id="services" class="services-section" aria-labelledby="services-title">
     <svg class="section-wave" viewBox="0 0 1440 85" preserveAspectRatio="none" aria-hidden="true"><path d="M0 45C300-30 460 110 790 45S1190 0 1440 40V85H0Z"/></svg>
-    <div class="wrap"><div class="section-heading services-heading"><div><span class="section-kicker">A few things I’m pretty good at</span><h2 id="services-title">Pick your<br/>purr-fect match<span>.</span></h2></div></div>
+    <div class="wrap"><div class="section-heading services-heading"><div><span class="section-kicker">A few things I’m pretty good at</span><h2 id="services-title">Pick your purr-fect match<span>.</span></h2></div></div>
       <div class="service-cats">
         {services.map((service,i)=><button type="button" class:list={['service-cat',`service-${service.id}`]} data-pick-service={service.id} data-character={service.id} aria-pressed={i===0?'true':'false'} aria-controls={`playground-${service.id} pricing-${service.id}`}>
-          <div class="service-cat-top"><span class="service-from">From RM{service.from}</span><span class="service-arrow"><Icon name="diagonal"/></span></div>
-          <div class="service-illustration"><div class="service-cursor-rig"><Cat variant={i===0?'developer':i===1?'resume':'chef'}/></div></div>
+          <div class="service-cat-top"><span class="service-from"><span class="service-index" aria-hidden="true">0{i+1} / </span>From RM{service.from}</span><span class="service-arrow"><Icon name="diagonal"/></span></div>
           <div class="service-cat-label"><span class="service-name">{service.title}</span><span class="service-short">{service.short}</span></div>
+          <div class="service-illustration"><div class="service-cursor-rig"><Cat variant={i===0?'developer':i===1?'resume':'chef'}/></div></div>
         </button>)}
       </div>
       <div class="services-bottom"><Icon name="paw"/><span>Pick a creative buddy. Give them a little personality.</span><Icon name="paw"/></div>
@@ -63,9 +61,11 @@ import {showcase} from '../data/showcase';
     <div class="playground-actions"><a class="button button-dark" href="#pricing-websites" data-pick-service="websites" data-explore-packages>Explore website packages <Icon name="arrow"/></a><p id="playground-status" role="status" aria-live="polite">Your website buddy is ready to make something good.</p></div>
   </section>
 
+
   <section id="work" class="work-section wrap" aria-labelledby="work-title">
     <div class="section-heading"><div><span class="section-kicker">A little show, a little tell</span><h2 id="work-title">The good stuff<span class="coral-text">.</span></h2></div><p>A closer look at what I can do.<br/>{' '}Big on the details. Easy on the eyes.</p></div>
     <div class="showcase-layout">
+      <button type="button" class="cinema-buddy" data-studio-pet aria-label="Pet the cinema cat"><span data-cinema-greeting>cinema buddy</span><div class="cinema-cat-crop"><Cat variant="resume"/></div></button>
       <div class="showcase-player">
         <div class="player-top"><span><span class="status-dot"></span> CAPPY’S LITTLE CINEMA</span><span class="player-dots" aria-hidden="true">● ● ●</span></div>
         {showcase.map((clip,i)=><div class="showcase-scene" id={`showcase-${clip.id}`} role="tabpanel" aria-labelledby={`showcase-tab-${clip.id}`} hidden={i!==0}>
@@ -75,7 +75,6 @@ import {showcase} from '../data/showcase';
       </div>
       <div class="showcase-copy"><span class="hand-note">a front-row seat ↙</span><div class="showcase-tabs" role="tablist" aria-label="Showcase category">{showcase.map((clip,i)=><button id={`showcase-tab-${clip.id}`} role="tab" aria-selected={i===0?'true':'false'} aria-controls={`showcase-${clip.id}`} tabindex={i===0?0:-1} data-showcase={clip.id}>{clip.label}</button>)}</div>
         {showcase.map((clip,i)=><div id={`showcase-copy-${clip.id}`} data-showcase-copy={clip.id} hidden={i!==0}><h3>{clip.title}</h3><p>{clip.description}</p></div>)}
-        <button class="text-link" data-preview-video><span class="small-play"><Icon name="play"/></span> Preview your video here <Icon name="diagonal"/></button><input id="local-video" type="file" accept="video/mp4,video/webm,video/quicktime" hidden/><p id="video-error" role="status" class="video-error"></p>
       </div>
     </div>
     <div class="artwork-heading"><h3>A little taste of the services</h3><span>Original service artwork, made for this little studio.</span></div>

@@ -1,0 +1,32 @@
+---
+import Cat from './Cat.astro';
+import Icon from './Icon.astro';
+const moods = [
+  { id: 'sunny', label: 'Soft & sunny', note: 'A little warmth. A lot of welcome.' },
+  { id: 'punchy', label: 'Bold & punchy', note: 'Big personality. Impossible to miss.' },
+  { id: 'calm', label: 'Cool & calm', note: 'Room to breathe. Details to fall for.' },
+];
+---
+<section class="mood-studio wrap" aria-labelledby="mood-title">
+  <div class="mood-intro">
+    <span class="section-kicker">Inside the little studio</span>
+    <h2 id="mood-title">Your vibe.<br/>My kind of<br/><em>playground.</em></h2>
+    <p>A little softer? A little louder? Good design should feel like you. Try a mood.</p>
+    <div class="mood-controls" role="group" aria-label="Choose a moodboard palette">
+      {moods.map((mood,i)=><button type="button" data-studio-mood={mood.id} data-mood-note={mood.note} aria-pressed={i===0?'true':'false'} aria-controls="studio-moodboard"><span class:list={['mood-swatch',`swatch-${mood.id}`]} aria-hidden="true"></span>{mood.label}<Icon name="check"/></button>)}
+    </div>
+  </div>
+  <div class="mood-board" id="studio-moodboard" data-mood="sunny">
+    <div class="mood-board-top"><span>THE CAPPY MOODBOARD</span><span aria-hidden="true">↗</span></div>
+    <div class="mood-poster">
+      <span class="mood-orb" aria-hidden="true"></span>
+      <span class="mood-flower" aria-hidden="true">✳</span>
+      <p class="mood-poster-title">A little<br/><em>different.</em><br/>A lot of you.</p>
+      <div class="mood-cat"><Cat variant="orange"/></div>
+      <span class="mood-sticker" aria-hidden="true">100%<br/>purr-sonality</span>
+      <span class="mood-small-star" aria-hidden="true">✦</span>
+    </div>
+    <div class="mood-board-bottom"><p data-mood-caption role="status" aria-live="polite">{moods[0].note}</p><span class="mood-palette" aria-hidden="true"><i></i><i></i><i></i></span></div>
+  </div>
+</section>
+<div class="studio-ribbon" aria-hidden="true"><div class="studio-ribbon-track">{[0,1].map(()=><div><span>Little details. Big feelings.</span><Icon name="paw"/><span>Made with a human touch.</span><Icon name="star"/><span>A little Cappy magic.</span><Icon name="paw"/></div>)}</div></div>

@@ -24,3 +24,7 @@ html[data-motion=reduced] .service-cat:hover .cat,html[data-motion=reduced] .ser
 html[data-motion=reduced] .service-cat:hover,html[data-motion=reduced] .service-cat:focus-visible{background:#fbf8ed18}
 html[data-motion=reduced] .nav-link:hover,html[data-motion=reduced] .text-link:hover{text-decoration:underline}
 html[data-motion=reduced] .service-illustration .cat{translate:-50% 0}
+.showcase-copy{min-width:0}
+.showcase-copy .showcase-tabs{flex-wrap:nowrap;max-width:100%;overflow-x:auto;overflow-y:hidden;padding:5px 4px 8px;overscroll-behavior-x:contain;scrollbar-width:thin}
+.showcase-copy .showcase-tabs button{flex:0 0 auto;white-space:nowrap}
+@media(max-width:600px){.showcase-copy .showcase-tabs{gap:6px}.showcase-copy .showcase-tabs button{font-size:10px;padding:8px 11px}}

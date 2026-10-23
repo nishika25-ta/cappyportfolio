@@ -50,8 +50,14 @@ function mountPage() {
     else preview.pause();
   }
 
+  function navigationOffset(){
+    const header=document.querySelector<HTMLElement>('.site-header');
+    if(!header)return 24;
+    const position=getComputedStyle(header).position;
+    return position==='sticky'||position==='fixed'?header.getBoundingClientRect().height+12:24;
+  }
   function scrollTo(target:HTMLElement,focus?:HTMLElement) {
-    if(lenis) lenis.scrollTo(target,{offset:-24,onComplete:()=>focus?.focus({preventScroll:true})});
+    if(lenis) lenis.scrollTo(target,{offset:-navigationOffset(),onComplete:()=>focus?.focus({preventScroll:true})});
     else {target.scrollIntoView({behavior:'instant',block:'start'});focus?.focus({preventScroll:true});}
   }
 
@@ -255,7 +261,7 @@ function mountPage() {
       const target=hash==='#top'?0:document.getElementById(hash.slice(1));
       if(target===null)return;
       event.preventDefault();
-      lenis?.scrollTo(target,{offset:target===0?0:-24,duration:1.5});
+      lenis?.scrollTo(target,{offset:target===0?0:-navigationOffset(),duration:1.5});
       history.pushState(null,'',hash);
     }));
     lenis.on('scroll',ScrollTrigger.update);
@@ -283,7 +289,10 @@ function mountPage() {
   dispose=()=>{controller.abort();document.querySelectorAll<HTMLVideoElement>('.showcase-scene video').forEach(v=>v.pause());if(video){video.pause();video.removeAttribute('src');}if(dialog?.open)dialog.close();if(videoObjectUrl)URL.revokeObjectURL(videoObjectUrl);cleanups.reverse().forEach(fn=>fn());};
 }
 
-function ensureMounted(){if(mountedRoot!==document.getElementById('main')||!dispose)mountPage();}
+function ensureMounted(){
+  const requestedRoot=document.getElementById('main');
+  if(mountedRoot!==requestedRoot||!dispose)mountPage();
+}
 document.addEventListener('astro:page-load',ensureMounted);
 document.addEventListener('astro:before-swap',()=>{dispose?.();dispose=undefined;mountedRoot=null;});
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ensureMounted,{once:true});else ensureMounted();

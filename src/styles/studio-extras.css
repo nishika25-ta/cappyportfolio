@@ -1,0 +1,71 @@
+.mood-studio{display:grid;grid-template-columns:.85fr 1.15fr;align-items:center;gap:9%;padding-block:clamp(65px,8vw,125px);background:var(--paper)}
+.mood-intro .section-kicker{font-size:11px;letter-spacing:.09em;text-transform:uppercase}
+.mood-intro h2{font-size:clamp(48px,5.3vw,78px);line-height:.98}
+.mood-intro h2 em{font-style:normal;color:#a44b3b;position:relative}
+.mood-intro>p{max-width:310px;font-size:14px;line-height:1.75;margin-top:25px;color:var(--muted)}
+.mood-controls{display:grid;gap:8px;margin-top:26px;max-width:280px}
+.mood-controls button{display:flex;align-items:center;gap:11px;min-height:47px;border:1px solid #25282035;border-radius:50px;background:transparent;padding:9px 15px;font-size:12px;text-align:left;transition:background .3s,box-shadow .3s,translate .3s}
+.mood-controls button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.mood-controls .icon{margin-left:auto;width:16px;height:16px;opacity:0}
+.mood-controls [aria-pressed=true] .icon{opacity:1}
+.mood-swatch{width:22px;height:22px;border-radius:50%;border:1px solid #25282050;flex-shrink:0}
+.swatch-sunny{background:linear-gradient(120deg,#f8e5a7 50%,#e88973 50%)}
+.swatch-punchy{background:linear-gradient(120deg,#f2b6cb 50%,#374c37 50%)}
+.swatch-calm{background:linear-gradient(120deg,#bfd8db 50%,#737d51 50%)}
+.mood-board{--mood-ground:#f8e5a7;--mood-accent:#e88973;--mood-ink:#252820;--mood-sticker:#fbf8ed;border:1.5px solid var(--ink);border-radius:22px;background:var(--paper);box-shadow:8px 10px 0 #25282014;rotate:2deg;isolation:isolate}
+.mood-board[data-mood=punchy]{--mood-ground:#f2b6cb;--mood-accent:#374c37;--mood-sticker:#f8e5a7}
+.mood-board[data-mood=calm]{--mood-ground:#bfd8db;--mood-accent:#737d51;--mood-sticker:#fbf8ed}
+.mood-board[data-mood=punchy] .mood-orb{border-radius:24px;rotate:20deg}
+.mood-board[data-mood=punchy] .mood-poster-title{font-weight:800;letter-spacing:-.065em}
+.mood-board[data-mood=calm] .mood-poster-title{font-family:Georgia,serif;font-weight:400;letter-spacing:-.065em}
+.mood-board[data-mood=calm] .mood-poster-title em{font-style:italic;text-decoration:none}
+.mood-board-top,.mood-board-bottom{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 20px;font-size:9px;letter-spacing:.1em}
+.mood-board-top{border-bottom:1px solid var(--ink)}
+.mood-board-top>span:last-child{font-size:20px;line-height:1}
+.mood-board-bottom{border-top:1px solid var(--ink);letter-spacing:0;font-size:11px}
+.mood-poster{position:relative;isolation:isolate;min-height:370px;overflow:hidden;background:var(--mood-ground);transition:background .6s}
+.mood-poster-title{position:relative;z-index:2;font-family:Bricolage,sans-serif;font-weight:750;font-size:clamp(45px,4.4vw,65px);line-height:.98;letter-spacing:-.055em;padding:35px 30px;max-width:75%;color:var(--mood-ink)}
+.mood-poster-title em{font-style:normal;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
+.mood-cat{position:absolute;right:-24px;bottom:-20px;width:58%;z-index:3;rotate:-10deg}
+.mood-cat .cat{width:100%;height:auto}
+.mood-orb{position:absolute;width:310px;height:310px;border-radius:50%;right:-80px;top:-115px;background:var(--mood-accent);transition:background .6s}
+.mood-flower{position:absolute;bottom:-60px;left:-40px;font-size:280px;line-height:1;color:var(--mood-accent);transition:color .6s;z-index:0}
+.mood-sticker{position:absolute;right:25px;top:36px;z-index:4;width:87px;height:87px;display:grid;place-content:center;text-align:center;border:1.5px solid var(--ink);border-radius:50%;font-size:11px;line-height:1.3;font-weight:600;rotate:12deg;background:var(--mood-sticker);box-shadow:3px 3px 0 #25282020;transition:background .6s}
+.mood-small-star{position:absolute;z-index:4;right:43%;bottom:55px;font-size:45px;color:var(--mood-sticker)}
+.mood-palette{display:flex}
+.mood-palette i{display:block;width:15px;height:15px;border:1px solid var(--ink);border-radius:50%;background:var(--mood-ground);margin-left:-3px;transition:background .6s}
+.mood-palette i:nth-child(2){background:var(--mood-accent)}
+.mood-palette i:nth-child(3){background:var(--mood-sticker)}
+.studio-ribbon{overflow:hidden;padding:18px 0;background:var(--scene-pink);color:var(--ink);border-block:1px solid var(--ink)}
+.studio-ribbon-track{display:flex;width:max-content}
+.studio-ribbon-track>div{display:flex;align-items:center;gap:34px;padding-right:34px;flex-shrink:0}
+.studio-ribbon span{font-family:Bricolage,sans-serif;font-size:clamp(22px,2.5vw,36px);font-weight:650;letter-spacing:-.03em;white-space:nowrap}
+.studio-ribbon .icon{width:24px;height:24px}
+.work-section .showcase-layout{position:relative;margin-top:85px}
+.cinema-buddy{position:absolute;z-index:4;top:-80px;left:24px;background:transparent;padding:0;width:100px;color:var(--paper);rotate:-7deg;transition:rotate .35s}
+.cinema-buddy>span{display:block;font-size:9px;white-space:nowrap;margin-bottom:3px;color:var(--butter)}
+.cinema-cat-crop{height:65px;overflow:hidden}
+.cinema-cat-crop .cat{width:100px;height:100px}
+@media(hover:hover){.mood-controls button:hover{translate:3px 0;box-shadow:2px 3px 0 #25282020}.cinema-buddy:hover{rotate:0deg}}
+@media(max-width:800px){.mood-studio{gap:5%;grid-template-columns:.85fr 1.15fr}.mood-poster{min-height:320px}.mood-poster-title{font-size:43px;padding:30px 22px}.mood-sticker{width:65px;height:65px;font-size:9px;right:15px;top:20px}.mood-intro h2{font-size:48px}}
+@media(max-width:600px){
+ .mood-studio{grid-template-columns:1fr;gap:30px;padding-block:60px}
+ .mood-intro h2{font-size:50px}
+ .mood-intro>p{font-size:13px;max-width:320px;margin-top:20px}
+ .mood-controls{display:flex;flex-wrap:wrap;gap:6px;max-width:none;margin-top:20px}
+ .mood-controls button{font-size:10px;gap:6px;padding:9px 11px;min-height:44px}
+ .mood-controls .icon{display:none}
+ .mood-swatch{width:17px;height:17px}
+ .mood-board{rotate:1deg;box-shadow:4px 6px 0 #25282014}
+ .mood-poster{min-height:310px}
+ .mood-poster-title{font-size:45px}
+ .mood-board-top,.mood-board-bottom{padding:13px 15px}
+ .mood-board-bottom{font-size:10px}
+ .mood-cat{width:61%;right:-10px}
+ .mood-flower{font-size:230px;bottom:-45px}
+ .mood-small-star{font-size:35px;bottom:45px}
+ .studio-ribbon{padding:14px 0}
+ .studio-ribbon-track>div{gap:22px;padding-right:22px}
+ .work-section .showcase-layout{margin-top:75px}
+ .cinema-buddy{left:15px}
+}

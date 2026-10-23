@@ -6,6 +6,7 @@ import {createCursorScene} from './cursor-scene';
 import {createExpressiveMotion} from './expressive-motion';
 import {getEnergyState} from './energy-state.mjs';
 import {createGeometryCache} from './motion-performance.mjs';
+import {getCreativeOrbitLayout} from './creative-orbit.mjs';
 
 type Listen=(el:EventTarget,type:string,handler:EventListener)=>void;
 gsap.registerPlugin(SplitText);
@@ -45,6 +46,14 @@ export function createChoreography(listen:Listen) {
     const entrance=(selector:string,vars:gsap.TweenVars)=>{if(document.querySelector(selector))gsap.from(selector,vars);};
     createCursorScene(listen,geometry.read);
     createExpressiveMotion(listen);
+    const cinemaCat=document.querySelector<HTMLElement>('[data-studio-pet]');
+    if(cinemaCat){
+      listen(cinemaCat,'click',()=>{
+        const greeting=cinemaCat.querySelector('[data-cinema-greeting]');
+        if(greeting)greeting.textContent='Prrr. Enjoy the show!';
+        ctx.add(()=>{gsap.fromTo(cinemaCat.querySelector('.cinema-cat-crop'),{y:0},{y:-9,duration:.25,repeat:1,yoyo:true,ease:'power2.out',overwrite:true});});
+      });
+    }
     gsap.fromTo('.scroll-progress',{scaleX:0},{scaleX:1,ease:'none',scrollTrigger:{start:0,end:'max',scrub:.15}});
     document.querySelectorAll<HTMLElement>('main h2').forEach(heading=>{
       const accessibleName=heading.innerText.replace(/\s+/g,' ').trim();
@@ -64,7 +73,7 @@ export function createChoreography(listen:Listen) {
       sceneLoop('.work-section',gsap.to(cat,{y:-12,rotation:i%2?-4:4,duration:2.2+i*.2,repeat:-1,yoyo:true,ease:'sine.inOut'}));
     });
     // Articulated characters: breathing, head turns, tails, blinks and typing paws.
-    document.querySelectorAll<SVGSVGElement>('.cat').forEach((cat,i)=>{
+    document.querySelectorAll<SVGSVGElement>('main .cat,.site-footer .cat').forEach((cat,i)=>{
       const body=cat.querySelector('.cat-body');
       const head=cat.querySelector('.cat-head');
       const tail=cat.querySelector('.cat-tail');
@@ -84,13 +93,33 @@ export function createChoreography(listen:Listen) {
     });
 
     if(document.querySelector('.hero')){
+    sceneLoop('.hero',gsap.to('.studio-orbits',{rotation:12,duration:24,repeat:-1,yoyo:true,ease:'sine.inOut',transformOrigin:'50% 50%'}));
+    sceneLoop('.hero',gsap.to('.studio-orbit-stars',{opacity:.4,duration:2.8,repeat:-1,yoyo:true,ease:'sine.inOut'}));
+    document.querySelectorAll<HTMLElement>('.cat-speech').forEach((pitch,speaker)=>{
+      const messages=Array.from(pitch.querySelectorAll<HTMLElement>('[data-cat-pitch]'));
+      if(messages.length<2)return;
+      let active=0;
+      const showPitch=(index:number)=>{
+        active=index;
+        messages.forEach((message,i)=>{message.dataset.active=String(i===index);message.setAttribute('aria-hidden',String(i!==index));});
+      };
+      const chatter=gsap.to({},{duration:speaker?7.5:6.5,repeat:-1,onRepeat:()=>showPitch((active+1)%messages.length)});
+      sceneLoop('.hero',chatter);
+      sceneLoop('.hero',gsap.to(pitch.querySelector('.cat-speech-body'),{y:speaker?5:-5,rotation:speaker?-1:1,duration:2.5+speaker*.4,repeat:-1,yoyo:true,ease:'sine.inOut'}));
+      const holdPitch=()=>chatter.timeScale(pitch.matches(':hover')?0:1);
+      listen(pitch,'mouseenter',holdPitch);
+      listen(pitch,'mouseleave',holdPitch);
+    });
     const intro=gsap.timeline({defaults:{ease:'power3.out'}});
-    intro.from('.hero h1 > span',{yPercent:65,rotation:3,duration:1.05,stagger:.1},0)
-      .from('.hero-copy,.hero-button',{y:35,duration:.75,stagger:.1},.35)
-      .from('.hero-cat-left .cat-entry',{xPercent:-115,y:120,rotation:-30,duration:1.5,ease:'elastic.out(1,.7)'},.08)
-      .from('.hero-cat-right .cat-entry',{xPercent:115,y:110,rotation:32,duration:1.5,ease:'elastic.out(1,.7)'},.22)
-      .from('.satellite-entry',{yPercent:-130,rotation:0,scale:.7,duration:1.3,stagger:.15,ease:'back.out(1.6)'},.15)
-      .from('.hero-float,.hero-spark,.miri-stamp',{scale:0,rotation:-50,duration:1,stagger:.08,ease:'elastic.out(1,.65)'},.55);
+    intro.from('.hero h1 > span',{yPercent:50,rotation:3,duration:.8,stagger:.09,ease:'expo.out'},0)
+      .from('.hero-paper',{scale:.96,duration:.9,ease:'power3.out'},0)
+      .from('.hero-windowbar',{autoAlpha:0,duration:.5,immediateRender:false},.12)
+      .from('.hero-ticket',{y:-30,rotation:-12,autoAlpha:0,duration:.8,ease:'back.out(1.7)',immediateRender:false},.25)
+      .from('.hero-copy,.hero-button',{y:20,duration:.4,stagger:.05},0)
+      .from('.hero-cat-left .cat-entry',{xPercent:-115,y:120,rotation:-30,duration:.9,ease:'elastic.out(1,.7)'},.04)
+      .from('.hero-cat-right .cat-entry',{xPercent:115,y:110,rotation:32,duration:.9,ease:'elastic.out(1,.7)'},.12)
+      .from('.satellite-entry',{yPercent:-130,rotation:0,scale:.7,duration:.8,stagger:.08,ease:'back.out(1.6)'},.08)
+      .from('.hero-float,.hero-spark,.miri-stamp',{scale:0,rotation:-50,duration:.65,stagger:.04,ease:'elastic.out(1,.65)'},.25);
 
     document.querySelectorAll<HTMLElement>('.hero-float,.hero-spark').forEach((el,i)=>{
       const t=gsap.to(el,{y:i%2?20:-20,rotation:`+=${i%2?9:-9}`,duration:2.2+i*.3,repeat:-1,yoyo:true,ease:'sine.inOut'});
@@ -120,13 +149,18 @@ export function createChoreography(listen:Listen) {
     gsap.set('.orbit-center',{autoAlpha:0,y:45,scale:.85});
     gsap.set('.orbit-item',{autoAlpha:0,scale:.1,rotation:-70});
     gsap.set('.orbit-spark,.orbit-paws>span',{scale:0,autoAlpha:0});
-    gsap.set('.hero-ticker',{autoAlpha:0,y:80,rotation:-3});
-    const orbitX=()=>innerWidth<=600?innerWidth*.36:innerWidth<=800?innerWidth*.3:Math.min(innerWidth*.22,225);
-    const orbitY=()=>innerWidth<=600?85:110;
+    const orbitScene=document.querySelector<HTMLElement>('.hero')!;
+    let orbitWidth=orbitScene.clientWidth,orbitHeight=orbitScene.clientHeight;
+    const orbitTurn={value:0};
+    const orbitPosition=(i:number)=>getCreativeOrbitLayout(orbitWidth,orbitHeight,0)[i];
+    const orbitSetters=Array.from(document.querySelectorAll<HTMLElement>('.orbit-item')).map(el=>({x:gsap.quickSetter(el,'x','px'),y:gsap.quickSetter(el,'y','px'),rotation:gsap.quickSetter(el,'rotation','deg')}));
+    const renderOrbit=()=>getCreativeOrbitLayout(orbitWidth,orbitHeight,orbitTurn.value).forEach((position,i)=>{orbitSetters[i]?.x(position.x);orbitSetters[i]?.y(position.y);orbitSetters[i]?.rotation(position.rotation);});
+    const refreshOrbit=()=>{orbitWidth=orbitScene.clientWidth;orbitHeight=orbitScene.clientHeight;if(orbitTurn.value>0)renderOrbit();};
+    listen(window,'resize',refreshOrbit);
     const compactHero=innerWidth<=800;
-    gsap.timeline({scrollTrigger:{trigger:'.hero',start:'top top',end:()=>`+=${innerHeight*(compactHero?.82:1.65)}`,pin:!compactHero&&innerHeight>650,scrub:.65,invalidateOnRefresh:true}})
+    const heroTransition=gsap.timeline({scrollTrigger:{trigger:'.hero',start:'top top',end:()=>`+=${innerHeight*(compactHero?.55:.75)}`,pin:!compactHero&&innerHeight>650,scrub:.4,invalidateOnRefresh:true,onRefresh:refreshOrbit}})
       .to('.hero-type',{y:-95,rotation:-5,scale:.9,autoAlpha:0,duration:.3,ease:'power2.in'},0)
-      .to('.hero-copy,.hero-button,.motion-hint,.hero-meta,.hero-bottom,.cat-note,.miri-stamp',{y:-35,autoAlpha:0,duration:.2,ease:'power2.in'},0)
+      .to('.hero-copy,.hero-button,.cat-speech,.hero-windowbar,.hero-ticket,.hero-magic-position,.hero-edition,.studio-atmosphere,.motion-hint,.hero-meta,.hero-bottom,.cat-note,.miri-stamp',{y:-35,autoAlpha:0,duration:.2,ease:'power2.in'},0)
       .to('.hero-cat-left',{y:-75,rotation:-15,scale:.8,duration:.2,ease:'power2.out'},0)
       .to('.hero-cat-right',{y:-95,rotation:18,scale:.8,duration:.2,ease:'power2.out'},0)
       .to('.hero-cat-left',{xPercent:-65,y:55,rotation:15,scale:.55,duration:.4,ease:'power2.inOut'},.2)
@@ -136,18 +170,17 @@ export function createChoreography(listen:Listen) {
       .to('.hero-ground',{scaleY:7,transformOrigin:'50% 100%',duration:.9,ease:'none'},.15)
       .to('.hero-orbit',{autoAlpha:1,duration:.15},.2)
       .to('.orbit-center',{autoAlpha:1,y:0,scale:1,duration:.4,ease:'back.out(1.5)'},.25)
-      .to('.orbit-web',{x:()=>-orbitX(),y:()=>-orbitY(),scale:1,rotation:-12,autoAlpha:1,duration:.5,ease:'back.out(1.6)'},.25)
-      .to('.orbit-resume',{x:orbitX,y:()=>-orbitY(),scale:1,rotation:10,autoAlpha:1,duration:.5,ease:'back.out(1.6)'},.32)
-      .to('.orbit-food',{x:0,y:()=>innerWidth<=600?125:250,scale:1,rotation:-5,autoAlpha:1,duration:.5,ease:'back.out(1.6)'},.39)
+      .to('.orbit-web',{x:()=>orbitPosition(0).x,y:()=>orbitPosition(0).y,scale:1,rotation:()=>orbitPosition(0).rotation,autoAlpha:1,duration:.5,ease:'back.out(1.6)'},.25)
+      .to('.orbit-resume',{x:()=>orbitPosition(1).x,y:()=>orbitPosition(1).y,scale:1,rotation:()=>orbitPosition(1).rotation,autoAlpha:1,duration:.5,ease:'back.out(1.6)'},.32)
+      .to('.orbit-food',{x:()=>orbitPosition(2).x,y:()=>orbitPosition(2).y,scale:1,rotation:()=>orbitPosition(2).rotation,autoAlpha:1,duration:.5,ease:'back.out(1.6)'},.39)
       .to('.orbit-spark',{scale:1,autoAlpha:1,rotation:90,duration:.45,stagger:.08,ease:'back.out(2)'},.5)
-      .to('.orbit-carousel',{rotation:160,duration:.75,ease:'power1.inOut'},.85)
-      .to('.orbit-sticker',{rotation:-160,duration:.75,ease:'power1.inOut'},.85)
-      .to('.orbit-track',{rotation:-80,duration:1.15,ease:'none'},.45)
-      .to('.orbit-paws>span',{scale:1,autoAlpha:.45,y:-15,duration:.2,stagger:.1,ease:'back.out(2)'},.85)
-      .to('.hero-ticker',{autoAlpha:1,y:0,rotation:-3,duration:.25,ease:'power2.out'},1.1);
-    sceneLoop('.hero',gsap.to('.hero-ticker-track',{xPercent:-50,duration:18,repeat:-1,ease:'none'}));
-    sceneLoop('.hero',gsap.to('.orbit-sticker>.icon',{y:-4,rotation:8,duration:1.2,stagger:.15,yoyo:true,repeat:-1,ease:'sine.inOut'}));
-    sceneLoop('.hero',gsap.to('.orbit-center em',{rotation:5,scale:1.035,duration:1.6,repeat:-1,yoyo:true,ease:'sine.inOut'}));
+      .to(orbitTurn,{value:118,duration:.95,ease:'power1.inOut',onUpdate:renderOrbit},.85)
+      .to('.orbit-track',{rotation:-35,duration:1.15,ease:'none'},.45)
+      .to('.orbit-paws>span',{scale:1,autoAlpha:.45,y:-15,duration:.2,stagger:.1,ease:'back.out(2)'},.85);
+    if(compactHero)heroTransition.to('.hero-cast',{autoAlpha:0,duration:.12},0);
+    sceneLoop('.hero',gsap.to('.planet-spark',{rotation:40,scale:.8,duration:1.8,stagger:.2,yoyo:true,repeat:-1,ease:'sine.inOut'}));
+    sceneLoop('.hero',gsap.to('.universe-stars>span',{opacity:.75,duration:2.5,stagger:.17,yoyo:true,repeat:-1,ease:'sine.inOut'}));
+    sceneLoop('.hero',gsap.to('.orbit-center em',{rotation:2,scale:1.015,duration:2.4,repeat:-1,yoyo:true,ease:'sine.inOut'}));
     }
 
     if(document.querySelector('.service-cats'))gsap.from('.service-illustration',{y:140,scale:.45,rotation:-15,duration:1.3,stagger:.16,ease:'elastic.out(1,.65)',scrollTrigger:{trigger:'.service-cats',start:'top 88%',once:true}});

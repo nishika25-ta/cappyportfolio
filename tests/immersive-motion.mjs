@@ -8,7 +8,7 @@ try{
   await page.goto('http://localhost:4400/',{waitUntil:'networkidle'});
   await page.waitForTimeout(1200);
   assert.ok(await page.locator('.motion-word').count()>20,'Section headings have animated words.');
-  const button=page.locator('.hero-button');const box=await button.boundingBox();
+  const button=page.locator('.hero-button[href="#pricing"]');const box=await button.boundingBox();
   await page.mouse.move(box.x+box.width-15,box.y+box.height/2);await page.waitForTimeout(300);
   const magnet=await button.evaluate(el=>new DOMMatrixReadOnly(getComputedStyle(el).transform).m41);
   assert.ok(magnet>3,'Buttons react magnetically to the pointer.');

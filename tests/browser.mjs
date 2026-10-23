@@ -12,7 +12,7 @@ fs.mkdirSync(output,{recursive:true});
 const checks=[];
 try {
   await page.goto(base,{waitUntil:'networkidle'});
-  await page.locator('.hero-button').waitFor();
+  await page.locator('.hero-button[href="#pricing"]').waitFor();
   await page.screenshot({path:`${output}/desktop-home.png`,fullPage:true});
   for(const [id,prices] of [['websites',['129','299','599']],['resumes',['19','49','89']],['food',['15','39','79']]]){
     await page.locator(`[data-service-tab="${id}"]`).click();

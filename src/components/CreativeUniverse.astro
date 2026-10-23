@@ -1,0 +1,26 @@
+---
+import Cat from './Cat.astro';
+import Icon from './Icon.astro';
+const worlds = [
+  { key:'web', title:'Websites', number:'01', label:'YOUR ONLINE WORLD', price:'From RM129', variant:'developer' as const },
+  { key:'resume', title:'Résumés', number:'02', label:'YOUR NEXT CHAPTER', price:'From RM19', variant:'resume' as const },
+  { key:'food', title:'Food visuals', number:'03', label:'YOUR GOOD TASTE', price:'From RM15', variant:'chef' as const },
+];
+---
+<div class="hero-orbit creative-universe" aria-hidden="true">
+  <div class="universe-atmosphere"></div>
+  <div class="universe-frame"></div>
+  <svg class="orbit-track" viewBox="0 0 1200 800" fill="none">
+    <ellipse cx="600" cy="400" rx="490" ry="265" stroke="currentColor"/>
+    <ellipse cx="600" cy="400" rx="470" ry="290" stroke="currentColor" stroke-dasharray="2 12" transform="rotate(-20 600 400)"/>
+    <ellipse cx="600" cy="400" rx="375" ry="350" stroke="currentColor" opacity=".4" transform="rotate(24 600 400)"/>
+    <g fill="currentColor" stroke="none"><circle cx="110" cy="400" r="4"/><circle cx="1090" cy="400" r="4"/><circle cx="600" cy="135" r="5"/><circle cx="600" cy="665" r="4"/></g>
+  </svg>
+  <div class="universe-stars">{Array.from({length:12},(_,i)=><span style={`--star:${i}`}><Icon name={i%3===0?'star':'paw'}/></span>)}</div>
+  <div class="orbit-center"><p>A little idea.<br/><em>A whole world.</em></p><small>Small studio. Wonderfully big possibilities.</small><div class="universe-swatches"><i></i><i></i><i></i><span>Made of imagination.</span></div></div>
+  <div class="orbit-carousel">
+    {worlds.map(world=><div class:list={['orbit-item',`orbit-${world.key}`]}><div class="orbit-sticker"><div class="planet-content"><div class="planet-meta"><span>{world.number} / {world.label}</span><Icon name="diagonal"/></div><div class="planet-art"><div class="planet-cat"><Cat variant={world.variant}/></div><span class="planet-spark">✦</span></div><strong>{world.title}</strong><small>{world.price}</small></div></div></div>)}
+  </div>
+  <span class="orbit-spark orbit-spark-one">✦</span><span class="orbit-spark orbit-spark-two">✳</span>
+  <div class="orbit-paws">{Array.from({length:5},(_,i)=><span style={`--paw:${i}`}><Icon name="paw"/></span>)}</div>
+</div>
