@@ -1,4 +1,4 @@
-/** Elliptical desktop choreography; a separate, readable arrangement on phones. */
+/** Keep the service stickers readable while adding a small scroll-driven rock. */
 export function getCreativeOrbitLayout(width,height,turn=0){
   if(width<=800){
     return [0,1,2].map(i=>({
@@ -7,10 +7,10 @@ export function getCreativeOrbitLayout(width,height,turn=0){
       rotation:Math.sin(turn*Math.PI/180+i)*1.5,
     }));
   }
-  const radiusX=Math.min(width*.34,480);
-  const radiusY=Math.min(height*.31,250);
-  return [-150,-30,90].map((start,i)=>{
-    const angle=(start+turn)*Math.PI/180;
-    return {x:Math.cos(angle)*radiusX,y:Math.sin(angle)*radiusY,rotation:Math.sin(angle)*7+(i-1)*3};
-  });
+  const drift=Math.sin(turn*Math.PI/180);
+  return [
+    {x:-width*.31,y:-height*.02,rotation:-9+drift*2},
+    {x:width*.31,y:height*.07,rotation:7-drift*2},
+    {x:-width*.22,y:height*.29,rotation:-5+drift*2},
+  ];
 }

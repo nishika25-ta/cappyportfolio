@@ -147,8 +147,8 @@ export function createChoreography(listen:Listen) {
     // A three-beat sticker carousel replaces the oversized character zoom.
     gsap.set('.hero-orbit',{autoAlpha:0});
     gsap.set('.orbit-center',{autoAlpha:0,y:45,scale:.85});
-    gsap.set('.orbit-item',{autoAlpha:0,scale:.1,rotation:-70});
-    gsap.set('.orbit-spark,.orbit-paws>span',{scale:0,autoAlpha:0});
+    gsap.set('.orbit-item',{autoAlpha:0,scale:.72,rotation:-12});
+    gsap.set('.orbit-spark,.universe-mascot,.universe-seal,.universe-note,.universe-footer',{scale:.85,autoAlpha:0});
     const orbitScene=document.querySelector<HTMLElement>('.hero')!;
     let orbitWidth=orbitScene.clientWidth,orbitHeight=orbitScene.clientHeight;
     const orbitTurn={value:0};
@@ -158,28 +158,38 @@ export function createChoreography(listen:Listen) {
     const refreshOrbit=()=>{orbitWidth=orbitScene.clientWidth;orbitHeight=orbitScene.clientHeight;if(orbitTurn.value>0)renderOrbit();};
     listen(window,'resize',refreshOrbit);
     const compactHero=innerWidth<=800;
-    const heroTransition=gsap.timeline({scrollTrigger:{trigger:'.hero',start:'top top',end:()=>`+=${innerHeight*(compactHero?.55:.75)}`,pin:!compactHero&&innerHeight>650,scrub:.4,invalidateOnRefresh:true,onRefresh:refreshOrbit}})
-      .to('.hero-type',{y:-95,rotation:-5,scale:.9,autoAlpha:0,duration:.3,ease:'power2.in'},0)
-      .to('.hero-copy,.hero-button,.cat-speech,.hero-windowbar,.hero-ticket,.hero-magic-position,.hero-edition,.studio-atmosphere,.motion-hint,.hero-meta,.hero-bottom,.cat-note,.miri-stamp',{y:-35,autoAlpha:0,duration:.2,ease:'power2.in'},0)
-      .to('.hero-cat-left',{y:-75,rotation:-15,scale:.8,duration:.2,ease:'power2.out'},0)
-      .to('.hero-cat-right',{y:-95,rotation:18,scale:.8,duration:.2,ease:'power2.out'},0)
-      .to('.hero-cat-left',{xPercent:-65,y:55,rotation:15,scale:.55,duration:.4,ease:'power2.inOut'},.2)
-      .to('.hero-cat-right',{xPercent:65,y:55,rotation:-15,scale:.55,duration:.4,ease:'power2.inOut'},.2)
-      .to('.hero-satellite',{y:-220,scale:.5,autoAlpha:0,duration:.3,ease:'power2.in'},0)
-      .to('.hero-float,.hero-spark,.hero-hand',{autoAlpha:0,duration:.2},.05)
-      .to('.hero-ground',{scaleY:7,transformOrigin:'50% 100%',duration:.9,ease:'none'},.15)
-      .to('.hero-orbit',{autoAlpha:1,duration:.15},.2)
-      .to('.orbit-center',{autoAlpha:1,y:0,scale:1,duration:.4,ease:'back.out(1.5)'},.25)
-      .to('.orbit-web',{x:()=>orbitPosition(0).x,y:()=>orbitPosition(0).y,scale:1,rotation:()=>orbitPosition(0).rotation,autoAlpha:1,duration:.5,ease:'back.out(1.6)'},.25)
-      .to('.orbit-resume',{x:()=>orbitPosition(1).x,y:()=>orbitPosition(1).y,scale:1,rotation:()=>orbitPosition(1).rotation,autoAlpha:1,duration:.5,ease:'back.out(1.6)'},.32)
-      .to('.orbit-food',{x:()=>orbitPosition(2).x,y:()=>orbitPosition(2).y,scale:1,rotation:()=>orbitPosition(2).rotation,autoAlpha:1,duration:.5,ease:'back.out(1.6)'},.39)
-      .to('.orbit-spark',{scale:1,autoAlpha:1,rotation:90,duration:.45,stagger:.08,ease:'back.out(2)'},.5)
-      .to(orbitTurn,{value:118,duration:.95,ease:'power1.inOut',onUpdate:renderOrbit},.85)
-      .to('.orbit-track',{rotation:-35,duration:1.15,ease:'none'},.45)
-      .to('.orbit-paws>span',{scale:1,autoAlpha:.45,y:-15,duration:.2,stagger:.1,ease:'back.out(2)'},.85);
-    if(compactHero)heroTransition.to('.hero-cast',{autoAlpha:0,duration:.12},0);
-    sceneLoop('.hero',gsap.to('.planet-spark',{rotation:40,scale:.8,duration:1.8,stagger:.2,yoyo:true,repeat:-1,ease:'sine.inOut'}));
-    sceneLoop('.hero',gsap.to('.universe-stars>span',{opacity:.75,duration:2.5,stagger:.17,yoyo:true,repeat:-1,ease:'sine.inOut'}));
+    // Read the phone scene before a brief, reversible handoff.
+    const heroTransition=gsap.timeline({scrollTrigger:{
+      trigger:'.hero',
+      start:()=>compactHero&&orbitScene.clientHeight>innerHeight?'bottom bottom':'top top',
+      end:()=>`+=${innerHeight*(compactHero?1.25:1.4)}`,
+      pin:innerHeight>650,
+      scrub:.9,
+      invalidateOnRefresh:true,
+      onRefresh:refreshOrbit,
+    }})
+      .to('.hero-type',{y:-65,rotation:-3,scale:.95,autoAlpha:0,duration:.65,ease:'power1.inOut'},.15)
+      .to('.hero-copy,.hero-button,.cat-speech,.hero-windowbar,.hero-ticket,.hero-magic-position,.hero-edition,.studio-atmosphere,.motion-hint,.hero-meta,.hero-bottom,.cat-note,.miri-stamp',{y:-25,autoAlpha:0,duration:.65,ease:'power1.inOut'},.2)
+      .to('.hero-cat-left',{y:-35,rotation:-9,scale:.9,duration:.6,ease:'power1.inOut'},.3)
+      .to('.hero-cat-right',{y:-45,rotation:10,scale:.9,duration:.6,ease:'power1.inOut'},.35)
+      .to('.hero-cat-left',{xPercent:-45,y:35,rotation:12,scale:.7,duration:.85,ease:'power1.inOut'},.8)
+      .to('.hero-cat-right',{xPercent:45,y:35,rotation:-12,scale:.7,duration:.85,ease:'power1.inOut'},.85)
+      .to('.hero-satellite',{y:-150,scale:.7,autoAlpha:0,duration:.75,ease:'power1.inOut'},.25)
+      .to('.hero-float,.hero-spark,.hero-hand',{autoAlpha:0,duration:.6},.25)
+      .to('.hero-ground',{scaleY:7,transformOrigin:'50% 100%',duration:1.25,ease:'power1.inOut'},.4)
+      .to('.hero-orbit',{autoAlpha:1,duration:.75,ease:'power1.inOut'},.65)
+      .to('.orbit-center',{autoAlpha:1,y:0,scale:1,duration:.85,ease:'power2.out'},.95)
+      .to('.orbit-web',{x:()=>orbitPosition(0).x,y:()=>orbitPosition(0).y,scale:1,rotation:()=>orbitPosition(0).rotation,autoAlpha:1,duration:.85,ease:'power2.out'},1.1)
+      .to('.orbit-resume',{x:()=>orbitPosition(1).x,y:()=>orbitPosition(1).y,scale:1,rotation:()=>orbitPosition(1).rotation,autoAlpha:1,duration:.85,ease:'power2.out'},1.25)
+      .to('.orbit-food',{x:()=>orbitPosition(2).x,y:()=>orbitPosition(2).y,scale:1,rotation:()=>orbitPosition(2).rotation,autoAlpha:1,duration:.85,ease:'power2.out'},1.4)
+      .to('.orbit-spark',{scale:1,autoAlpha:1,rotation:45,duration:.7,stagger:.1,ease:'power2.out'},1.55)
+      .to(orbitTurn,{value:118,duration:1.25,ease:'power1.inOut',onUpdate:renderOrbit},1.95)
+      .to('.orbit-track',{rotation:-25,duration:1.8,ease:'none'},1.1)
+      .to('.universe-mascot',{scale:1,autoAlpha:1,duration:.9,ease:'power2.out'},.95)
+      .to('.universe-seal,.universe-note,.universe-footer',{scale:1,autoAlpha:1,duration:.7,stagger:.1,ease:'power2.out'},1.3)
+      // Keep the finished universe readable before the page releases into services.
+      .to('.hero-orbit',{autoAlpha:1,duration:.45},3.2);
+    if(compactHero)heroTransition.to('.hero-cast',{autoAlpha:0,duration:.8,ease:'power1.inOut'},.6);
     sceneLoop('.hero',gsap.to('.orbit-center em',{rotation:2,scale:1.015,duration:2.4,repeat:-1,yoyo:true,ease:'sine.inOut'}));
     }
 

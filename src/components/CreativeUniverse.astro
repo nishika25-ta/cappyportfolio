@@ -2,25 +2,23 @@
 import Cat from './Cat.astro';
 import Icon from './Icon.astro';
 const worlds = [
-  { key:'web', title:'Websites', number:'01', label:'YOUR ONLINE WORLD', price:'From RM129', variant:'developer' as const },
-  { key:'resume', title:'Résumés', number:'02', label:'YOUR NEXT CHAPTER', price:'From RM19', variant:'resume' as const },
-  { key:'food', title:'Food visuals', number:'03', label:'YOUR GOOD TASTE', price:'From RM15', variant:'chef' as const },
+  {key:'web',title:'Websites',number:'01',price:'From RM129',variant:'developer' as const},
+  {key:'resume',title:'Résumés',number:'02',price:'From RM19',variant:'resume' as const},
+  {key:'food',title:'Food visuals',number:'03',price:'From RM15',variant:'chef' as const},
 ];
 ---
 <div class="hero-orbit creative-universe" aria-hidden="true">
-  <div class="universe-atmosphere"></div>
-  <div class="universe-frame"></div>
-  <svg class="orbit-track" viewBox="0 0 1200 800" fill="none">
-    <ellipse cx="600" cy="400" rx="490" ry="265" stroke="currentColor"/>
-    <ellipse cx="600" cy="400" rx="470" ry="290" stroke="currentColor" stroke-dasharray="2 12" transform="rotate(-20 600 400)"/>
-    <ellipse cx="600" cy="400" rx="375" ry="350" stroke="currentColor" opacity=".4" transform="rotate(24 600 400)"/>
-    <g fill="currentColor" stroke="none"><circle cx="110" cy="400" r="4"/><circle cx="1090" cy="400" r="4"/><circle cx="600" cy="135" r="5"/><circle cx="600" cy="665" r="4"/></g>
-  </svg>
-  <div class="universe-stars">{Array.from({length:12},(_,i)=><span style={`--star:${i}`}><Icon name={i%3===0?'star':'paw'}/></span>)}</div>
-  <div class="orbit-center"><p>A little idea.<br/><em>A whole world.</em></p><small>Small studio. Wonderfully big possibilities.</small><div class="universe-swatches"><i></i><i></i><i></i><span>Made of imagination.</span></div></div>
-  <div class="orbit-carousel">
-    {worlds.map(world=><div class:list={['orbit-item',`orbit-${world.key}`]}><div class="orbit-sticker"><div class="planet-content"><div class="planet-meta"><span>{world.number} / {world.label}</span><Icon name="diagonal"/></div><div class="planet-art"><div class="planet-cat"><Cat variant={world.variant}/></div><span class="planet-spark">✦</span></div><strong>{world.title}</strong><small>{world.price}</small></div></div></div>)}
+  <div class="universe-board">
+    <div class="universe-atmosphere"></div>
+    <svg class="orbit-track" viewBox="0 0 1000 800" fill="none"><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M90 340C-20 90 360 190 210 300S30 580 260 670" stroke-dasharray="7 10"/><path d="M750 170C1010 80 1040 450 810 400S710 650 925 700"/><path d="m889 680 39 23-8-45M178 273l29 30 15-40"/></g></svg>
+    <div class="orbit-center"><span class="universe-eyebrow">THE CREATIVE CAT DEPARTMENT</span><p>Serious skills.<br/><em>Silly little cats.</em></p><small>A little imagination goes a long way.</small></div>
+    <div class="universe-mascot"><div class="universe-burst"></div><Cat variant="orange"/><span class="universe-cat-label">head of good ideas ↗</span></div>
+    <span class="universe-seal">100%<br/><small>made with care</small></span>
+    <div class="orbit-carousel">
+      {worlds.map(world=><div class:list={['orbit-item',`orbit-${world.key}`]}><div class="orbit-sticker"><div class="planet-content"><span class="planet-ticket-number">{world.number} / THE GOOD STUFF</span><div class="planet-art"><div class="planet-cat"><Cat variant={world.variant}/></div></div><strong>{world.title}</strong><small>{world.price} <Icon name="diagonal"/></small></div></div></div>)}
+    </div>
+    <div class="universe-note">Small studio.<br/><em>Big cat energy.</em><svg viewBox="0 0 150 20"><path d="M5 12Q60 0 142 10M30 18l95-4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
+    <span class="orbit-spark orbit-spark-one">✳</span><span class="orbit-spark orbit-spark-two">✦</span>
+    <div class="universe-footer"><span>GOOD IDEAS LIVE HERE</span><Icon name="paw"/><span>MADE IN MIRI</span></div>
   </div>
-  <span class="orbit-spark orbit-spark-one">✦</span><span class="orbit-spark orbit-spark-two">✳</span>
-  <div class="orbit-paws">{Array.from({length:5},(_,i)=><span style={`--paw:${i}`}><Icon name="paw"/></span>)}</div>
 </div>

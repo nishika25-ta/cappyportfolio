@@ -204,36 +204,60 @@
  .hero-stage .hero-satellite{top:135px}
 }
 
-/* Phone layout: reserve a full dialogue row between the actions and characters. */
-@media(max-width:600px){
- .hero.hero-stage{height:calc(590px + 72vw);min-height:820px}
- .hero-stage .hero-cat{width:43vw;bottom:67px;rotate:0deg}
- .hero-stage .hero-cat-left{left:3%}
- .hero-stage .hero-cat-right{right:3%}
- .hero-stage .cat-speech{width:43vw;left:0;bottom:calc(100% + 17px);rotate:0deg}
- .hero-stage .cat-speech-orange{left:auto;right:0;bottom:calc(100% + 17px);rotate:0deg}
- .hero-stage .cat-speech-body,.hero-stage .cat-speech-orange .cat-speech-body{height:194px;padding:13px 12px 11px;display:flex;flex-direction:column;justify-content:center;border-radius:21px;box-shadow:2px 3px 0 #25282020}
- .hero-stage .cat-speech-messages{flex:1;align-items:center;min-height:0}
- .hero-stage .cat-speech-title{font-size:clamp(14px,3.7vw,18px);line-height:1.16}
- .hero-stage .cat-speech-copy{font-size:10px;line-height:1.4;margin-top:7px}
- .hero-stage .cat-speech-dots{flex-shrink:0;margin-top:7px}
- .hero-stage .cat-speech-tail{left:29%;bottom:-22px}
- .hero-stage .cat-speech-orange .cat-speech-tail{left:auto;right:29%}
-}
-
-/* Mobile content participates in layout: no viewport-height guesses for the cast. */
+/* Mobile has its own reading flow: promise, context, actions, then the cast. */
+.hero-mobile-intro{display:none}
 .hero-cast{display:contents}
 @media(max-width:800px){
- .hero.hero-stage{display:flex;flex-direction:column;height:auto;min-height:0;padding-bottom:73px}
- .hero-stage .hero-type{flex:none}
- .hero-stage .hero-actions{width:100%;flex:none;margin-bottom:0}
- .hero-stage .hero-cast{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;position:relative;z-index:4;width:calc(100% - 40px);max-width:650px;margin:36px auto 0;padding-top:215px;flex:none}
+ .hero.hero-stage{display:flex;flex-direction:column;height:auto;min-height:0;padding-bottom:82px}
+ .hero-stage .hero-type{flex:none;padding:177px 34px 0}
+ .hero-stage h1{font-size:clamp(38px,8.8vw,62px);line-height:1.08}
+ .hero-stage h1>.hero-title-small{font-size:.82em;letter-spacing:-.045em}
+ .hero-stage h1>.hero-title-big{flex-direction:column;align-items:center;gap:5px;margin-top:8px}
+ .hero-stage .hero-big-word{font-size:1.08em;line-height:1}
+ .hero-stage .personality{padding:2px .13em .09em;border-radius:9px;rotate:-2deg}
+ .hero-stage .personality>svg{bottom:-10px;height:11px;opacity:.35}
+ .hero-mobile-intro{display:block;position:relative;z-index:3;max-width:340px;margin:25px auto 0;padding:0 12px;font-size:13px;line-height:1.65;color:var(--muted)}
+ .hero-stage .hero-actions{width:100%;flex:none;max-width:430px;margin:22px auto 0;padding-inline:34px;gap:10px}
+ .hero-stage .hero-actions .button{min-width:0;min-height:48px;padding:12px 14px;font-size:12px;gap:12px;flex:1;box-shadow:2px 3px 0 #25282020}
+ .hero-stage .hero-actions .icon{width:16px;height:16px}
+ /* A little comic scene: the coder leans in, then the orange cat answers. */
+ .hero-stage .hero-cast{display:flex;flex-direction:column;gap:8px;position:relative;z-index:4;width:calc(100% - 48px);max-width:520px;margin:38px auto 0;flex:none;padding:5px 0 10px}
  .hero-stage .hero-cast .hero-cat{position:relative;width:100%;left:auto;right:auto;top:auto;bottom:auto;rotate:0deg;min-width:0}
- .hero-stage .hero-cast .cat-speech{width:100%;left:0;right:auto;top:auto;bottom:calc(100% + 17px);rotate:0deg}
- .hero-stage .hero-cast .cat-speech-orange{left:auto;right:0;top:auto;bottom:calc(100% + 17px);rotate:0deg}
- .hero-stage .hero-cast .cat-speech-body{height:194px;display:flex;flex-direction:column;justify-content:center;padding:13px 12px 11px}
+ .hero-stage .hero-cast .cursor-rig{position:relative;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:center;gap:12px;isolation:isolate}
+ .hero-stage .hero-cast .cursor-rig::before{content:'';position:absolute;z-index:-1;left:-12px;bottom:8px;width:47%;height:82%;background:#f2b6cb;border:1px solid #25282025;border-radius:48% 52% 38% 62%;rotate:-16deg}
+ .hero-stage .hero-cast .cursor-rig::after{content:'✦';position:absolute;left:3%;top:-7px;color:var(--coral);font-size:27px;rotate:12deg;line-height:1;pointer-events:none}
+ .hero-stage .hero-cast .cat-speech{position:relative;order:0;width:100%;left:auto;right:auto;top:auto;bottom:auto;rotate:3deg}
+ .hero-stage .hero-cast .cat-speech-body{height:auto;min-height:158px;display:flex;flex-direction:column;justify-content:center;padding:17px 15px 12px;border:1.5px solid var(--ink);border-radius:23px 24px 24px 7px;box-shadow:3px 4px 0 #25282020}
  .hero-stage .hero-cast .cat-speech-messages{flex:1;align-items:center;min-height:0}
- .hero-stage .hero-cast .cat-speech-title{font-size:clamp(14px,3.7vw,18px);line-height:1.16}
- .hero-stage .hero-cast .cat-speech-copy{font-size:10px;line-height:1.4}
- .hero-stage .hero-cast .cat-speech-dots{flex-shrink:0}
+ .hero-stage .hero-cast .cat-speech-title{font-size:clamp(14px,3.7vw,19px);line-height:1.2;letter-spacing:-.025em;text-wrap:pretty}
+ .hero-stage .hero-cast .cat-speech-copy{font-size:11px;line-height:1.5;margin-top:8px}
+ .hero-stage .hero-cast .cat-speech-dots{flex-shrink:0;margin-top:10px;opacity:.4}
+ .hero-stage .hero-cast .cat-speech-tail{width:30px;height:25px;left:-22px;right:auto;top:62%;bottom:auto;rotate:0deg;stroke-width:2}
+ .hero-stage .hero-cast .cursor-rig>.cat{width:calc(100% + 26px);max-width:240px;height:auto;justify-self:center;rotate:-11deg;translate:-4px 12px;transform-origin:50% 80%}
+ .hero-stage .hero-cast .hero-cat-right{margin-top:4px}
+ .hero-stage .hero-cast .hero-cat-right .cursor-rig{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}
+ .hero-stage .hero-cast .hero-cat-right .cursor-rig::before{left:auto;right:-17px;bottom:0;width:49%;height:88%;background:#bfd8db;border-radius:55% 45% 60% 40%;rotate:16deg}
+ .hero-stage .hero-cast .hero-cat-right .cursor-rig::after{content:'♡';left:auto;right:7%;top:-10px;font-size:30px;color:#b65442;rotate:19deg}
+ .hero-stage .hero-cast .hero-cat-right .cat-speech{grid-column:1;grid-row:1;rotate:-4deg}
+ .hero-stage .hero-cast .cat-speech-orange .cat-speech-body{border-radius:24px 23px 7px 24px}
+ .hero-stage .hero-cast .cat-speech-orange .cat-speech-tail{left:auto;right:-22px;top:56%;bottom:auto;rotate:0deg}
+ .hero-stage .hero-cast .hero-cat-right .cursor-rig>.cat{grid-column:2;grid-row:1;width:calc(100% + 44px);rotate:13deg;translate:12px 8px}
+ .hero-stage .hero-hand,.hero-stage .hero-satellite,.hero-stage .float-code,.hero-stage .float-squiggle,.hero-stage .hero-spark{display:none}
+ .hero-stage .hero-dais{display:none}
+ .hero-stage .hero-dais-left{left:0}.hero-stage .hero-dais-right{right:0}
+ .hero-stage .hero-ticket{left:34px;bottom:21px;rotate:0deg;padding:8px 10px;min-height:44px;display:flex;align-items:center}
+ .hero-stage .hero-ticket>.ticket-mobile-label{font-size:10px}
+ .hero-stage .miri-stamp{right:34px;bottom:30px}
+ .hero-stage .miri-stamp>small{font-size:7px}
+}
+@media(max-width:360px){
+ .hero-stage .hero-type{padding-inline:26px}
+ .hero-stage h1{font-size:9.6vw}
+ .hero-stage .hero-actions{padding-inline:28px;gap:8px}
+ .hero-stage .hero-actions .button{padding-inline:10px;gap:8px}
+ .hero-stage .hero-cast{width:calc(100% - 44px);gap:12px}
+ .hero-stage .hero-cast .cursor-rig{gap:10px}
+ .hero-stage .hero-cast .cat-speech-body{min-height:176px;padding:14px 12px 11px}
+ .hero-stage .hero-ticket{left:28px}
+ .hero-stage .miri-stamp{right:28px}
 }
