@@ -1,10 +1,10 @@
 /* A cut-paper playground for the creative cat department. */
-.hero-stage .creative-universe{color:var(--ink);background:#f2b6cb;overflow:hidden}
+.creative-universe{position:relative;width:100%;height:clamp(680px,90svh,840px);color:var(--ink);background:#f2b6cb;overflow:clip;isolation:isolate;margin-top:-2px;padding-bottom:24px}
 .universe-board{position:absolute;inset:0;max-width:1600px;margin-inline:auto;isolation:isolate}
 .universe-atmosphere{position:absolute;inset:0;background-image:radial-gradient(#25282018 .8px,transparent .8px);background-size:12px 12px;pointer-events:none}
-.universe-board::before{content:'';position:absolute;inset:16px;border:1px solid #25282045;border-radius:28px;pointer-events:none}
+.universe-board::before{content:'';position:absolute;inset:16px 24px 36px;border:1px solid #25282045;border-radius:28px;pointer-events:none}
 .creative-universe .orbit-track{width:100%;height:100%;left:50%;top:50%;translate:-50% -50%;opacity:.32;color:var(--ink);overflow:visible}
-.creative-universe .orbit-center{left:50%;top:20%;width:min(650px,65%);z-index:5;color:var(--ink)}
+.creative-universe .orbit-center{left:50%;top:18%;width:min(650px,65%);z-index:5;color:var(--ink)}
 .creative-universe .universe-eyebrow{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.14em;border:1px solid var(--ink);border-radius:100px;padding:6px 12px;background:var(--paper);rotate:-3deg}
 .creative-universe .orbit-center p{font-size:clamp(42px,4.5vw,68px);line-height:.97;font-weight:800;letter-spacing:-.06em;margin-top:17px;white-space:normal}
 .creative-universe .orbit-center em{font-family:Georgia,serif;font-weight:400;font-size:1.03em;line-height:1.1;background:none;padding:0;color:var(--ink);rotate:0deg;border-radius:0}
@@ -30,10 +30,10 @@
 .creative-universe .planet-content>strong{grid-column:2;align-self:end;font-family:Bricolage,sans-serif;font-size:24px;font-weight:800;line-height:1.05;letter-spacing:-.04em}
 .creative-universe .planet-content>small{grid-column:2;display:flex;align-items:center;gap:6px;align-self:start;font-size:10px;line-height:1.5;margin-top:6px;white-space:nowrap}
 .planet-content>small .icon{width:12px;height:12px;margin-left:auto}
-.universe-note{position:absolute;right:12%;bottom:13%;font-family:Bricolage,sans-serif;font-size:31px;font-weight:700;line-height:1.05;letter-spacing:-.04em;rotate:-8deg;z-index:3}
+.universe-note{position:absolute;right:12%;bottom:15%;font-family:Bricolage,sans-serif;font-size:31px;font-weight:700;line-height:1.05;letter-spacing:-.04em;rotate:-8deg;z-index:3}
 .universe-note em{font-family:Georgia,serif;font-weight:400}
 .universe-note svg{width:155px;height:20px;margin-top:3px}
-.universe-footer{position:absolute;bottom:29px;left:40px;right:40px;border-top:1px solid #25282050;padding-top:13px;display:flex;justify-content:space-between;align-items:center;font-size:8px;font-weight:600;letter-spacing:.13em}
+.universe-footer{position:absolute;bottom:52px;left:48px;right:48px;border-top:1px solid #25282050;padding-top:13px;display:flex;justify-content:space-between;align-items:center;font-size:8px;font-weight:600;letter-spacing:.13em}
 .universe-footer .icon{width:17px;height:17px;rotate:12deg}
 @media(min-width:801px) and (max-width:1100px){
  .creative-universe .orbit-item{width:190px}
@@ -43,21 +43,22 @@
  .universe-note{right:9%;font-size:25px}
 }
 @media(max-width:800px){
- /* Compose within the visible bottom of the taller pinned phone hero. */
- .universe-board{inset:auto 0 0;height:100svh;max-height:100%;width:100%}
- .universe-board::before{inset:95px 12px 13px;border-radius:24px}
- .creative-universe .orbit-center{top:23%;width:calc(100% - 42px);max-width:440px}
+ /* Compose cleanly within the mobile creative-universe stage. */
+ .creative-universe{height:clamp(650px,86svh,750px);padding-bottom:20px}
+ .universe-board{inset:0;height:100%;max-height:100%;width:100%}
+ .universe-board::before{inset:14px 14px 34px;border-radius:24px}
+ .creative-universe .orbit-center{top:16%;width:calc(100% - 42px);max-width:440px}
  .creative-universe .universe-eyebrow{font-size:8px;letter-spacing:.09em;padding:6px 10px}
- .creative-universe .orbit-center p{font-size:clamp(34px,9.4vw,52px);margin-top:13px;line-height:1.02}
- .creative-universe .orbit-center>small{font-size:11px;margin-top:11px}
- .universe-mascot{left:58%;top:37%;width:clamp(220px,68vw,340px);translate:-38% 0}
+ .creative-universe .orbit-center p{font-size:clamp(34px,9.4vw,52px);margin-top:12px;line-height:1.02}
+ .creative-universe .orbit-center>small{font-size:11px;margin-top:10px}
+ .universe-mascot{left:58%;top:32%;width:clamp(210px,62vw,310px);translate:-38% 0}
  .universe-mascot>.cat{rotate:11deg}
  .universe-cat-label{font-size:9px;bottom:-6px;padding:5px 9px}
  .creative-universe .orbit-carousel{inset:0;display:block;transform-origin:center}
  .creative-universe .orbit-item{width:clamp(148px,43vw,195px);translate:0 0;min-width:0}
- .creative-universe .orbit-web{left:5%;top:41%}
- .creative-universe .orbit-resume{left:auto;right:5%;top:57%}
- .creative-universe .orbit-food{left:6%;top:73%}
+ .creative-universe .orbit-web{left:5%;top:36%}
+ .creative-universe .orbit-resume{left:auto;right:5%;top:52%}
+ .creative-universe .orbit-food{left:6%;top:68%}
  .creative-universe .orbit-web .orbit-sticker{rotate:-9deg}
  .creative-universe .orbit-resume .orbit-sticker{rotate:7deg}
  .creative-universe .orbit-food .orbit-sticker{rotate:-6deg}
@@ -69,39 +70,39 @@
  .creative-universe .planet-content>small{font-size:9px;margin-top:5px;gap:2px}
  .planet-content>small .icon{width:10px;height:10px}
  .planet-content::before{width:36px;height:15px;top:-8px}
- .universe-note{right:6%;bottom:10%;font-size:clamp(21px,5.8vw,30px);rotate:7deg}
+ .universe-note{right:6%;bottom:13%;font-size:clamp(21px,5.8vw,30px);rotate:7deg}
  .universe-note svg{width:115px;height:15px}
- .universe-footer{left:27px;right:27px;bottom:27px;padding-top:10px;font-size:6px;letter-spacing:.07em}
+ .universe-footer{left:27px;right:27px;bottom:48px;padding-top:10px;font-size:6px;letter-spacing:.07em}
  .universe-footer .icon{width:13px;height:13px}
 }
 @media(max-width:360px){
- .creative-universe .orbit-center{top:24%}
+ .creative-universe .orbit-center{top:16%}
  .creative-universe .orbit-center p{font-size:32px}
  .creative-universe .orbit-center>small{font-size:10px}
- .universe-mascot{width:215px;top:39%;left:58%}
+ .universe-mascot{width:205px;top:33%;left:58%}
  .creative-universe .orbit-item{width:142px}
  .planet-content{grid-template-columns:38px minmax(0,1fr);padding-inline:8px}
  .creative-universe .planet-content>strong{font-size:14px}
- .creative-universe .orbit-web{left:5%;top:41%}
- .creative-universe .orbit-resume{left:auto;right:5%;top:57%}
- .creative-universe .orbit-food{left:5%;top:73%}
- .universe-note{font-size:19px;bottom:10%}
+ .creative-universe .orbit-web{left:5%;top:36%}
+ .creative-universe .orbit-resume{left:auto;right:5%;top:52%}
+ .creative-universe .orbit-food{left:5%;top:68%}
+ .universe-note{font-size:19px;bottom:13%}
 }
 @media(max-width:800px) and (max-height:650px){
- .universe-board::before{top:85px}
- .creative-universe .orbit-center{top:26%}
+ .universe-board::before{top:14px}
+ .creative-universe .orbit-center{top:16%}
  .creative-universe .orbit-center p{font-size:28px;margin-top:8px}
  .creative-universe .orbit-center>small{display:none}
- .universe-mascot{width:175px;top:40%;left:57%}
+ .universe-mascot{width:175px;top:33%;left:57%}
  .creative-universe .orbit-item{width:clamp(146px,42vw,180px)}
- .creative-universe .orbit-web{left:5%;top:43%}
- .creative-universe .orbit-resume{left:auto;right:5%;top:59%}
- .creative-universe .orbit-food{left:5%;top:74%}
+ .creative-universe .orbit-web{left:5%;top:36%}
+ .creative-universe .orbit-resume{left:auto;right:5%;top:52%}
+ .creative-universe .orbit-food{left:5%;top:68%}
  .planet-content{grid-template-columns:38px minmax(0,1fr);padding:9px 9px 8px}
  .creative-universe .planet-content>strong{font-size:clamp(14px,3.6vw,16px)}
  .planet-art{height:36px}
  .planet-cat{width:48px;height:48px;top:-6px;left:-6px}
  .planet-ticket-number{display:none}
- .universe-note{font-size:18px;bottom:9%}
+ .universe-note{font-size:18px;bottom:12%}
  .universe-cat-label{display:none}
 }

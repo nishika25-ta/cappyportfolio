@@ -99,7 +99,6 @@ export function createChoreography(listen:Listen) {
     });
 
     if(document.querySelector('.hero')){
-    sceneLoop('.hero',gsap.to('.studio-orbits',{rotation:12,duration:24,repeat:-1,yoyo:true,ease:'sine.inOut',transformOrigin:'50% 50%'}));
     sceneLoop('.hero',gsap.to('.studio-orbit-stars',{opacity:.4,duration:2.8,repeat:-1,yoyo:true,ease:'sine.inOut'}));
     document.querySelectorAll<HTMLElement>('.cat-speech').forEach((pitch,speaker)=>{
       const messages=Array.from(pitch.querySelectorAll<HTMLElement>('[data-cat-pitch]'));
@@ -117,18 +116,18 @@ export function createChoreography(listen:Listen) {
       listen(pitch,'mouseleave',holdPitch);
     });
     const intro=gsap.timeline({defaults:{ease:'power3.out'}});
-    intro.from('.hero h1 > span',{yPercent:50,rotation:3,duration:.8,stagger:.09,ease:'expo.out'},0)
-      .from('.hero-paper',{scale:.96,duration:.9,ease:'power3.out'},0)
-      .from('.hero-windowbar',{autoAlpha:0,duration:.5,immediateRender:false},.12)
-      .from('.hero-ticket',{y:-30,rotation:-12,autoAlpha:0,duration:.8,ease:'back.out(1.7)',immediateRender:false},.25)
-      .from('.hero-copy,.hero-button',{y:20,duration:.4,stagger:.05},0)
-      .from('.hero-cat-left .cat-entry',{xPercent:-115,y:120,rotation:-30,duration:.9,ease:'elastic.out(1,.7)'},.04)
-      .from('.hero-cat-right .cat-entry',{xPercent:115,y:110,rotation:32,duration:.9,ease:'elastic.out(1,.7)'},.12)
-      .from('.satellite-entry',{yPercent:-130,rotation:0,scale:.7,duration:.8,stagger:.08,ease:'back.out(1.6)'},.08)
-      .from('.hero-float,.hero-spark,.miri-stamp',{scale:0,rotation:-50,duration:.65,stagger:.04,ease:'elastic.out(1,.65)'},.25);
+    intro.from('.hero h1 > span',{yPercent:42,rotation:2,duration:.75,stagger:.08,ease:'expo.out'},0)
+      .from('.hero-paper',{scale:.97,duration:.8,ease:'power3.out'},0)
+      .from('.hero-windowbar',{autoAlpha:0,duration:.45,immediateRender:false},.1)
+      .from('.hero-ticket',{y:-24,rotation:-10,autoAlpha:0,duration:.65,ease:'back.out(1.5)',immediateRender:false},.2)
+      .from('.hero-copy,.hero-button',{y:18,duration:.4,stagger:.05},0)
+      .from('.hero-cat-left .cat-entry',{xPercent:-85,y:85,rotation:-18,duration:.75,ease:'back.out(1.35)'},.04)
+      .from('.hero-cat-right .cat-entry',{xPercent:85,y:80,rotation:18,duration:.75,ease:'back.out(1.35)'},.1)
+      .from('.satellite-entry',{yPercent:-110,rotation:0,scale:.75,duration:.7,stagger:.08,ease:'back.out(1.4)'},.08)
+      .from('.hero-float,.hero-spark,.miri-stamp',{scale:0,rotation:-35,duration:.55,stagger:.04,ease:'back.out(1.5)'},.22);
 
     document.querySelectorAll<HTMLElement>('.hero-float,.hero-spark').forEach((el,i)=>{
-      const t=gsap.to(el,{y:i%2?20:-20,rotation:`+=${i%2?9:-9}`,duration:2.2+i*.3,repeat:-1,yoyo:true,ease:'sine.inOut'});
+      const t=gsap.to(el,{y:i%2?16:-16,rotation:`+=${i%2?7:-7}`,duration:2.4+i*.3,repeat:-1,yoyo:true,ease:'sine.inOut'});
       loops.push(t);
       ScrollTrigger.create({trigger:'.hero',start:'top bottom',end:'bottom top',onToggle:s=>t.paused(!s.isActive)});
     });
@@ -148,59 +147,82 @@ export function createChoreography(listen:Listen) {
       ScrollTrigger.create({trigger:'.hero',start:'top bottom',end:'bottom top',onToggle:s=>hand.paused(!s.isActive)});
     }
 
-    // A three-beat sticker carousel replaces the oversized character zoom.
-    gsap.set('.hero-orbit',{autoAlpha:0});
-    gsap.set('.orbit-center',{autoAlpha:0,y:45,scale:.85});
-    gsap.set('.universe-mascot,.universe-note,.universe-footer',{scale:.85,autoAlpha:0});
-    const orbitScene=document.querySelector<HTMLElement>('.hero')!;
-    let orbitWidth=orbitScene.clientWidth,orbitHeight=orbitScene.clientHeight;
-    const orbitTurn={value:0};
-    let baseOrbit=getCreativeOrbitLayout(orbitWidth,orbitHeight,0);
-    const orbitPosition=(i:number)=>baseOrbit[i];
-    document.querySelectorAll<HTMLElement>('.orbit-item').forEach((el,i)=>{
-      const pos=orbitPosition(i);
-      gsap.set(el,{x:pos.x,y:pos.y,rotation:pos.rotation,scale:.72,autoAlpha:0});
-    });
-    const orbitSetters=Array.from(document.querySelectorAll<HTMLElement>('.orbit-item')).map(el=>({x:gsap.quickSetter(el,'x','px'),y:gsap.quickSetter(el,'y','px'),rotation:gsap.quickSetter(el,'rotation','deg')}));
-    const renderOrbit=()=>getCreativeOrbitLayout(orbitWidth,orbitHeight,orbitTurn.value).forEach((position,i)=>{orbitSetters[i]?.x(position.x);orbitSetters[i]?.y(position.y);orbitSetters[i]?.rotation(position.rotation);});
-    const refreshOrbit=()=>{orbitWidth=orbitScene.clientWidth;orbitHeight=orbitScene.clientHeight;baseOrbit=getCreativeOrbitLayout(orbitWidth,orbitHeight,0);renderOrbit();};
-    listen(window,'resize',refreshOrbit);
-    const compactHero=innerWidth<=800;
-    // Read the phone scene before a brief, reversible handoff.
-    const heroTransition=gsap.timeline({scrollTrigger:{
+    // Smooth, unpinned scroll handoff from Hero into the Creative Universe section.
+    gsap.timeline({scrollTrigger:{
       trigger:'.hero',
-      start:()=>compactHero&&orbitScene.clientHeight>innerHeight?'bottom bottom':'top top',
-      end:()=>`+=${innerHeight*(compactHero?.35:1.4)}`,
-      pin:innerHeight>650,
+      start:'top top',
+      end:'bottom top',
       scrub:true,
       invalidateOnRefresh:true,
-      onRefresh:refreshOrbit,
     }})
-      .to('.hero-type',{y:-65,rotation:-3,scale:.95,autoAlpha:0,duration:.65,ease:'power1.inOut'},.15)
-      .to('.hero-copy,.hero-button,.cat-speech,.hero-windowbar,.hero-ticket,.hero-magic-position,.hero-edition,.studio-atmosphere,.motion-hint,.hero-meta,.hero-bottom,.cat-note,.miri-stamp',{y:-25,autoAlpha:0,duration:.65,ease:'power1.inOut'},.2)
-      .to('.hero-cat-left',{y:-35,rotation:-9,scale:.9,duration:.6,ease:'power1.inOut'},.3)
-      .to('.hero-cat-right',{y:-45,rotation:10,scale:.9,duration:.6,ease:'power1.inOut'},.35)
-      .to('.hero-cat-left',{xPercent:-45,y:35,rotation:12,scale:.7,duration:.85,ease:'power1.inOut'},.8)
-      .to('.hero-cat-right',{xPercent:45,y:35,rotation:-12,scale:.7,duration:.85,ease:'power1.inOut'},.85)
-      .to('.hero-satellite',{y:-150,scale:.7,autoAlpha:0,duration:.75,ease:'power1.inOut'},.25)
-      .to('.hero-float,.hero-spark,.hero-hand',{autoAlpha:0,duration:.6},.25)
-      .to('.hero-ground',{scaleY:7,transformOrigin:'50% 100%',duration:1.25,ease:'power1.inOut'},.4)
-      .to('.hero-orbit',{autoAlpha:1,duration:.75,ease:'power1.inOut'},.65)
-      .to('.orbit-center',{autoAlpha:1,y:0,scale:1,duration:.85,ease:'power2.out'},.95)
-      .to('.orbit-web',{x:()=>orbitPosition(0).x,y:()=>orbitPosition(0).y,scale:1,rotation:()=>orbitPosition(0).rotation,autoAlpha:1,duration:.85,ease:'power2.out'},1.1)
-      .to('.orbit-resume',{x:()=>orbitPosition(1).x,y:()=>orbitPosition(1).y,scale:1,rotation:()=>orbitPosition(1).rotation,autoAlpha:1,duration:.85,ease:'power2.out'},1.25)
-      .to('.orbit-food',{x:()=>orbitPosition(2).x,y:()=>orbitPosition(2).y,scale:1,rotation:()=>orbitPosition(2).rotation,autoAlpha:1,duration:.85,ease:'power2.out'},1.4)
-      .to(orbitTurn,{value:118,duration:1.25,ease:'power1.inOut',onUpdate:renderOrbit},1.95)
-      .to('.orbit-track',{rotation:-25,duration:1.8,ease:'none'},1.1)
-      .to('.universe-mascot',{scale:1,autoAlpha:1,duration:.9,ease:'power2.out'},.95)
-      .to('.universe-note,.universe-footer',{scale:1,autoAlpha:1,duration:.7,stagger:.1,ease:'power2.out'},1.3)
-      // Keep the finished universe readable before the page releases into services.
-      .to('.hero-orbit',{autoAlpha:1,duration:.45},3.2);
-    if(compactHero)heroTransition.to('.hero-cast',{autoAlpha:0,duration:.8,ease:'power1.inOut'},.6);
-    sceneLoop('.hero',gsap.to('.orbit-center em',{rotation:2,scale:1.015,duration:2.4,repeat:-1,yoyo:true,ease:'sine.inOut'}));
+      .to('.hero-type',{y:-28,ease:'none'},0)
+      .to('.hero-cat-left',{y:-18,rotation:-3,ease:'none'},0)
+      .to('.hero-cat-right',{y:-22,rotation:3,ease:'none'},0)
+      .to('.hero-ground',{scaleY:1.18,transformOrigin:'50% 100%',ease:'none'},0);
     }
 
-    if(document.querySelector('.service-cats'))gsap.from('.service-illustration',{y:140,scale:.45,rotation:-15,duration:1.3,stagger:.16,ease:'elastic.out(1,.65)',scrollTrigger:{trigger:'.service-cats',start:'top 88%',once:true}});
+    const orbitScene=document.querySelector<HTMLElement>('.creative-universe');
+    if(orbitScene){
+      let orbitWidth=orbitScene.clientWidth,orbitHeight=orbitScene.clientHeight;
+      const orbitTurn={value:0};
+      let baseOrbit=getCreativeOrbitLayout(orbitWidth,orbitHeight,0);
+      const orbitItems=Array.from(orbitScene.querySelectorAll<HTMLElement>('.orbit-item'));
+      const orbitSetters=orbitItems.map(el=>({
+        x:gsap.quickSetter(el,'x','px'),
+        y:gsap.quickSetter(el,'y','px'),
+        rotation:gsap.quickSetter(el,'rotation','deg'),
+      }));
+      const renderOrbit=()=>{
+        const current=getCreativeOrbitLayout(orbitWidth,orbitHeight,orbitTurn.value);
+        current.forEach((position,i)=>{
+          const base=baseOrbit[i]??position;
+          orbitSetters[i]?.x(position.x-base.x);
+          orbitSetters[i]?.y(position.y-base.y);
+          orbitSetters[i]?.rotation(position.rotation);
+        });
+      };
+      const refreshOrbit=()=>{
+        orbitWidth=orbitScene.clientWidth;
+        orbitHeight=orbitScene.clientHeight;
+        baseOrbit=getCreativeOrbitLayout(orbitWidth,orbitHeight,0);
+        renderOrbit();
+      };
+      refreshOrbit();
+      listen(window,'resize',refreshOrbit);
+
+      gsap.from('.creative-universe .orbit-center',{
+        y:34,autoAlpha:0,duration:.75,ease:'power3.out',
+        scrollTrigger:{trigger:orbitScene,start:'top 84%',once:true},
+      });
+      gsap.from('.creative-universe .universe-mascot',{
+        scale:.86,y:24,autoAlpha:0,duration:.8,ease:'back.out(1.4)',
+        scrollTrigger:{trigger:orbitScene,start:'top 80%',once:true},
+      });
+      gsap.from(orbitItems,{
+        scale:.88,y:28,autoAlpha:0,duration:.75,stagger:.1,ease:'back.out(1.35)',
+        scrollTrigger:{trigger:orbitScene,start:'top 76%',once:true},
+      });
+      gsap.from('.creative-universe .universe-note,.creative-universe .universe-footer',{
+        y:20,autoAlpha:0,duration:.65,stagger:.08,ease:'power2.out',
+        scrollTrigger:{trigger:orbitScene,start:'top 70%',once:true},
+      });
+
+      gsap.timeline({scrollTrigger:{
+        trigger:orbitScene,
+        start:'top bottom',
+        end:'bottom top',
+        scrub:true,
+        invalidateOnRefresh:true,
+        onRefresh:refreshOrbit,
+      }})
+        .to(orbitTurn,{value:118,ease:'none',onUpdate:renderOrbit},0)
+        .to('.creative-universe .orbit-track',{rotation:-16,ease:'none'},0)
+        .fromTo('.creative-universe .universe-mascot',{y:14},{y:-14,ease:'none'},0);
+
+      sceneLoop('.creative-universe',gsap.to('.orbit-center em',{rotation:2,scale:1.015,duration:2.4,repeat:-1,yoyo:true,ease:'sine.inOut'}));
+    }
+
+    if(document.querySelector('.service-cats'))gsap.from('.service-illustration',{y:55,scale:.9,autoAlpha:0,duration:.75,stagger:.1,ease:'back.out(1.4)',scrollTrigger:{trigger:'.service-cats',start:'top 88%',once:true}});
     document.querySelectorAll('.service-cat .cat').forEach((cat,i)=>sceneLoop('.service-cats',gsap.to(cat,{y:-12,rotation:i%2?-3:3,duration:1.2+i*.17,delay:i*.2,repeat:-1,yoyo:true,ease:'sine.inOut'})));
 
     const playground=document.querySelector('.playground-section');

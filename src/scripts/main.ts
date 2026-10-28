@@ -38,6 +38,8 @@ function mountPage() {
       const dispatch=(event:Event)=>handler(event);
       el.addEventListener(type,event=>pointerQueue.push(dispatch,event),{passive:true,signal:controller.signal});
       el.addEventListener('pointerleave',()=>pointerQueue.remove(dispatch),{signal:controller.signal});
+    }else if(type==='scroll'||type==='resize'||type==='touchstart'||type==='touchmove'){
+      el.addEventListener(type,handler,{passive:true,signal:controller.signal});
     }else el.addEventListener(type,handler,{signal:controller.signal});
   };
   function scheduleScrollRefresh(request?:{target:HTMLElement;focus?:HTMLElement}){

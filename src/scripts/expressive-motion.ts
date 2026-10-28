@@ -1,5 +1,4 @@
 import gsap from 'gsap';
-import {ScrollTrigger} from 'gsap/ScrollTrigger';
 type Listen=(el:EventTarget,type:string,handler:EventListener)=>void;
 
 /** Decorative reactions live on separate layers from layout and cursor position. */
@@ -11,12 +10,6 @@ export function createExpressiveMotion(listen:Listen){
   let particles:HTMLElement[]=[];
   let burst:gsap.core.Timeline|undefined;
   const ctx=gsap.context(()=>{
-    const windTargets=document.querySelectorAll('.artwork-card,.about-postcard,.contact-main h2');
-    const wind=gsap.quickTo(windTargets,'--scroll-wind',{duration:.5,ease:'power3.out'});
-    const settle=gsap.delayedCall(.13,()=>wind(0)).pause();
-    ScrollTrigger.create({start:0,end:'max',onUpdate:self=>{
-      wind(gsap.utils.clamp(-5,5,self.getVelocity()/450));settle.restart(true);
-    }});
     particles=Array.from({length:6},(_,i)=>{
       const particle=document.createElement('span');
       particle.className='celebration-particle';particle.textContent=['✦','♡','✧'][i%3];
