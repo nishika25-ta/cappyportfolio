@@ -1,10 +1,20 @@
+import { deepFreeze, sanitizePhoneDigits, sanitizePlainText } from '../scripts/security.mjs';
+
+const envPhone =
+  typeof process !== 'undefined' && process.env?.WHATSAPP_NUMBER
+    ? process.env.WHATSAPP_NUMBER
+    : undefined;
+const whatsappNumber = sanitizePhoneDigits(envPhone, '60178478597');
+
 export const site = {
   name: 'CappyTheDev', location: 'Miri, Sarawak', phone: '017 847 8597',
   description: 'Small business websites, ATS-friendly resumes and food photo editing. A friendly independent creative studio in Miri, Sarawak. Websites from RM129.'
 };
 export function enquiryUrl(name = '', price) {
-  const message = name ? `Hi Cappy! I'm interested in ${name}${price !== undefined ? ` (RM${price})` : ''}. Can we chat about my project?` : "Hi Cappy! I have a project in mind. Let's make something good!";
-  return `https://wa.me/60178478597?text=${encodeURIComponent(message)}`;
+  const safeName = sanitizePlainText(name, 80);
+  const validPrice = typeof price === 'number' && Number.isFinite(price) && price >= 0;
+  const message = safeName ? `Hi Cappy! I'm interested in ${safeName}${validPrice ? ` (RM${price})` : ''}. Can we chat about my project?` : "Hi Cappy! I have a project in mind. Let's make something good!";
+  return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 }
 export const services = [
   {
@@ -51,3 +61,6 @@ export const faqs = [
   ['Are domain and hosting included?', 'Domain registration, hosting and renewals are billed separately unless they are explicitly included in your quote. Domain setup help is RM40; website maintenance is RM30–RM80 per month, quoted to suit your needs.'],
   ['Can I ask for changes?', 'Absolutely. Each website and resume package lists its included revision rounds. Extra website revisions are RM30 per round. We’ll agree on the scope of any other changes before going ahead.']
 ];
+deepFreeze(site);
+deepFreeze(services);
+deepFreeze(faqs);

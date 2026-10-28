@@ -7,6 +7,7 @@ import {createExpressiveMotion} from './expressive-motion';
 import {getEnergyState} from './energy-state.mjs';
 import {createGeometryCache} from './motion-performance.mjs';
 import {getCreativeOrbitLayout} from './creative-orbit.mjs';
+import {isAllowedServiceId} from './security.mjs';
 
 type Listen=(el:EventTarget,type:string,handler:EventListener)=>void;
 gsap.registerPlugin(SplitText);
@@ -275,6 +276,7 @@ export function createChoreography(listen:Listen) {
     energyPose?.rotation((1-level)*-3);
   }
   function selectCharacter(id:string){
+    if(!isAllowedServiceId(id))return;
     character=id;
     if(reduced)return;
     ctx.add(()=>{

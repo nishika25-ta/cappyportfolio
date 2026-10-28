@@ -10,3 +10,19 @@ sample2/
 png/
 poster/
 *.log
+
+# Environment variables, API keys & credentials (never commit)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.cert
+*.crt
+*secret*
+*credentials*
+service-account*.json
+.DS_Store
+Thumbs.db

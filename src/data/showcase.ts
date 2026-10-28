@@ -1,3 +1,5 @@
+import { deepFreeze } from '../scripts/security.mjs';
+
 // Showcase configuration for CappyTheDev portfolio.
 // Video files reside in public/videos/ and original source clips are in video/.
 export const showcase = [
@@ -29,3 +31,4 @@ export const showcase = [
     placeholder: false
   }
 ];
+deepFreeze(showcase);

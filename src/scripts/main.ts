@@ -8,6 +8,14 @@ import {createFrameCoalescer} from './frame-coalescer.mjs';
 import {getEnergyState} from './energy-state.mjs';
 import {parseServiceRoute,serviceForShowcase} from './service-navigation.mjs';
 import {createPointerQueue} from './motion-performance.mjs';
+import {
+  isAllowedServiceId,
+  isAllowedShowcaseId,
+  isAllowedVideoSource,
+  isSafeAnchorHash,
+  sanitizePlainText,
+  validateVideoFile
+} from './security.mjs';
 gsap.registerPlugin(ScrollTrigger);
 
 let dispose: (()=>void) | undefined;
@@ -82,7 +90,7 @@ function mountPage() {
   let selectedService=pricingTabs.find(tab=>tab.getAttribute('aria-selected')==='true')?.dataset.serviceTab;
   let lastWebsiteShowcase='websites';
   function activateService(id:string,syncShowcase=true) {
-    if(!pricingTabs.some(tab=>tab.dataset.serviceTab===id))return false;
+    if(!isAllowedServiceId(id)||!pricingTabs.some(tab=>tab.dataset.serviceTab===id))return false;
     if(selectedService===id)return true;
     selectedService=id;
     pricingTabs.forEach(tab=>{
@@ -111,7 +119,7 @@ function mountPage() {
   const showcaseTabs=setupTabs('[data-showcase]',activateShowcase);
   let selectedShowcase=showcaseTabs.find(tab=>tab.getAttribute('aria-selected')==='true')?.dataset.showcase;
   function activateShowcase(id:string,syncService=true) {
-    if(!showcaseTabs.some(tab=>tab.dataset.showcase===id))return false;
+    if(!isAllowedShowcaseId(id)||!showcaseTabs.some(tab=>tab.dataset.showcase===id))return false;
     if(selectedShowcase===id)return true;
     selectedShowcase=id;
     const service=serviceForShowcase(id);
@@ -212,10 +220,10 @@ function mountPage() {
   const fileInput=document.querySelector<HTMLInputElement>('#local-video');
   let videoOpener:HTMLElement|undefined;
   function openVideo(src:string,title:string,opener:HTMLElement,local=false){
-    if(!dialog||!video)return;
+    if(!dialog||!video||!isAllowedVideoSource(src,local))return;
     videoOpener=opener;
     document.querySelectorAll<HTMLVideoElement>('.showcase-scene video').forEach(v=>v.pause());
-    document.getElementById('video-dialog-title')!.textContent=title;
+    document.getElementById('video-dialog-title')!.textContent=sanitizePlainText(title,120);
     const note=dialog.querySelector<HTMLElement>('.dialog-note');
     if(note){note.hidden=!local;note.textContent='Your local preview is only visible on this device. To publish a showcase, add your video to the site’s video folder.';}
     video.src=src;dialog.showModal();lenis?.stop();
@@ -228,11 +236,12 @@ function mountPage() {
     listen(fileInput,'change',()=>{
       const file=fileInput.files?.[0];if(!file)return;
       const error=document.getElementById('video-error')!;
-      if(!file.type.startsWith('video/')){error.textContent='Please choose an MP4, WebM or MOV video.';fileInput.value='';return;}
+      const validation=validateVideoFile(file);
+      if(!validation.valid){error.textContent=validation.reason??'Please choose an MP4, WebM or MOV video.';fileInput.value='';return;}
       error.textContent='';
       if(videoObjectUrl)URL.revokeObjectURL(videoObjectUrl);
       videoObjectUrl=URL.createObjectURL(file);
-      openVideo(videoObjectUrl,`Local preview: ${file.name}`,previewButton,true);
+      openVideo(videoObjectUrl,`Local preview: ${validation.safeName}`,previewButton,true);
       fileInput.value='';
     });
   }
@@ -258,6 +267,7 @@ function mountPage() {
       const event=raw as MouseEvent;
       if(event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
       const hash=link.getAttribute('href')!;
+      if(!isSafeAnchorHash(hash))return;
       const target=hash==='#top'?0:document.getElementById(hash.slice(1));
       if(target===null)return;
       event.preventDefault();

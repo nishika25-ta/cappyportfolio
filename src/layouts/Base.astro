@@ -3,6 +3,7 @@ import {ClientRouter} from 'astro:transitions';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import {site} from '../data/site.mjs';
+import {safeJsonLd,sanitizePlainText,sanitizeSiteUrl} from '../scripts/security.mjs';
 import '../styles/global.css';
 import '../styles/motion.css';
 import '../styles/header.css';
@@ -16,23 +17,29 @@ import '../styles/hero-poster.css';
 import '../styles/creative-universe.css';
 interface Props { title?: string; description?: string; }
 const {title='Small business. Big purr-sonality.',description=site.description}=Astro.props;
-const siteUrl=import.meta.env.SITE_URL;
+const safeTitle=sanitizePlainText(title,120);
+const safeDescription=sanitizePlainText(description,300);
+const siteUrl=sanitizeSiteUrl(import.meta.env.SITE_URL);
 const canonical=siteUrl ? new URL(Astro.url.pathname,siteUrl).href : undefined;
+const csp="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'";
 ---
 <!doctype html>
 <html lang="en" data-motion="full" transition:animate="none">
   <head>
     <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>MeowMeow</title><meta name="description" content={description}/>
+    <meta http-equiv="Content-Security-Policy" content={csp}/>
+    <meta http-equiv="X-Content-Type-Options" content="nosniff"/>
+    <meta name="referrer" content="strict-origin-when-cross-origin"/>
+    <title>MeowMeow</title><meta name="description" content={safeDescription}/>
     <meta name="theme-color" content="#f8e5a7"/>
     {canonical && <link rel="canonical" href={canonical}/>}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
     <link rel="preload" href="/fonts/bricolage-400_800-normal.woff2" as="font" type="font/woff2" crossorigin/>
     <link rel="preload" href="/fonts/dm-sans-400_700-normal.woff2" as="font" type="font/woff2" crossorigin/>
-    <meta property="og:title" content={`${title} | CappyTheDev`}/><meta property="og:description" content={description}/><meta property="og:type" content="website"/>
+    <meta property="og:title" content={`${safeTitle} | CappyTheDev`}/><meta property="og:description" content={safeDescription}/><meta property="og:type" content="website"/>
     <meta property="og:image" content={siteUrl ? new URL('/og.png',siteUrl).href : '/og.png'}/>{canonical && <meta property="og:url" content={canonical}/>}
-    <meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content={`${title} | CappyTheDev`}/><meta name="twitter:description" content={description}/><meta name="twitter:image" content={siteUrl ? new URL('/og.png',siteUrl).href : '/og.png'}/>
-    <script type="application/ld+json" set:html={JSON.stringify({'@context':'https://schema.org','@type':'ProfessionalService',name:site.name,description:site.description,telephone:'+60178478597',address:{'@type':'PostalAddress',addressLocality:'Miri',addressRegion:'Sarawak',addressCountry:'MY'},...(siteUrl?{url:siteUrl}:{}),priceRange:'RM15–RM599',areaServed:'MY'})}/>
+    <meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content={`${safeTitle} | CappyTheDev`}/><meta name="twitter:description" content={safeDescription}/><meta name="twitter:image" content={siteUrl ? new URL('/og.png',siteUrl).href : '/og.png'}/>
+    <script type="application/ld+json" set:html={safeJsonLd({'@context':'https://schema.org','@type':'ProfessionalService',name:site.name,description:site.description,telephone:'+60178478597',address:{'@type':'PostalAddress',addressLocality:'Miri',addressRegion:'Sarawak',addressCountry:'MY'},...(siteUrl?{url:siteUrl}:{}),priceRange:'RM15–RM599',areaServed:'MY'})}/>
     <ClientRouter/>
   </head>
   <body id="top">
