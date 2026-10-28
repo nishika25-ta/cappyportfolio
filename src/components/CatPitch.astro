@@ -2,19 +2,13 @@
 interface Props { speaker: 'developer' | 'orange'; }
 const { speaker } = Astro.props;
 const messages = speaker === 'developer' ? [
-  { title: 'Thousands for a website? Meow, why?', copy: 'From RM129. Save the rest for treats.' },
-  { title: 'Your business deserves its own little home.', copy: 'A proper website. A very friendly price.' },
-  { title: 'Open for business. Even during cat naps.', copy: 'Let your website do the introductions.' },
-  { title: 'Big ideas. Tiny budget? Come sit with us.', copy: 'Start small. Look like you mean business.' },
-  { title: 'Pretty is good. Easy to use is purr-fect.', copy: 'Clear pages. Handy buttons. Happy humans.' },
-  { title: 'Less “link in bio.” More “look at me!”', copy: 'Give your business a place to shine.' },
+  { title: 'Websites from RM129.', copy: 'Fast, mobile-ready sites for local businesses.' },
+  { title: 'Need a dev portfolio?', copy: 'Personal sites for grads, devs & designers.' },
+  { title: '48-hour starter turnaround.', copy: 'Direct WhatsApp booking included.' },
 ] : [
-  { title: 'No job promises. Plenty of paw-lish.', copy: 'Your résumé, looking its best.' },
-  { title: 'AI food looking a little… fishy?', copy: 'Real food. Tasty edits. No weird extras.' },
-  { title: 'Your experience has a story. Let it shine.', copy: 'Clean résumés. Clear words. Still you.' },
-  { title: 'Good food deserves a good first bite.', copy: 'Even when that first bite is with your eyes.' },
-  { title: 'Messy résumé? Slide it under my paw.', copy: 'A little tidy-up. A much sharper impression.' },
-  { title: 'Keep the flavour. Lose the bad lighting.', copy: 'Your actual dish, on its best-looking day.' },
+  { title: 'ATS-friendly résumés.', copy: 'Clean formatting & sharp wording from RM19.' },
+  { title: 'Natural food photo edits.', copy: 'Real dishes, brighter colours, from RM15.' },
+  { title: 'Simple, upfront pricing.', copy: 'No hidden fees or agency markups.' },
 ];
 ---
 <aside class:list={['cat-speech', `cat-speech-${speaker}`]} aria-label={speaker === 'developer' ? 'The coding cat says' : 'The orange cat says'}>

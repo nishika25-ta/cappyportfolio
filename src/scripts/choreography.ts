@@ -320,7 +320,7 @@ export function createChoreography(listen:Listen) {
   }
   function pet(){
     const status=document.getElementById('playground-status');
-    if(status)status.textContent='Prrrr. Creative chemistry: confirmed.';
+    if(status)status.textContent='Prrrr.';
     if(reduced)return;
     ctx.add(()=>{
       petting?.kill();

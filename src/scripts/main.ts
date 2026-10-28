@@ -113,7 +113,7 @@ function mountPage() {
       explore.dataset.pickService=id;
     }
     const status=document.getElementById('playground-status');
-    if(status&&labels[id])status.textContent=`Your ${labels[id]} buddy is ready to make something good.`;
+    if(status&&labels[id])status.textContent=`Selected: ${labels[id]} packages.`;
     choreography?.selectCharacter(id);
     choreography?.swap(`#pricing-${id} .package`);
     if(syncShowcase&&id==='websites')activateShowcase(lastWebsiteShowcase,false);
