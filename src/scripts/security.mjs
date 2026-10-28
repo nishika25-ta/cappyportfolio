@@ -2,6 +2,7 @@ const ALLOWED_SERVICE_IDS = Object.freeze(['websites', 'portfolios', 'resumes', 
 const ALLOWED_SHOWCASE_IDS = Object.freeze(['websites', 'business', 'pro', 'portfolios', 'resumes', 'food']);
 const ALLOWED_VIDEO_TYPES = Object.freeze(['video/mp4', 'video/webm', 'video/quicktime']);
 const SAFE_VIDEO_PATH_RE = /^\/videos\/[a-zA-Z0-9_-]+\.(mp4|webm|mov)$/i;
+const SAFE_ARTWORK_PATH_RE = /^\/artwork\/[a-zA-Z0-9_-]+\.(webp|png|jpg|jpeg)$/i;
 const SAFE_HASH_RE = /^#[a-zA-Z0-9_-]{1,64}$/;
 const CONTROL_AND_BIDI_RE = /[\u0000-\u001F\u007F-\u009F\u202A-\u202E\u2066-\u2069<>]/g;
 
@@ -137,6 +138,16 @@ export function isAllowedVideoSource(src, isLocalBlob = false) {
   }
   if (src.includes('..') || src.startsWith('//')) return false;
   return SAFE_VIDEO_PATH_RE.test(src);
+}
+
+/**
+ * Validates artwork/poster image URLs to prevent XSS/external image injection.
+ * Only allows relative paths in /artwork/ with safe image extensions.
+ */
+export function isAllowedArtworkSource(src) {
+  if (typeof src !== 'string' || !src) return false;
+  if (src.includes('..') || src.startsWith('//')) return false;
+  return SAFE_ARTWORK_PATH_RE.test(src);
 }
 
 /**

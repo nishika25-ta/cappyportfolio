@@ -9,6 +9,7 @@ import {getEnergyState} from './energy-state.mjs';
 import {parseServiceRoute,serviceForShowcase} from './service-navigation.mjs';
 import {createPointerQueue} from './motion-performance.mjs';
 import {
+  isAllowedArtworkSource,
   isAllowedServiceId,
   isAllowedShowcaseId,
   isAllowedVideoSource,
@@ -260,6 +261,36 @@ function mountPage() {
     listen(video,'error',()=>{const note=dialog.querySelector<HTMLElement>('.dialog-note');if(note){note.hidden=false;note.textContent='This video could not be played. Try an MP4 using H.264 video, or a WebM file.';}});
   }
 
+  const posterDialog=document.querySelector<HTMLDialogElement>('#poster-dialog');
+  const posterImg=document.querySelector<HTMLImageElement>('#dialog-poster');
+  let posterOpener:HTMLElement|undefined;
+  function openPoster(src:string,title:string,opener:HTMLElement){
+    if(!posterDialog||!posterImg||!isAllowedArtworkSource(src))return;
+    posterOpener=opener;
+    const safeTitle=sanitizePlainText(title,120);
+    document.getElementById('poster-dialog-title')!.textContent=safeTitle;
+    posterImg.src=src;
+    posterImg.alt=safeTitle;
+    posterDialog.showModal();
+    lenis?.stop();
+  }
+  document.querySelectorAll<HTMLElement>('[data-poster-src]').forEach(el=>listen(el,'click',raw=>{
+    const click=raw as MouseEvent;
+    if(click.button!==0||click.metaKey||click.ctrlKey||click.shiftKey||click.altKey)return;
+    raw.preventDefault();
+    openPoster(el.dataset.posterSrc!,el.dataset.posterTitle??'Studio poster',el);
+  }));
+  if(posterDialog&&posterImg){
+    posterDialog.setAttribute('data-lenis-prevent','');
+    listen(posterDialog.querySelector('.dialog-close')!,'click',()=>posterDialog.close());
+    listen(posterDialog,'click',(e)=>{if(e.target===posterDialog){const rect=posterDialog.getBoundingClientRect();const m=e as MouseEvent;if(m.clientX<rect.left||m.clientX>rect.right||m.clientY<rect.top||m.clientY>rect.bottom)posterDialog.close();}});
+    listen(posterDialog,'close',()=>{
+      posterImg.removeAttribute('src');
+      lenis?.start();
+      posterOpener?.focus();
+    });
+  }
+
   const context=gsap.context(()=>{
     if(!enabled)return;
     // Full motion, including Lenis, is always enabled for this site.
@@ -297,7 +328,7 @@ function mountPage() {
   listen(document,'visibilitychange',()=>visiblePreviews.forEach(updatePreviewPlayback));
   cleanups.push(()=>{previewObserver.disconnect();visiblePreviews.clear();});
   activateHash();
-  dispose=()=>{controller.abort();document.querySelectorAll<HTMLVideoElement>('.showcase-scene video').forEach(v=>v.pause());if(video){video.pause();video.removeAttribute('src');}if(dialog?.open)dialog.close();if(videoObjectUrl)URL.revokeObjectURL(videoObjectUrl);cleanups.reverse().forEach(fn=>fn());};
+  dispose=()=>{controller.abort();document.querySelectorAll<HTMLVideoElement>('.showcase-scene video').forEach(v=>v.pause());if(video){video.pause();video.removeAttribute('src');}if(dialog?.open)dialog.close();if(posterImg)posterImg.removeAttribute('src');if(posterDialog?.open)posterDialog.close();if(videoObjectUrl)URL.revokeObjectURL(videoObjectUrl);cleanups.reverse().forEach(fn=>fn());};
 }
 
 function ensureMounted(){

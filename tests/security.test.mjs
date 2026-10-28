@@ -5,6 +5,7 @@ import path from 'node:path';
 import {
   escapeHtml,
   escapeXml,
+  isAllowedArtworkSource,
   isAllowedServiceId,
   isAllowedShowcaseId,
   isAllowedVideoSource,
@@ -88,6 +89,12 @@ test('allowlist validators block DOM selector injection and unsafe video URLs', 
   assert.equal(isAllowedVideoSource('/videos/../../secret.mp4', false), false);
   assert.equal(isAllowedVideoSource('blob:https://example.com/1234-5678', true), true);
   assert.equal(isAllowedVideoSource('javascript:alert(1)', true), false);
+
+  assert.equal(isAllowedArtworkSource('/artwork/portfolios.webp'), true);
+  assert.equal(isAllowedArtworkSource('/artwork/portfolio-price.webp'), true);
+  assert.equal(isAllowedArtworkSource('javascript:alert(1)'), false);
+  assert.equal(isAllowedArtworkSource('https://evil.example/poster.webp'), false);
+  assert.equal(isAllowedArtworkSource('/artwork/../../secret.webp'), false);
 
   assert.equal(validateVideoFile({ type: 'video/mp4', size: 1024, name: 'demo.mp4' }).valid, true);
   assert.equal(validateVideoFile({ type: 'text/html', size: 1024, name: 'xss.html' }).valid, false);

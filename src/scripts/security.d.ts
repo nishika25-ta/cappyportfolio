@@ -9,6 +9,7 @@ export function isAllowedServiceId(id: unknown): id is 'websites' | 'portfolios'
 export function isAllowedShowcaseId(id: unknown): id is 'websites' | 'business' | 'pro' | 'portfolios' | 'resumes' | 'food';
 export function isSafeAnchorHash(hash: unknown): hash is string;
 export function isAllowedVideoSource(src: unknown, isLocalBlob?: boolean): boolean;
+export function isAllowedArtworkSource(src: unknown): boolean;
 export function validateVideoFile(
   file: File | null | undefined,
   maxBytes?: number

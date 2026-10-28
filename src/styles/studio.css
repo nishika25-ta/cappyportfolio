@@ -97,6 +97,11 @@
 .about-postcard{border:1px solid #25282050;box-shadow:7px 10px 0 #25282016}
 .faq-list details{transition:background .3s}
 .faq-list details[open]{background:#f8e5a730}
+.poster-dialog{padding:20px 22px 22px;border:2px solid var(--ink);border-radius:26px;background:var(--paper);width:min(1060px,94vw);max-height:92dvh;box-shadow:0 24px 60px #00000045,6px 8px 0 var(--ink);overflow:hidden}
+.poster-dialog .dialog-top{margin-bottom:14px;padding-bottom:12px;border-bottom:1.5px dashed #25282035}
+.poster-dialog .dialog-close{background:var(--butter);border:1.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink);font-weight:700;display:grid;place-items:center}
+.poster-dialog-body{display:flex;align-items:center;justify-content:center;max-height:calc(92dvh - 96px);overflow:auto;border-radius:16px;background:#f3efe0;border:1px solid #25282025;padding:8px}
+#dialog-poster{width:auto;height:auto;max-width:100%;max-height:calc(92dvh - 116px);object-fit:contain;border-radius:12px;display:block}
 
 @media(hover:hover){
  .hero-actions .button:hover{translate:0 -4px;box-shadow:0 8px 0 #25282025}
@@ -157,4 +162,8 @@
  .pricing-section .addons-table tbody td{padding:12px 16px}
  .pricing-section .addon-price-pill{font-size:13px;padding:5px 12px}
  .pricing-section .addon-price-sub{font-size:9.5px}
+ .poster-dialog{padding:14px 14px 16px;border-radius:20px;width:95vw}
+ .poster-dialog .dialog-top{margin-bottom:10px;padding-bottom:10px}
+ .poster-dialog-body{padding:4px;max-height:calc(90dvh - 80px)}
+ #dialog-poster{max-height:calc(90dvh - 92px);border-radius:9px}
 }
