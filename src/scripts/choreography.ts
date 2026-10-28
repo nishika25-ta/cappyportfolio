@@ -185,34 +185,34 @@ export function createChoreography(listen:Listen) {
     const heroTransition=gsap.timeline({scrollTrigger:{
       trigger:'.hero',
       start:()=>innerWidth<=800&&orbitScene.clientHeight>innerHeight?'bottom bottom':'top top',
-      end:()=>`+=${Math.round(innerHeight*(innerWidth<=800?1.05:1.4))}`,
+      end:()=>`+=${Math.round(innerHeight*(innerWidth<=800?.48:.68))}`,
       pin:true,
-      anticipatePin:1,
-      scrub:.35,
+      scrub:true,
       invalidateOnRefresh:true,
       onRefresh:refreshOrbit,
     }})
-      .to('.hero-type',{y:-65,rotation:-3,scale:.95,autoAlpha:0,duration:.65,ease:'power1.inOut'},.15)
-      .to('.hero-copy,.hero-mobile-intro,.hero-button,.cat-speech,.hero-windowbar,.hero-ticket,.hero-magic-position,.hero-edition,.studio-atmosphere,.motion-hint,.hero-meta,.hero-bottom,.cat-note,.miri-stamp',{y:-25,autoAlpha:0,duration:.65,ease:'power1.inOut'},.2)
-      .to('.hero-cat-left',{y:-35,rotation:-9,scale:.9,duration:.45,ease:'power1.inOut'},.25)
-      .to('.hero-cat-right',{y:-45,rotation:10,scale:.9,duration:.45,ease:'power1.inOut'},.3)
-      .to('.hero-cat-left',{xPercent:-45,y:35,rotation:12,scale:.7,duration:.75,ease:'power1.inOut'},.7)
-      .to('.hero-cat-right',{xPercent:45,y:35,rotation:-12,scale:.7,duration:.75,ease:'power1.inOut'},.75)
-      .to('.hero-satellite',{y:-150,scale:.7,autoAlpha:0,duration:.75,ease:'power1.inOut'},.25)
-      .to('.hero-float,.hero-spark,.hero-hand',{autoAlpha:0,duration:.6},.25)
-      .to('.hero-ground',{scaleY:8.5,transformOrigin:'50% 100%',duration:1.15,ease:'power1.inOut'},.38)
-      .to('.hero-orbit',{autoAlpha:1,duration:.65,ease:'power1.inOut'},.65)
-      .to('.orbit-center',{autoAlpha:1,y:0,scale:1,duration:.8,ease:'power2.out'},.95)
-      .to('.orbit-web',{x:0,y:0,scale:1,rotation:()=>orbitPosition(0).rotation,autoAlpha:1,duration:.8,ease:'power2.out'},1.1)
-      .to('.orbit-resume',{x:0,y:0,scale:1,rotation:()=>orbitPosition(1).rotation,autoAlpha:1,duration:.8,ease:'power2.out'},1.25)
-      .to('.orbit-food',{x:0,y:0,scale:1,rotation:()=>orbitPosition(2).rotation,autoAlpha:1,duration:.8,ease:'power2.out'},1.4)
-      .to(orbitTurn,{value:118,duration:1.25,ease:'power1.inOut',onUpdate:renderOrbit},1.9)
-      .to('.orbit-track',{rotation:-25,duration:1.8,ease:'none'},1.1)
-      .to('.universe-mascot',{scale:1,autoAlpha:1,duration:.85,ease:'power2.out'},.95)
-      .to('.universe-note,.universe-footer',{scale:1,autoAlpha:1,duration:.7,stagger:.1,ease:'power2.out'},1.3)
-      // Keep the finished universe readable before the page releases into services.
-      .to('.hero-orbit',{autoAlpha:1,duration:.45},3.15);
-    if(innerWidth<=800)heroTransition.to('.hero-cast',{autoAlpha:0,duration:.65,ease:'power1.inOut'},.55);
+      .to('.hero-type',{y:-48,rotation:-2,scale:.96,autoAlpha:0,duration:.48,ease:'power1.inOut'},.05)
+      .to('.hero-copy,.hero-mobile-intro,.hero-button,.cat-speech',{y:-18,autoAlpha:0,duration:.45,ease:'power1.inOut'},.08)
+      .to('.hero-windowbar,.hero-ticket,.hero-magic-position,.hero-edition,.studio-atmosphere,.motion-hint,.hero-meta,.hero-bottom,.cat-note,.miri-stamp',{autoAlpha:0,duration:.42,ease:'power1.inOut'},.08)
+      .to('.hero-cat-left',{y:-28,rotation:-8,scale:.92,duration:.32,ease:'power1.inOut'},.12)
+      .to('.hero-cat-right',{y:-34,rotation:8,scale:.92,duration:.32,ease:'power1.inOut'},.15)
+      .to('.hero-cat-left',{xPercent:-42,y:28,rotation:10,scale:.72,duration:.52,ease:'power1.inOut'},.44)
+      .to('.hero-cat-right',{xPercent:42,y:28,rotation:-10,scale:.72,duration:.52,ease:'power1.inOut'},.47)
+      .to('.hero-satellite',{y:-120,scale:.75,autoAlpha:0,duration:.48,ease:'power1.inOut'},.12)
+      .to('.hero-float,.hero-spark,.hero-hand',{autoAlpha:0,duration:.4},.12)
+      .to('.hero-ground',{scaleY:8.5,transformOrigin:'50% 100%',duration:.75,ease:'power1.inOut'},.22)
+      .to('.hero-orbit',{autoAlpha:1,duration:.45,ease:'power1.inOut'},.42)
+      .to('.orbit-center',{autoAlpha:1,y:0,scale:1,duration:.55,ease:'power2.out'},.62)
+      .to('.orbit-web',{x:0,y:0,scale:1,rotation:()=>orbitPosition(0).rotation,autoAlpha:1,duration:.55,ease:'power2.out'},.72)
+      .to('.orbit-resume',{x:0,y:0,scale:1,rotation:()=>orbitPosition(1).rotation,autoAlpha:1,duration:.55,ease:'power2.out'},.82)
+      .to('.orbit-food',{x:0,y:0,scale:1,rotation:()=>orbitPosition(2).rotation,autoAlpha:1,duration:.55,ease:'power2.out'},.92)
+      .to(orbitTurn,{value:118,duration:.8,ease:'power1.inOut',onUpdate:renderOrbit},1.15)
+      .to('.orbit-track',{rotation:-22,duration:1.15,ease:'none'},.72)
+      .to('.universe-mascot',{scale:1,autoAlpha:1,duration:.58,ease:'power2.out'},.62)
+      .to('.universe-note,.universe-footer',{scale:1,autoAlpha:1,duration:.48,stagger:.06,ease:'power2.out'},.88)
+      // Brief hold so the finished universe is readable before releasing into services.
+      .to('.hero-orbit',{autoAlpha:1,duration:.22},1.85);
+    if(innerWidth<=800)heroTransition.to('.hero-cast',{autoAlpha:0,duration:.45,ease:'power1.inOut'},.32);
     sceneLoop('.hero',gsap.to('.orbit-center em',{rotation:2,scale:1.015,duration:2.4,repeat:-1,yoyo:true,ease:'sine.inOut'}));
     }
 
@@ -221,10 +221,10 @@ export function createChoreography(listen:Listen) {
 
     const playground=document.querySelector('.playground-section');
     if(playground){
-      gsap.timeline({scrollTrigger:{trigger:playground,start:'top top',end:'+=65%',pin:matchMedia('(min-width:900px)').matches&&playground.getBoundingClientRect().height<=innerHeight,scrub:true,invalidateOnRefresh:true}})
-        .to('.playground-sky',{yPercent:-38,ease:'none'},0)
-        .to('.playground-cast',{scale:1.04,y:-8,ease:'none'},0)
-        .fromTo('.playground-doodles',{rotation:-5,scale:1.12},{rotation:5,scale:1.02,ease:'none'},0);
+      gsap.timeline({scrollTrigger:{trigger:playground,start:'top bottom',end:'bottom top',scrub:true,invalidateOnRefresh:true}})
+        .to('.playground-sky',{yPercent:-28,ease:'none'},0)
+        .to('.playground-cast',{scale:1.03,y:-6,ease:'none'},0)
+        .fromTo('.playground-doodles',{rotation:-4,scale:1.08},{rotation:4,scale:1.01,ease:'none'},0);
       const handLift=()=>innerWidth>600&&innerHeight<=680?-65:-105;
       gsap.set('.playground-hand',{xPercent:130,rotation:-45,y:handLift});
       const hint=gsap.timeline({delay:1,repeat:-1,repeatDelay:5,paused:true})

@@ -65,8 +65,8 @@
 
 /* This circular signature is also a real, keyboard-operable piece of play. */
 .hero-magic-position{position:absolute;z-index:7;bottom:142px;left:50%;translate:-50% 0;text-align:center;width:210px}
-.hero-magic-button{display:block;width:112px;height:112px;padding:0;border:0;background:none;border-radius:50%;margin-inline:auto;transition:scale .3s var(--ease);touch-action:manipulation}
-.hero-magic-button>svg{display:block;width:100%;height:100%;filter:drop-shadow(3px 4px 0 #25282025)}
+.hero-magic-button{display:block;width:112px;height:112px;padding:0;border:0;background:none;border-radius:50%;margin-inline:auto;box-shadow:3px 4px 0 #25282025;transition:scale .3s var(--ease);touch-action:manipulation}
+.hero-magic-button>svg{display:block;width:100%;height:100%}
 .hero-magic-ring text{font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:.9px;font-weight:600;fill:var(--ink)}
 .hero-magic-position>p{font-size:9px;line-height:1.4;margin-top:12px;max-width:200px;margin-inline:auto;color:var(--ink)}
 .hero-magic-button:focus-visible{outline:3px solid var(--ink);outline-offset:5px;scale:1.04}
