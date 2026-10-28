@@ -38,7 +38,7 @@ import {showcase} from '../data/showcase';
         {services.map((service,i)=><button type="button" class:list={['service-cat',`service-${service.id}`]} data-pick-service={service.id} data-character={service.id} aria-pressed={i===0?'true':'false'} aria-controls={`playground-${service.id} pricing-${service.id}`}>
           <div class="service-cat-top"><span class="service-from"><span class="service-index" aria-hidden="true">0{i+1} / </span>From RM{service.from}</span><span class="service-arrow"><Icon name="diagonal"/></span></div>
           <div class="service-cat-label"><span class="service-name">{service.title}</span><span class="service-short">{service.short}</span></div>
-          <div class="service-illustration"><div class="service-cursor-rig"><Cat variant={i===0?'developer':i===1?'resume':'chef'}/></div></div>
+          <div class="service-illustration"><div class="service-cursor-rig"><Cat variant={service.id==='websites'?'developer':service.id==='portfolios'?'orange':service.id==='resumes'?'resume':'chef'}/></div></div>
         </button>)}
       </div>
       <div class="services-bottom"><Icon name="paw"/><span>Pick a creative buddy. Give them a little personality.</span><Icon name="paw"/></div>
@@ -51,7 +51,7 @@ import {showcase} from '../data/showcase';
     <div class="playground-heading"><span class="section-kicker">A little creative chemistry</span><h2 id="playground-title" tabindex="-1">Turn up the<br/> purr-sonality.</h2></div>
     <div class="playground-stage">
       <div class="playground-cast" data-energy-mood="playful">
-      {services.map((s,i)=><div class="playground-character" id={`playground-${s.id}`} data-playground-character={s.id} hidden={i!==0}><Cat interactive variant={i===0?'developer':i===1?'resume':'chef'}/></div>)}
+      {services.map((s,i)=><div class="playground-character" id={`playground-${s.id}`} data-playground-character={s.id} hidden={i!==0}><Cat interactive variant={s.id==='websites'?'developer':s.id==='portfolios'?'orange':s.id==='resumes'?'resume':'chef'}/></div>)}
       <div class="playground-hand-track"><Hand class="playground-hand"/></div>
       <div class="pet-hearts" aria-hidden="true"><span>♡</span><span>♡</span><span>✦</span></div>
       </div>

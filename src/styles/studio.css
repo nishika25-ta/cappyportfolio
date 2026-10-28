@@ -20,7 +20,7 @@
 
 /* Tactile service cards; the illustration and headline are a single composition. */
 .services-section{padding-top:clamp(70px,7vw,110px);padding-bottom:50px}
-.services-section .service-cats{gap:22px}
+.services-section .service-cats{grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
 .services-section .service-cat{padding:18px 20px 10px;border:1px solid #25282030;border-radius:32px;background:#fbf8ed12;isolation:isolate;transition:background .35s,box-shadow .35s,border-color .35s}
 .services-section .service-cat::before{inset:0;border:0;border-radius:32px}
 .services-section .service-cat[aria-pressed=true]{background:#fbf8ed42;border-color:var(--ink);box-shadow:4px 6px 0 #2528201f}
@@ -53,6 +53,7 @@
 .work-section .showcase-copy .small-play{background:var(--butter);color:var(--ink)}
 .work-section .artwork-heading{margin-top:70px}
 .work-section .artwork-heading>span{color:#d2e4df}
+.work-section .artwork-gallery{grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
 .work-section .artwork-image{border:1px solid #fbf8ed40;border-radius:17px}
 .work-section .artwork-card>span{padding:4px 2px;font-size:13px}
 .work-section .private-examples{color:var(--ink);background:var(--butter);border-radius:24px;margin-top:40px}
@@ -63,12 +64,13 @@
 .pricing-section{background:linear-gradient(180deg,#ece8d9,var(--paper) 240px)}
 .pricing-section .package{border-radius:26px;border-color:#25282045;box-shadow:0 8px 0 #25282008;transition:box-shadow .35s,border-color .35s}
 .pricing-section .package-featured{box-shadow:5px 7px 0 #25282024;border-color:var(--ink)}
+#pricing-portfolios .package-featured{background:var(--scene-pink)}
 .pricing-section .package-meta{border-bottom:1px solid #2528202a;padding-bottom:18px;font-weight:600}
-.pricing-section .pricing-tabs{background:#fff5;padding:8px}
+.pricing-section .pricing-tabs{grid-template-columns:repeat(4,minmax(0,1fr));background:#fff5;padding:8px}
 .pricing-section .package .button{min-height:50px}
 .pricing-section .addons{display:block;margin-top:32px;padding:0;border:1.5px solid var(--ink);border-radius:24px;background:var(--paper);box-shadow:5px 7px 0 #25282018;overflow:hidden}
 .pricing-section .addons-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 24px;background:var(--butter);border-bottom:1.5px solid var(--ink)}
-#pricing-food .addons-header{background:var(--scene-pink)}
+#pricing-portfolios .addons-header,#pricing-food .addons-header{background:var(--scene-pink)}
 .pricing-section .addons-title{display:flex;align-items:center;gap:12px;padding:0;white-space:normal}
 .pricing-section .addons-badge{width:38px;height:38px;border-radius:50%;background:var(--paper);border:1.5px solid var(--ink);display:grid;place-items:center;box-shadow:2px 2px 0 var(--ink);flex-shrink:0;rotate:-8deg}
 .pricing-section .addons-badge .icon{width:18px;height:18px;color:#b65442}
@@ -90,7 +92,7 @@
 .pricing-section .addons-table tbody td{padding:14px 24px;text-align:right;vertical-align:middle}
 .pricing-section .addon-price-box{display:inline-flex;flex-direction:column;align-items:flex-end;gap:4px}
 .pricing-section .addon-price-pill{display:inline-flex;align-items:center;justify-content:center;margin:0;padding:6px 14px;border-radius:99px;border:1.5px solid var(--ink);background:var(--butter);font-family:Bricolage,sans-serif;font-size:14px;font-weight:800;line-height:1.1;letter-spacing:-.02em;color:var(--ink);white-space:nowrap;text-align:center;box-shadow:2px 2px 0 var(--ink)}
-#pricing-food .addon-price-pill{background:var(--scene-pink)}
+#pricing-portfolios .addon-price-pill,#pricing-food .addon-price-pill{background:var(--scene-pink)}
 .pricing-section .addon-price-sub{display:block;font-size:10px;font-weight:600;line-height:1.2;color:#252820b5;padding-right:4px;white-space:nowrap}
 .about-postcard{border:1px solid #25282050;box-shadow:7px 10px 0 #25282016}
 .faq-list details{transition:background .3s}
@@ -102,16 +104,21 @@
  .pricing-section .package:hover{border-color:var(--ink);box-shadow:5px 9px 0 #25282018}
  .work-section .showcase-tabs button:hover{translate:0 -3px;box-shadow:0 3px 0 #fbf8ed35}
 }
-@media(min-width:601px) and (max-width:1000px){
+@media(min-width:601px) and (max-width:1100px){
  .hero .miri-stamp{width:86px;height:86px;padding:8px 5px;gap:4px}
  .hero .miri-stamp>span{font-size:9px}
  .hero .miri-stamp>small{font-size:5px}
- .services-section .service-cats{gap:12px}
+ .services-section .service-cats{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
  .services-section .service-cat{padding:14px 12px 8px}
  .services-section .service-short{font-size:26px}
- .services-section .service-cat-label{min-height:205px}
+ .services-section .service-cat-label{min-height:175px}
+ .work-section .artwork-gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+}
+@media(max-width:800px){
+ .pricing-section .pricing-tabs{grid-template-columns:repeat(2,minmax(0,1fr));border-radius:24px}
 }
 @media(max-width:600px){
+ .work-section .artwork-gallery{grid-template-columns:minmax(0,1fr);gap:22px}
  .services-section #services-title{font-size:clamp(21px,5.7vw,34px)}
  .hero .miri-stamp{width:72px;height:72px;padding:7px 4px;gap:3px}
  .hero .miri-stamp>.icon{width:12px;height:12px;flex-basis:12px}
@@ -123,7 +130,7 @@
  .hero-actions .button{min-height:48px}
  .studio-orbits{opacity:.12}
  .services-section{padding-top:65px;padding-bottom:35px}
- .services-section .service-cats{gap:16px}
+ .services-section .service-cats{grid-template-columns:minmax(0,1fr);gap:16px}
  .services-section .service-cat{padding:16px;border-radius:26px}
  .services-section .service-cat::before{border-radius:26px}
  .services-section .service-cat-label{padding:10px 0 12px;min-height:0}

@@ -1,5 +1,5 @@
-const ALLOWED_SERVICE_IDS = Object.freeze(['websites', 'resumes', 'food']);
-const ALLOWED_SHOWCASE_IDS = Object.freeze(['websites', 'business', 'pro', 'resumes', 'food']);
+const ALLOWED_SERVICE_IDS = Object.freeze(['websites', 'portfolios', 'resumes', 'food']);
+const ALLOWED_SHOWCASE_IDS = Object.freeze(['websites', 'business', 'pro', 'portfolios', 'resumes', 'food']);
 const ALLOWED_VIDEO_TYPES = Object.freeze(['video/mp4', 'video/webm', 'video/quicktime']);
 const SAFE_VIDEO_PATH_RE = /^\/videos\/[a-zA-Z0-9_-]+\.(mp4|webm|mov)$/i;
 const SAFE_HASH_RE = /^#[a-zA-Z0-9_-]{1,64}$/;

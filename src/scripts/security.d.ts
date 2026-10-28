@@ -5,8 +5,8 @@ export function escapeHtml(input: unknown): string;
 export function escapeXml(input: unknown): string;
 export function safeJsonLd(data: unknown): string;
 export function sanitizeSiteUrl(rawUrl: unknown): string | undefined;
-export function isAllowedServiceId(id: unknown): id is 'websites' | 'resumes' | 'food';
-export function isAllowedShowcaseId(id: unknown): id is 'websites' | 'business' | 'pro' | 'resumes' | 'food';
+export function isAllowedServiceId(id: unknown): id is 'websites' | 'portfolios' | 'resumes' | 'food';
+export function isAllowedShowcaseId(id: unknown): id is 'websites' | 'business' | 'pro' | 'portfolios' | 'resumes' | 'food';
 export function isSafeAnchorHash(hash: unknown): hash is string;
 export function isAllowedVideoSource(src: unknown, isLocalBlob?: boolean): boolean;
 export function validateVideoFile(

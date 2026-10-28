@@ -30,6 +30,18 @@ export const services = [
     note:'Domain, hosting and renewals billed separately unless quoted. Complex features priced separately. The 48-hour target applies to Kitty Starter after complete materials, subject to availability.'
   },
   {
+    id:'portfolios', title:'Portfolios', label:'Show the world what you build.', short:'For IT pros, devs & designers.',
+    description:'A resume tells them what you did; a portfolio shows them what you can do. Custom personal websites for software engineers, IT grads, UI/UX designers and creatives.',
+    from:149, color:'pink', icon:'star', artwork:'/artwork/portfolios.webp', sheet:'/artwork/portfolio-price.webp',
+    packages:[
+      {name:'Purr-folio Starter',price:149,description:'A sharp 1-page home for grads, interns & junior talent.',features:['1-page responsive personal site','Skills, tech stack or design tools showcase','Up to 3 featured projects (GitHub, Figma or live links)','Downloadable CV button & social/contact links','1 revision round']},
+      {name:'Whisker Creator',price:249,description:'Built for developers & designers ready to stand out.',features:['Up to 3 responsive pages','Up to 6 project or case-study showcases','Custom developer dark/light or studio aesthetic','Smooth interactive motion & basic SEO setup','2 revision rounds']},
+      {name:'Neko Signature',price:449,description:'Bespoke interactive storytelling for senior pros & freelancers.',features:['Up to 5 responsive pages','Custom interactive animations & visual polish','Deep-dive case study & write-up layouts','Custom domain setup help included','3 revision rounds']}
+    ],
+    addons:[['Resume + Portfolio bundle','RM35'],['Extra project case study','RM35'],['Interactive motion upgrade','RM60'],['Custom domain setup','RM40'],['Content / project update','RM25 / update']],
+    note:'Send your CV, project links (GitHub, Behance, Figma or screenshots) and preferred vibe. Domain and hosting billed separately unless quoted. Typical turnaround: 2–4 days after complete materials.'
+  },
+  {
     id:'resumes',title:'Resumes / CVs',label:'Your next chapter starts here.',short:'Your experience. A sharper first impression.',
     description:'Clean, ATS-friendly resumes with the right words in the right places. Still you, just a little sharper.',
     from:19,color:'sky',icon:'document',artwork:'/artwork/resumes.webp',sheet:'/artwork/resume-price.webp',

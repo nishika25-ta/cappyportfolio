@@ -102,7 +102,7 @@ function mountPage() {
     });
     document.querySelectorAll<HTMLElement>('[data-character]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.character===id)));
     document.querySelectorAll<HTMLElement>('[data-playground-character]').forEach(actor=>actor.hidden=actor.dataset.playgroundCharacter!==id);
-    const labels:Record<string,string>={websites:'website',resumes:'resume',food:'food visual'};
+    const labels:Record<string,string>={websites:'website',portfolios:'portfolio',resumes:'resume',food:'food visual'};
     const explore=document.querySelector<HTMLElement>('[data-explore-packages]');
     if(explore&&labels[id]){
       explore.childNodes[0].textContent=`Explore ${labels[id]} packages `;
