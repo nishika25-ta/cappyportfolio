@@ -147,15 +147,18 @@ export function createChoreography(listen:Listen) {
     // A three-beat sticker carousel replaces the oversized character zoom.
     gsap.set('.hero-orbit',{autoAlpha:0});
     gsap.set('.orbit-center',{autoAlpha:0,y:45,scale:.85});
-    gsap.set('.orbit-item',{autoAlpha:0,scale:.72,rotation:-12});
     gsap.set('.orbit-spark,.universe-mascot,.universe-seal,.universe-note,.universe-footer',{scale:.85,autoAlpha:0});
     const orbitScene=document.querySelector<HTMLElement>('.hero')!;
     let orbitWidth=orbitScene.clientWidth,orbitHeight=orbitScene.clientHeight;
     const orbitTurn={value:0};
     const orbitPosition=(i:number)=>getCreativeOrbitLayout(orbitWidth,orbitHeight,0)[i];
+    document.querySelectorAll<HTMLElement>('.orbit-item').forEach((el,i)=>{
+      const pos=orbitPosition(i);
+      gsap.set(el,{x:pos.x,y:pos.y,rotation:pos.rotation,scale:.72,autoAlpha:0});
+    });
     const orbitSetters=Array.from(document.querySelectorAll<HTMLElement>('.orbit-item')).map(el=>({x:gsap.quickSetter(el,'x','px'),y:gsap.quickSetter(el,'y','px'),rotation:gsap.quickSetter(el,'rotation','deg')}));
     const renderOrbit=()=>getCreativeOrbitLayout(orbitWidth,orbitHeight,orbitTurn.value).forEach((position,i)=>{orbitSetters[i]?.x(position.x);orbitSetters[i]?.y(position.y);orbitSetters[i]?.rotation(position.rotation);});
-    const refreshOrbit=()=>{orbitWidth=orbitScene.clientWidth;orbitHeight=orbitScene.clientHeight;if(orbitTurn.value>0)renderOrbit();};
+    const refreshOrbit=()=>{orbitWidth=orbitScene.clientWidth;orbitHeight=orbitScene.clientHeight;renderOrbit();};
     listen(window,'resize',refreshOrbit);
     const compactHero=innerWidth<=800;
     // Read the phone scene before a brief, reversible handoff.

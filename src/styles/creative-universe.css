@@ -16,7 +16,10 @@
 .universe-seal{position:absolute;left:12%;top:15%;width:90px;height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1.5px dashed var(--ink);border-radius:50%;background:#d7ef79;rotate:-14deg;font-family:Bricolage,sans-serif;font-size:26px;line-height:1;z-index:3}
 .universe-seal small{font-family:'DM Sans',sans-serif;font-size:8px;margin-top:5px}
 .creative-universe .orbit-carousel{position:absolute;inset:0;transform-origin:50% 50%;z-index:4}
-.creative-universe .orbit-item{position:absolute;left:50%;top:45%;width:220px;translate:-50% -50%;perspective:none}
+.creative-universe .orbit-item{position:absolute;width:220px;perspective:none}
+.creative-universe .orbit-web{left:20%;top:43%;translate:-50% -50%}
+.creative-universe .orbit-resume{left:auto;right:18%;top:48%;translate:50% -50%}
+.creative-universe .orbit-food{left:28%;top:73%;translate:-50% -50%}
 .creative-universe .orbit-sticker{display:block;min-height:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none;text-align:left}
 .planet-content{--planet-color:var(--butter);position:relative;display:grid;grid-template-columns:66px minmax(0,1fr);grid-template-rows:auto auto auto;align-items:center;column-gap:8px;padding:14px 15px 12px;background:var(--planet-color);border:1.5px solid var(--ink);border-radius:12px;box-shadow:4px 5px 0 var(--ink);color:var(--ink)}
 .planet-content::before{content:'';position:absolute;left:35%;top:-10px;width:48px;height:18px;background:#fbf8eda8;border-inline:1px dashed #25282035;rotate:-7deg}
@@ -58,10 +61,10 @@
  .universe-seal{left:7%;top:32%;width:60px;height:60px;font-size:21px;rotate:-16deg}
  .universe-seal small{font-size:6px;margin-top:3px}
  .creative-universe .orbit-carousel{inset:0;display:block;transform-origin:center}
- .creative-universe .orbit-item{width:clamp(155px,44vw,220px);translate:0 0;min-width:0}
- .creative-universe .orbit-web{left:6%;top:43%}
- .creative-universe .orbit-resume{left:auto;right:6%;top:64%}
- .creative-universe .orbit-food{left:7%;top:79%}
+ .creative-universe .orbit-item{width:clamp(145px,42vw,195px);translate:0 0;min-width:0}
+ .creative-universe .orbit-web{left:5%;top:42%}
+ .creative-universe .orbit-resume{left:auto;right:5%;top:59%}
+ .creative-universe .orbit-food{left:6%;top:77%}
  .creative-universe .orbit-web .orbit-sticker{rotate:-9deg}
  .creative-universe .orbit-resume .orbit-sticker{rotate:7deg}
  .creative-universe .orbit-food .orbit-sticker{rotate:-6deg}
@@ -85,27 +88,28 @@
  .creative-universe .orbit-center p{font-size:32px}
  .creative-universe .orbit-center>small{font-size:10px}
  .universe-mascot{width:215px;top:39%;left:58%}
- .creative-universe .orbit-item{width:148px}
+ .creative-universe .orbit-item{width:140px}
  .planet-content{grid-template-columns:43px minmax(0,1fr);padding-inline:8px}
  .creative-universe .planet-content>strong{font-size:18px}
- .creative-universe .orbit-web{left:6%;top:45%}
- .creative-universe .orbit-resume{top:65%}
+ .creative-universe .orbit-web{left:5%;top:43%}
+ .creative-universe .orbit-resume{left:auto;right:5%;top:59%}
+ .creative-universe .orbit-food{left:5%;top:76%}
  .universe-note{font-size:19px;bottom:10%}
 }
 @media(max-width:800px) and (max-height:650px){
  .universe-board::before{top:85px}
- .creative-universe .orbit-center{top:30%}
- .creative-universe .orbit-center p{font-size:29px;margin-top:8px}
+ .creative-universe .orbit-center{top:28%}
+ .creative-universe .orbit-center p{font-size:28px;margin-top:8px}
  .creative-universe .orbit-center>small{display:none}
- .universe-mascot{width:180px;top:45%;left:57%}
- .universe-seal{top:43%;width:47px;height:47px;font-size:17px}
- .creative-universe .orbit-item{width:140px}
- .creative-universe .orbit-web{top:50%}
- .creative-universe .orbit-resume{top:68%}
- .creative-universe .orbit-food{top:82%}
+ .universe-mascot{width:175px;top:42%;left:57%}
+ .universe-seal{top:40%;width:47px;height:47px;font-size:17px}
+ .creative-universe .orbit-item{width:136px}
+ .creative-universe .orbit-web{left:5%;top:46%}
+ .creative-universe .orbit-resume{left:auto;right:5%;top:63%}
+ .creative-universe .orbit-food{left:5%;top:80%}
  .planet-art{height:34px}
  .planet-cat{width:48px;height:48px;top:-7px}
  .planet-ticket-number{display:none}
- .universe-note{font-size:19px;bottom:9%}
+ .universe-note{font-size:18px;bottom:8%}
  .universe-cat-label{display:none}
 }
