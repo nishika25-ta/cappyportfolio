@@ -52,24 +52,32 @@
 html[data-motion=reduced] .site-header *{animation:none!important;transition:none!important}
 
 /* Only the pill floats over the page; the wrapper paints no strip and reserves no band. */
+html{scroll-padding-top:calc(112px + env(safe-area-inset-top,0px))}
+.site-header{
+ position:fixed;
+ top:0;
+ left:0;
+ right:0;
+ z-index:1000;
+ height:auto;
+ padding:calc(14px + env(safe-area-inset-top,0px)) max(clamp(18px,3vw,54px),env(safe-area-inset-right,0px)) 14px max(clamp(18px,3vw,54px),env(safe-area-inset-left,0px));
+ background:transparent;
+ overflow:visible;
+ pointer-events:none;
+}
+.site-header .header-shell{margin:0 auto;border-radius:999px;overflow:visible;min-width:0;pointer-events:auto}
+#main>.hero:not(.hero-stage){padding-top:calc(132px + env(safe-area-inset-top,0px))}
+#main>.about-page-hero,#main>.not-found{padding-top:calc(126px + env(safe-area-inset-top,0px))}
 @media(max-width:1000px){
- html{scroll-padding-top:calc(112px + env(safe-area-inset-top,0px))}
  .site-header{
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  z-index:1000;
-  height:auto;
-  padding:calc(12px + env(safe-area-inset-top,0px)) max(18px,env(safe-area-inset-right,0px)) 18px max(18px,env(safe-area-inset-left,0px));
-  background:transparent;
-  overflow:visible;
-  pointer-events:none;
+  padding:calc(12px + env(safe-area-inset-top,0px)) max(18px,env(safe-area-inset-right,0px)) 14px max(18px,env(safe-area-inset-left,0px));
  }
- .site-header .header-shell{margin:0 auto;border-radius:999px;overflow:visible;min-width:0;pointer-events:auto}
  .site-header nav{max-height:calc(100dvh - 130px - env(safe-area-inset-top,0px));overflow-y:auto}
- #main>.hero:not(.hero-stage){padding-top:calc(132px + env(safe-area-inset-top,0px))}
- #main>.about-page-hero,#main>.not-found{padding-top:calc(120px + env(safe-area-inset-top,0px))}
+}
+@media(max-width:600px){
+ .site-header{
+  padding:calc(10px + env(safe-area-inset-top,0px)) max(14px,env(safe-area-inset-right,0px)) 10px max(14px,env(safe-area-inset-left,0px));
+ }
 }
 
 /* Equal side tracks keep the navigation centered in the pill. */
