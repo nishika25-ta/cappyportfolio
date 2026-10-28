@@ -147,79 +147,73 @@ export function createChoreography(listen:Listen) {
       ScrollTrigger.create({trigger:'.hero',start:'top bottom',end:'bottom top',onToggle:s=>hand.paused(!s.isActive)});
     }
 
-    // Smooth, unpinned scroll handoff from Hero into the Creative Universe section.
-    gsap.timeline({scrollTrigger:{
+    // A three-beat sticker carousel replaces the oversized character zoom.
+    gsap.set('.hero-orbit',{autoAlpha:0});
+    gsap.set('.orbit-center',{autoAlpha:0,y:45,scale:.85});
+    gsap.set('.universe-mascot,.universe-note,.universe-footer',{scale:.85,autoAlpha:0});
+    const orbitScene=document.querySelector<HTMLElement>('.hero')!;
+    let orbitWidth=orbitScene.clientWidth,orbitHeight=orbitScene.clientHeight;
+    const orbitTurn={value:0};
+    let baseOrbit=getCreativeOrbitLayout(orbitWidth,orbitHeight,0);
+    const orbitPosition=(i:number)=>baseOrbit[i];
+    document.querySelectorAll<HTMLElement>('.orbit-item').forEach((el,i)=>{
+      const pos=orbitPosition(i);
+      gsap.set(el,{x:0,y:24,rotation:pos.rotation,scale:.72,autoAlpha:0});
+    });
+    const orbitSetters=Array.from(document.querySelectorAll<HTMLElement>('.orbit-item')).map(el=>({
+      x:gsap.quickSetter(el,'x','px'),
+      y:gsap.quickSetter(el,'y','px'),
+      rotation:gsap.quickSetter(el,'rotation','deg'),
+    }));
+    const renderOrbit=()=>{
+      const current=getCreativeOrbitLayout(orbitWidth,orbitHeight,orbitTurn.value);
+      current.forEach((position,i)=>{
+        const base=baseOrbit[i]??position;
+        orbitSetters[i]?.x(position.x-base.x);
+        orbitSetters[i]?.y(position.y-base.y);
+        orbitSetters[i]?.rotation(position.rotation);
+      });
+    };
+    const refreshOrbit=()=>{
+      orbitWidth=orbitScene.clientWidth;
+      orbitHeight=orbitScene.clientHeight;
+      baseOrbit=getCreativeOrbitLayout(orbitWidth,orbitHeight,0);
+      renderOrbit();
+    };
+    listen(window,'resize',refreshOrbit);
+    // Read the phone scene before a smooth, reversible handoff.
+    const heroTransition=gsap.timeline({scrollTrigger:{
       trigger:'.hero',
-      start:'top top',
-      end:'bottom top',
-      scrub:true,
+      start:()=>innerWidth<=800&&orbitScene.clientHeight>innerHeight?'bottom bottom':'top top',
+      end:()=>`+=${Math.round(innerHeight*(innerWidth<=800?1.05:1.4))}`,
+      pin:true,
+      anticipatePin:1,
+      scrub:.35,
       invalidateOnRefresh:true,
+      onRefresh:refreshOrbit,
     }})
-      .to('.hero-type',{y:-28,ease:'none'},0)
-      .to('.hero-cat-left',{y:-18,rotation:-3,ease:'none'},0)
-      .to('.hero-cat-right',{y:-22,rotation:3,ease:'none'},0)
-      .to('.hero-ground',{scaleY:1.18,transformOrigin:'50% 100%',ease:'none'},0);
-    }
-
-    const orbitScene=document.querySelector<HTMLElement>('.creative-universe');
-    if(orbitScene){
-      let orbitWidth=orbitScene.clientWidth,orbitHeight=orbitScene.clientHeight;
-      const orbitTurn={value:0};
-      let baseOrbit=getCreativeOrbitLayout(orbitWidth,orbitHeight,0);
-      const orbitItems=Array.from(orbitScene.querySelectorAll<HTMLElement>('.orbit-item'));
-      const orbitSetters=orbitItems.map(el=>({
-        x:gsap.quickSetter(el,'x','px'),
-        y:gsap.quickSetter(el,'y','px'),
-        rotation:gsap.quickSetter(el,'rotation','deg'),
-      }));
-      const renderOrbit=()=>{
-        const current=getCreativeOrbitLayout(orbitWidth,orbitHeight,orbitTurn.value);
-        current.forEach((position,i)=>{
-          const base=baseOrbit[i]??position;
-          orbitSetters[i]?.x(position.x-base.x);
-          orbitSetters[i]?.y(position.y-base.y);
-          orbitSetters[i]?.rotation(position.rotation);
-        });
-      };
-      const refreshOrbit=()=>{
-        orbitWidth=orbitScene.clientWidth;
-        orbitHeight=orbitScene.clientHeight;
-        baseOrbit=getCreativeOrbitLayout(orbitWidth,orbitHeight,0);
-        renderOrbit();
-      };
-      refreshOrbit();
-      listen(window,'resize',refreshOrbit);
-
-      gsap.from('.creative-universe .orbit-center',{
-        y:34,autoAlpha:0,duration:.75,ease:'power3.out',
-        scrollTrigger:{trigger:orbitScene,start:'top 84%',once:true},
-      });
-      gsap.from('.creative-universe .universe-mascot',{
-        scale:.86,y:24,autoAlpha:0,duration:.8,ease:'back.out(1.4)',
-        scrollTrigger:{trigger:orbitScene,start:'top 80%',once:true},
-      });
-      gsap.from(orbitItems,{
-        scale:.88,y:28,autoAlpha:0,duration:.75,stagger:.1,ease:'back.out(1.35)',
-        scrollTrigger:{trigger:orbitScene,start:'top 76%',once:true},
-      });
-      gsap.from('.creative-universe .universe-note,.creative-universe .universe-footer',{
-        y:20,autoAlpha:0,duration:.65,stagger:.08,ease:'power2.out',
-        scrollTrigger:{trigger:orbitScene,start:'top 70%',once:true},
-      });
-
-      gsap.timeline({scrollTrigger:{
-        trigger:orbitScene,
-        start:'top bottom',
-        end:'bottom top',
-        scrub:true,
-        invalidateOnRefresh:true,
-        onRefresh:refreshOrbit,
-      }})
-        .to(orbitTurn,{value:118,ease:'none',onUpdate:renderOrbit},0)
-        .to('.creative-universe .orbit-track',{rotation:-16,ease:'none'},0)
-        .fromTo('.creative-universe .universe-mascot',{y:14},{y:-14,ease:'none'},0);
-
-      sceneLoop('.creative-universe',gsap.to('.orbit-center em',{rotation:2,scale:1.015,duration:2.4,repeat:-1,yoyo:true,ease:'sine.inOut'}));
+      .to('.hero-type',{y:-65,rotation:-3,scale:.95,autoAlpha:0,duration:.65,ease:'power1.inOut'},.15)
+      .to('.hero-copy,.hero-mobile-intro,.hero-button,.cat-speech,.hero-windowbar,.hero-ticket,.hero-magic-position,.hero-edition,.studio-atmosphere,.motion-hint,.hero-meta,.hero-bottom,.cat-note,.miri-stamp',{y:-25,autoAlpha:0,duration:.65,ease:'power1.inOut'},.2)
+      .to('.hero-cat-left',{y:-35,rotation:-9,scale:.9,duration:.45,ease:'power1.inOut'},.25)
+      .to('.hero-cat-right',{y:-45,rotation:10,scale:.9,duration:.45,ease:'power1.inOut'},.3)
+      .to('.hero-cat-left',{xPercent:-45,y:35,rotation:12,scale:.7,duration:.75,ease:'power1.inOut'},.7)
+      .to('.hero-cat-right',{xPercent:45,y:35,rotation:-12,scale:.7,duration:.75,ease:'power1.inOut'},.75)
+      .to('.hero-satellite',{y:-150,scale:.7,autoAlpha:0,duration:.75,ease:'power1.inOut'},.25)
+      .to('.hero-float,.hero-spark,.hero-hand',{autoAlpha:0,duration:.6},.25)
+      .to('.hero-ground',{scaleY:8.5,transformOrigin:'50% 100%',duration:1.15,ease:'power1.inOut'},.38)
+      .to('.hero-orbit',{autoAlpha:1,duration:.65,ease:'power1.inOut'},.65)
+      .to('.orbit-center',{autoAlpha:1,y:0,scale:1,duration:.8,ease:'power2.out'},.95)
+      .to('.orbit-web',{x:0,y:0,scale:1,rotation:()=>orbitPosition(0).rotation,autoAlpha:1,duration:.8,ease:'power2.out'},1.1)
+      .to('.orbit-resume',{x:0,y:0,scale:1,rotation:()=>orbitPosition(1).rotation,autoAlpha:1,duration:.8,ease:'power2.out'},1.25)
+      .to('.orbit-food',{x:0,y:0,scale:1,rotation:()=>orbitPosition(2).rotation,autoAlpha:1,duration:.8,ease:'power2.out'},1.4)
+      .to(orbitTurn,{value:118,duration:1.25,ease:'power1.inOut',onUpdate:renderOrbit},1.9)
+      .to('.orbit-track',{rotation:-25,duration:1.8,ease:'none'},1.1)
+      .to('.universe-mascot',{scale:1,autoAlpha:1,duration:.85,ease:'power2.out'},.95)
+      .to('.universe-note,.universe-footer',{scale:1,autoAlpha:1,duration:.7,stagger:.1,ease:'power2.out'},1.3)
+      // Keep the finished universe readable before the page releases into services.
+      .to('.hero-orbit',{autoAlpha:1,duration:.45},3.15);
+    if(innerWidth<=800)heroTransition.to('.hero-cast',{autoAlpha:0,duration:.65,ease:'power1.inOut'},.55);
+    sceneLoop('.hero',gsap.to('.orbit-center em',{rotation:2,scale:1.015,duration:2.4,repeat:-1,yoyo:true,ease:'sine.inOut'}));
     }
 
     if(document.querySelector('.service-cats'))gsap.from('.service-illustration',{y:55,scale:.9,autoAlpha:0,duration:.75,stagger:.1,ease:'back.out(1.4)',scrollTrigger:{trigger:'.service-cats',start:'top 88%',once:true}});
