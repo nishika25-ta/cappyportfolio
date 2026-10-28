@@ -162,9 +162,9 @@ export function createChoreography(listen:Listen) {
     const heroTransition=gsap.timeline({scrollTrigger:{
       trigger:'.hero',
       start:()=>compactHero&&orbitScene.clientHeight>innerHeight?'bottom bottom':'top top',
-      end:()=>`+=${innerHeight*(compactHero?1.25:1.4)}`,
+      end:()=>`+=${innerHeight*(compactHero?.35:1.4)}`,
       pin:innerHeight>650,
-      scrub:.9,
+      scrub:compactHero?.35:.9,
       invalidateOnRefresh:true,
       onRefresh:refreshOrbit,
     }})

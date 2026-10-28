@@ -42,8 +42,8 @@ try{
       return {start:trigger.start,end:trigger.end,pinned:!!trigger.pin,heroHeight:trigger.trigger.clientHeight,scrub:trigger.vars.scrub};
     });
     if(width<=800)assert.ok(settings.start>=settings.heroHeight-height-2,'The phone cast remains visible until the bottom of the hero reaches the viewport.');
-    assert.ok(settings.end-settings.start>=height,'The handoff retains enough distance for a smooth entrance.');
-    assert.ok(settings.end-settings.start<=height*1.5,'The pinned scene releases within one and a half screenfuls.');
+    assert.ok(width<=800?settings.end-settings.start>=height*.3:settings.end-settings.start>=height,'The handoff retains enough distance for a smooth entrance.');
+    assert.ok(settings.end-settings.start<=height*(width<=800?.7:1.5),'The pinned scene releases within the screen budget.');
     if(height<=650){
       assert.equal(settings.pinned,false,'Short landscape screens scroll naturally without trapping content below the viewport.');
       assert.deepEqual(errors,[]);
