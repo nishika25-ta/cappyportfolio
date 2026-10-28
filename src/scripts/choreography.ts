@@ -32,7 +32,12 @@ export function createChoreography(listen:Listen) {
   const observer=new IntersectionObserver(entries=>{
     for(const entry of entries){
       const actor=actors.get(entry.target);
-      if(actor){actor.visible=entry.isIntersecting;actor.timeline.paused(!entry.isIntersecting||document.hidden);entry.target.classList.toggle('is-in-view',entry.isIntersecting&&!document.hidden);}
+      if(actor){
+        const isHidden=Boolean(entry.target.closest('[hidden]'));
+        actor.visible=entry.isIntersecting&&!isHidden;
+        actor.timeline.paused(!actor.visible||document.hidden);
+        entry.target.classList.toggle('is-in-view',actor.visible&&!document.hidden);
+      }
       loopScenes.get(entry.target)?.forEach(loop=>loop.paused(!entry.isIntersecting||document.hidden));
     }
   },{rootMargin:'80px'});
@@ -55,7 +60,7 @@ export function createChoreography(listen:Listen) {
         ctx.add(()=>{gsap.fromTo(cinemaCat.querySelector('.cinema-cat-crop'),{y:0},{y:-9,duration:.25,repeat:1,yoyo:true,ease:'power2.out',overwrite:true});});
       });
     }
-    gsap.fromTo('.scroll-progress',{scaleX:0},{scaleX:1,ease:'none',scrollTrigger:{start:0,end:'max',scrub:.15}});
+    gsap.fromTo('.scroll-progress',{scaleX:0},{scaleX:1,ease:'none',scrollTrigger:{start:0,end:'max',scrub:true}});
     document.querySelectorAll<HTMLElement>('main h2').forEach(heading=>{
       const accessibleName=heading.innerText.replace(/\s+/g,' ').trim();
       const split=new SplitText(heading,{type:'words',wordsClass:'motion-word',aria:'auto'});
@@ -63,8 +68,8 @@ export function createChoreography(listen:Listen) {
       textSplits.push(split);
       gsap.from(split.words,{yPercent:65,rotation:5,autoAlpha:0,duration:.85,stagger:.055,ease:'power3.out',scrollTrigger:{trigger:heading,start:'top 94%',toggleActions:'play none none reverse'}});
     });
-    document.querySelectorAll<HTMLElement>('.artwork-image img,.about-postcard img').forEach((image,i)=>{
-      gsap.fromTo(image,{yPercent:-5,scale:1.12},{yPercent:5,scale:1.12,ease:'none',scrollTrigger:{trigger:image.parentElement,start:'top bottom',end:'bottom top',scrub:.8+i*.1}});
+    document.querySelectorAll<HTMLElement>('.artwork-image img,.about-postcard img').forEach(image=>{
+      gsap.fromTo(image,{yPercent:-5,scale:1.12},{yPercent:5,scale:1.12,ease:'none',scrollTrigger:{trigger:image.parentElement,start:'top bottom',end:'bottom top',scrub:true}});
     });
     document.querySelectorAll<HTMLElement>('.pricing-panel').forEach(panel=>{
       const reveal=gsap.timeline({paused:true}).from(panel.querySelectorAll('.package'),{y:70,rotation:3,scale:.94,autoAlpha:0,duration:.85,stagger:.13,ease:'power3.out',immediateRender:false,clearProps:'transform,opacity,visibility'});
@@ -74,7 +79,7 @@ export function createChoreography(listen:Listen) {
       sceneLoop('.work-section',gsap.to(cat,{y:-12,rotation:i%2?-4:4,duration:2.2+i*.2,repeat:-1,yoyo:true,ease:'sine.inOut'}));
     });
     // Articulated characters: breathing, head turns, tails, blinks and typing paws.
-    document.querySelectorAll<SVGSVGElement>('main .cat,.site-footer .cat').forEach((cat,i)=>{
+    document.querySelectorAll<SVGSVGElement>('main .cat:not(.planet-cat .cat):not(.hero-satellite .cat),.site-footer .cat').forEach((cat,i)=>{
       const body=cat.querySelector('.cat-body');
       const head=cat.querySelector('.cat-head');
       const tail=cat.querySelector('.cat-tail');
@@ -143,23 +148,22 @@ export function createChoreography(listen:Listen) {
       ScrollTrigger.create({trigger:'.hero',start:'top bottom',end:'bottom top',onToggle:s=>hand.paused(!s.isActive)});
     }
 
-    const ground=document.querySelector('.hero-ground path');
-    if(ground)sceneLoop('.hero',gsap.to(ground,{attr:{d:'M0 70C280 170 480 10 760 90S1200 145 1440 60V180H0Z'},duration:4.5,repeat:-1,yoyo:true,ease:'sine.inOut'}));
     // A three-beat sticker carousel replaces the oversized character zoom.
     gsap.set('.hero-orbit',{autoAlpha:0});
     gsap.set('.orbit-center',{autoAlpha:0,y:45,scale:.85});
-    gsap.set('.orbit-spark,.universe-mascot,.universe-seal,.universe-note,.universe-footer',{scale:.85,autoAlpha:0});
+    gsap.set('.universe-mascot,.universe-seal,.universe-note,.universe-footer',{scale:.85,autoAlpha:0});
     const orbitScene=document.querySelector<HTMLElement>('.hero')!;
     let orbitWidth=orbitScene.clientWidth,orbitHeight=orbitScene.clientHeight;
     const orbitTurn={value:0};
-    const orbitPosition=(i:number)=>getCreativeOrbitLayout(orbitWidth,orbitHeight,0)[i];
+    let baseOrbit=getCreativeOrbitLayout(orbitWidth,orbitHeight,0);
+    const orbitPosition=(i:number)=>baseOrbit[i];
     document.querySelectorAll<HTMLElement>('.orbit-item').forEach((el,i)=>{
       const pos=orbitPosition(i);
       gsap.set(el,{x:pos.x,y:pos.y,rotation:pos.rotation,scale:.72,autoAlpha:0});
     });
     const orbitSetters=Array.from(document.querySelectorAll<HTMLElement>('.orbit-item')).map(el=>({x:gsap.quickSetter(el,'x','px'),y:gsap.quickSetter(el,'y','px'),rotation:gsap.quickSetter(el,'rotation','deg')}));
     const renderOrbit=()=>getCreativeOrbitLayout(orbitWidth,orbitHeight,orbitTurn.value).forEach((position,i)=>{orbitSetters[i]?.x(position.x);orbitSetters[i]?.y(position.y);orbitSetters[i]?.rotation(position.rotation);});
-    const refreshOrbit=()=>{orbitWidth=orbitScene.clientWidth;orbitHeight=orbitScene.clientHeight;renderOrbit();};
+    const refreshOrbit=()=>{orbitWidth=orbitScene.clientWidth;orbitHeight=orbitScene.clientHeight;baseOrbit=getCreativeOrbitLayout(orbitWidth,orbitHeight,0);renderOrbit();};
     listen(window,'resize',refreshOrbit);
     const compactHero=innerWidth<=800;
     // Read the phone scene before a brief, reversible handoff.
@@ -168,7 +172,7 @@ export function createChoreography(listen:Listen) {
       start:()=>compactHero&&orbitScene.clientHeight>innerHeight?'bottom bottom':'top top',
       end:()=>`+=${innerHeight*(compactHero?.35:1.4)}`,
       pin:innerHeight>650,
-      scrub:compactHero?.35:.9,
+      scrub:true,
       invalidateOnRefresh:true,
       onRefresh:refreshOrbit,
     }})
@@ -186,7 +190,6 @@ export function createChoreography(listen:Listen) {
       .to('.orbit-web',{x:()=>orbitPosition(0).x,y:()=>orbitPosition(0).y,scale:1,rotation:()=>orbitPosition(0).rotation,autoAlpha:1,duration:.85,ease:'power2.out'},1.1)
       .to('.orbit-resume',{x:()=>orbitPosition(1).x,y:()=>orbitPosition(1).y,scale:1,rotation:()=>orbitPosition(1).rotation,autoAlpha:1,duration:.85,ease:'power2.out'},1.25)
       .to('.orbit-food',{x:()=>orbitPosition(2).x,y:()=>orbitPosition(2).y,scale:1,rotation:()=>orbitPosition(2).rotation,autoAlpha:1,duration:.85,ease:'power2.out'},1.4)
-      .to('.orbit-spark',{scale:1,autoAlpha:1,rotation:45,duration:.7,stagger:.1,ease:'power2.out'},1.55)
       .to(orbitTurn,{value:118,duration:1.25,ease:'power1.inOut',onUpdate:renderOrbit},1.95)
       .to('.orbit-track',{rotation:-25,duration:1.8,ease:'none'},1.1)
       .to('.universe-mascot',{scale:1,autoAlpha:1,duration:.9,ease:'power2.out'},.95)
@@ -199,19 +202,13 @@ export function createChoreography(listen:Listen) {
 
     if(document.querySelector('.service-cats'))gsap.from('.service-illustration',{y:140,scale:.45,rotation:-15,duration:1.3,stagger:.16,ease:'elastic.out(1,.65)',scrollTrigger:{trigger:'.service-cats',start:'top 88%',once:true}});
     document.querySelectorAll('.service-cat .cat').forEach((cat,i)=>sceneLoop('.service-cats',gsap.to(cat,{y:-12,rotation:i%2?-3:3,duration:1.2+i*.17,delay:i*.2,repeat:-1,yoyo:true,ease:'sine.inOut'})));
-    const sky=document.querySelector('.playground-sky path');
-    if(sky)sceneLoop('.playground-section',gsap.to(sky,{attr:{d:'M0 0H1440V155C1120 250 1060 40 740 145S280 80 0 160Z'},duration:5,repeat:-1,yoyo:true,ease:'sine.inOut'}));
 
     const playground=document.querySelector('.playground-section');
     if(playground){
-      gsap.timeline({scrollTrigger:{trigger:playground,start:'top top',end:'+=65%',pin:matchMedia('(min-width:900px)').matches&&playground.getBoundingClientRect().height<=innerHeight,scrub:.6,invalidateOnRefresh:true}})
+      gsap.timeline({scrollTrigger:{trigger:playground,start:'top top',end:'+=65%',pin:matchMedia('(min-width:900px)').matches&&playground.getBoundingClientRect().height<=innerHeight,scrub:true,invalidateOnRefresh:true}})
         .to('.playground-sky',{yPercent:-38,ease:'none'},0)
         .to('.playground-cast',{scale:1.04,y:-8,ease:'none'},0)
         .fromTo('.playground-doodles',{rotation:-5,scale:1.12},{rotation:5,scale:1.02,ease:'none'},0);
-      document.querySelectorAll('.playground-doodles path').forEach((path,i)=>{
-        const length=(path as SVGPathElement).getTotalLength();
-        sceneLoop('.playground-section',gsap.fromTo(path,{strokeDasharray:`${length*.55} ${length*.45}`,strokeDashoffset:0},{strokeDashoffset:-length,duration:7+i,repeat:-1,ease:'none'}));
-      });
       const handLift=()=>innerWidth>600&&innerHeight<=680?-65:-105;
       gsap.set('.playground-hand',{xPercent:130,rotation:-45,y:handLift});
       const hint=gsap.timeline({delay:1,repeat:-1,repeatDelay:5,paused:true})
@@ -236,7 +233,7 @@ export function createChoreography(listen:Listen) {
     entrance('.showcase-player',{rotation:-5,scale:.88,y:70,duration:1.2,ease:'power3.out',scrollTrigger:{trigger:'.showcase-player',start:'top 90%',once:true}});
     entrance('.artwork-card',{y:90,rotation:7,scale:.9,duration:1.1,stagger:.13,ease:'power3.out',scrollTrigger:{trigger:'.artwork-gallery',start:'top 90%',once:true}});
     entrance('.pricing-tabs',{scaleX:.8,y:30,duration:1,ease:'elastic.out(1,.8)',scrollTrigger:{trigger:'.pricing-tabs',start:'top 90%',once:true}});
-    entrance('.about-art',{rotation:5,y:80,ease:'none',scrollTrigger:{trigger:'.about-section',start:'top bottom',end:'center center',scrub:.5}});
+    entrance('.about-art',{rotation:5,y:80,ease:'none',scrollTrigger:{trigger:'.about-section',start:'top bottom',end:'center center',scrub:true}});
     entrance('.faq-cat',{x:80,rotation:20,duration:1.3,ease:'elastic.out(1,.7)',scrollTrigger:{trigger:'.faq-section',start:'top 80%',once:true}});
     entrance('.contact-cat',{y:145,rotation:-18,scale:.65,duration:1.5,ease:'elastic.out(1,.75)',scrollTrigger:{trigger:'.contact-main',start:'top 85%',once:true}});
     entrance('.contact-main h2',{y:80,rotation:4,duration:1,ease:'power3.out',scrollTrigger:{trigger:'.contact-main',start:'top 85%',once:true}});
@@ -279,6 +276,13 @@ export function createChoreography(listen:Listen) {
     if(!isAllowedServiceId(id))return;
     character=id;
     if(reduced)return;
+    actors.forEach((actor,cat)=>{
+      if(cat.closest('.playground-section')){
+        const active=cat.closest(`[data-playground-character="${id}"]`)!==null;
+        actor.visible=active;
+        actor.timeline.paused(!active||document.hidden);
+      }
+    });
     ctx.add(()=>{
       const selected=document.querySelector(`[data-character="${id}"] .cat-body`);
       if(selected)gsap.fromTo(selected,{scaleX:1.16,scaleY:.8},{scaleX:1,scaleY:1,duration:.85,ease:'elastic.out(1,.5)',overwrite:'auto'});

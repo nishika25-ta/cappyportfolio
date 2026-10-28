@@ -17,6 +17,7 @@ import {
   validateVideoFile
 } from './security.mjs';
 gsap.registerPlugin(ScrollTrigger);
+ScrollTrigger.config({limitCallbacks:true,ignoreMobileResize:true});
 
 let dispose: (()=>void) | undefined;
 let mountedRoot:HTMLElement|null=null;
@@ -262,7 +263,7 @@ function mountPage() {
   const context=gsap.context(()=>{
     if(!enabled)return;
     // Full motion, including Lenis, is always enabled for this site.
-    lenis=new Lenis({lerp:0,duration:1.45,easing:t=>1-Math.pow(1-t,4),smoothWheel:true,wheelMultiplier:.9,syncTouch:true,syncTouchLerp:.085,touchInertiaExponent:1.5,respectReducedMotion:false,anchors:false});
+    lenis=new Lenis({lerp:0,duration:1.2,easing:t=>1-Math.pow(1-t,4),smoothWheel:true,wheelMultiplier:.9,syncTouch:false,respectReducedMotion:false,anchors:false});
     document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach(link=>listen(link,'click',raw=>{
       const event=raw as MouseEvent;
       if(event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
