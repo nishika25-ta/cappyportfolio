@@ -13,7 +13,6 @@ const worlds = [
     <svg class="orbit-track" viewBox="0 0 1000 800" fill="none"><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M90 340C-20 90 360 190 210 300S30 580 260 670" stroke-dasharray="7 10"/><path d="M750 170C1010 80 1040 450 810 400S710 650 925 700"/><path d="m889 680 39 23-8-45M178 273l29 30 15-40"/></g></svg>
     <div class="orbit-center"><span class="universe-eyebrow">THE CREATIVE CAT DEPARTMENT</span><p>Serious skills.<br/><em>Silly little cats.</em></p><small>A little imagination goes a long way.</small></div>
     <div class="universe-mascot"><div class="universe-burst"></div><Cat variant="orange"/><span class="universe-cat-label">head of good ideas ↗</span></div>
-    <span class="universe-seal">100%<br/><small>made with care</small></span>
     <div class="orbit-carousel">
       {worlds.map(world=><div class:list={['orbit-item',`orbit-${world.key}`]}><div class="orbit-sticker"><div class="planet-content"><span class="planet-ticket-number">{world.number} / THE GOOD STUFF</span><div class="planet-art"><div class="planet-cat"><Cat variant={world.variant}/></div></div><strong>{world.title}</strong><small>{world.price} <Icon name="diagonal"/></small></div></div></div>)}
     </div>

@@ -151,7 +151,7 @@ export function createChoreography(listen:Listen) {
     // A three-beat sticker carousel replaces the oversized character zoom.
     gsap.set('.hero-orbit',{autoAlpha:0});
     gsap.set('.orbit-center',{autoAlpha:0,y:45,scale:.85});
-    gsap.set('.universe-mascot,.universe-seal,.universe-note,.universe-footer',{scale:.85,autoAlpha:0});
+    gsap.set('.universe-mascot,.universe-note,.universe-footer',{scale:.85,autoAlpha:0});
     const orbitScene=document.querySelector<HTMLElement>('.hero')!;
     let orbitWidth=orbitScene.clientWidth,orbitHeight=orbitScene.clientHeight;
     const orbitTurn={value:0};
@@ -193,7 +193,7 @@ export function createChoreography(listen:Listen) {
       .to(orbitTurn,{value:118,duration:1.25,ease:'power1.inOut',onUpdate:renderOrbit},1.95)
       .to('.orbit-track',{rotation:-25,duration:1.8,ease:'none'},1.1)
       .to('.universe-mascot',{scale:1,autoAlpha:1,duration:.9,ease:'power2.out'},.95)
-      .to('.universe-seal,.universe-note,.universe-footer',{scale:1,autoAlpha:1,duration:.7,stagger:.1,ease:'power2.out'},1.3)
+      .to('.universe-note,.universe-footer',{scale:1,autoAlpha:1,duration:.7,stagger:.1,ease:'power2.out'},1.3)
       // Keep the finished universe readable before the page releases into services.
       .to('.hero-orbit',{autoAlpha:1,duration:.45},3.2);
     if(compactHero)heroTransition.to('.hero-cast',{autoAlpha:0,duration:.8,ease:'power1.inOut'},.6);
