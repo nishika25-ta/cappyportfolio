@@ -66,6 +66,32 @@
 .pricing-section .package-meta{border-bottom:1px solid #2528202a;padding-bottom:18px;font-weight:600}
 .pricing-section .pricing-tabs{background:#fff5;padding:8px}
 .pricing-section .package .button{min-height:50px}
+.pricing-section .addons{display:block;margin-top:32px;padding:0;border:1.5px solid var(--ink);border-radius:24px;background:var(--paper);box-shadow:5px 7px 0 #25282018;overflow:hidden}
+.pricing-section .addons-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 24px;background:var(--butter);border-bottom:1.5px solid var(--ink)}
+#pricing-food .addons-header{background:var(--scene-pink)}
+.pricing-section .addons-title{display:flex;align-items:center;gap:12px;padding:0;white-space:normal}
+.pricing-section .addons-badge{width:38px;height:38px;border-radius:50%;background:var(--paper);border:1.5px solid var(--ink);display:grid;place-items:center;box-shadow:2px 2px 0 var(--ink);flex-shrink:0;rotate:-8deg}
+.pricing-section .addons-badge .icon{width:18px;height:18px;color:#b65442}
+.pricing-section .addons-title strong{display:block;font-family:Bricolage,sans-serif;font-size:20px;font-weight:800;letter-spacing:-.03em;line-height:1.1;color:var(--ink)}
+.pricing-section .addons-title small{display:block;font-size:11px;font-weight:500;color:#252820b8;margin-top:2px}
+.pricing-section .addons-tag{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border:1px solid var(--ink);border-radius:99px;background:var(--paper);font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;box-shadow:2px 2px 0 #2528201f}
+.pricing-section .addons-tag .icon{width:13px;height:13px;rotate:12deg;color:var(--ink)}
+.pricing-section .addons-table-wrap{width:100%;overflow-x:auto}
+.pricing-section .addons-table{display:table;width:100%;border-collapse:collapse;margin:0;text-align:left}
+.pricing-section .addons-table thead tr{background:#f3efe0;border-bottom:1px dashed #25282040}
+.pricing-section .addons-table thead th{padding:11px 24px;font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#25282099}
+.pricing-section .addons-table thead th:last-child{text-align:right}
+.pricing-section .addons-table tbody tr{border-bottom:1px solid #25282018;transition:background .2s}
+.pricing-section .addons-table tbody tr:last-child{border-bottom:0}
+.pricing-section .addons-table tbody tr:nth-child(even){background:#fbf8ed80}
+.pricing-section .addons-table tbody tr:hover{background:#f8e5a745}
+.pricing-section .addons-table tbody th{padding:15px 24px;font-weight:600;font-size:14px;color:var(--ink);display:flex;align-items:center;gap:12px}
+.pricing-section .addon-index{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;border:1px dashed #25282055;background:#f3efe0;font-family:Bricolage,sans-serif;font-size:10px;font-weight:700;color:var(--ink);flex-shrink:0}
+.pricing-section .addons-table tbody td{padding:14px 24px;text-align:right;vertical-align:middle}
+.pricing-section .addon-price-box{display:inline-flex;flex-direction:column;align-items:flex-end;gap:4px}
+.pricing-section .addon-price-pill{display:inline-flex;align-items:center;justify-content:center;margin:0;padding:6px 14px;border-radius:99px;border:1.5px solid var(--ink);background:var(--butter);font-family:Bricolage,sans-serif;font-size:14px;font-weight:800;line-height:1.1;letter-spacing:-.02em;color:var(--ink);white-space:nowrap;text-align:center;box-shadow:2px 2px 0 var(--ink)}
+#pricing-food .addon-price-pill{background:var(--scene-pink)}
+.pricing-section .addon-price-sub{display:block;font-size:10px;font-weight:600;line-height:1.2;color:#252820b5;padding-right:4px;white-space:nowrap}
 .about-postcard{border:1px solid #25282050;box-shadow:7px 10px 0 #25282016}
 .faq-list details{transition:background .3s}
 .faq-list details[open]{background:#f8e5a730}
@@ -112,4 +138,16 @@
  .work-section .showcase-tabs button{min-height:40px}
  .work-section .private-examples{margin-top:28px}
  .pricing-section .package{border-radius:22px}
+ .pricing-section .addons{border-radius:20px;margin-top:24px}
+ .pricing-section .addons-header{padding:14px 16px;flex-wrap:wrap;gap:10px}
+ .pricing-section .addons-badge{width:34px;height:34px}
+ .pricing-section .addons-title strong{font-size:18px}
+ .pricing-section .addons-title small{font-size:10px}
+ .pricing-section .addons-tag{font-size:9px;padding:5px 10px}
+ .pricing-section .addons-table thead th{padding:10px 16px;font-size:9px}
+ .pricing-section .addons-table tbody th{padding:13px 16px;font-size:13px;gap:9px}
+ .pricing-section .addon-index{width:22px;height:22px;font-size:9px}
+ .pricing-section .addons-table tbody td{padding:12px 16px}
+ .pricing-section .addon-price-pill{font-size:13px;padding:5px 12px}
+ .pricing-section .addon-price-sub{font-size:9.5px}
 }
