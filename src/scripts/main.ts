@@ -57,9 +57,24 @@ function mountPage() {
   let choreography:ReturnType<typeof createChoreography>|undefined;
   let videoObjectUrl='';
   const visiblePreviews=new Set<HTMLVideoElement>();
+  function unloadPreview(preview:HTMLVideoElement){
+    preview.pause();
+    if(preview.hasAttribute('src')){
+      preview.removeAttribute('src');
+      preview.load();
+    }
+  }
   function updatePreviewPlayback(preview:HTMLVideoElement){
-    if(visiblePreviews.has(preview)&&!preview.closest('[hidden]')&&!document.hidden&&!document.querySelector('#video-dialog[open]'))preview.play().catch(()=>{});
-    else preview.pause();
+    const shouldPlay=visiblePreviews.has(preview)&&!preview.closest('[hidden]')&&!document.hidden&&!document.querySelector('#video-dialog[open]');
+    if(shouldPlay){
+      const dataSrc=preview.dataset.src;
+      if(dataSrc&&!preview.getAttribute('src')&&isAllowedVideoSource(dataSrc,false)){
+        preview.src=dataSrc;
+      }
+      preview.play().catch(()=>{});
+    }else{
+      preview.pause();
+    }
   }
 
   function navigationOffset(){
@@ -138,10 +153,10 @@ function mountPage() {
         const vid=scene.querySelector<HTMLVideoElement>('video');
         if(vid){
           if(selected){
-            vid.currentTime=0;
             updatePreviewPlayback(vid);
+            if(vid.readyState>0)vid.currentTime=0;
           }else{
-            vid.pause();
+            unloadPreview(vid);
           }
         }
       }
@@ -191,6 +206,11 @@ function mountPage() {
   cleanups.push(()=>energyMotion.cancel());
   if(energy)listen(energy,'input',()=>energyMotion.schedule());
   document.querySelectorAll('[data-pet-cat]').forEach(button=>listen(button,'click',()=>choreography?.pet()));
+  const faqDetails=[...document.querySelectorAll<HTMLDetailsElement>('.faq-list details')];
+  faqDetails.forEach(item=>listen(item,'toggle',()=>{
+    if(item.open)faqDetails.forEach(other=>{if(other!==item&&other.open)other.open=false;});
+    scheduleScrollRefresh();
+  }));
 
   const menu=document.querySelector<HTMLButtonElement>('.menu-toggle');
   const nav=document.getElementById('main-nav');
@@ -310,7 +330,7 @@ function mountPage() {
     }));
     lenis.on('scroll',ScrollTrigger.update);
     const tick=(time:number)=>lenis?.raf(time*1000);
-    gsap.ticker.add(tick);gsap.ticker.lagSmoothing(0);
+    gsap.ticker.add(tick);gsap.ticker.lagSmoothing(500,33);
     cleanups.push(()=>{gsap.ticker.remove(tick);lenis?.destroy();});
   });
   choreography=createChoreography(listen);
@@ -320,17 +340,20 @@ function mountPage() {
     for(const entry of entries){
       const preview=entry.target as HTMLVideoElement;
       if(entry.isIntersecting&&entry.intersectionRatio>=.15)visiblePreviews.add(preview);
-      else visiblePreviews.delete(preview);
+      else{
+        visiblePreviews.delete(preview);
+        if(!entry.isIntersecting)unloadPreview(preview);
+      }
       updatePreviewPlayback(preview);
     }
-  },{threshold:[0,.15]});
+  },{rootMargin:'120px 0px',threshold:[0,.15]});
   document.querySelectorAll<HTMLVideoElement>('.showcase-scene video').forEach(preview=>{
     preview.muted=true;preview.pause();previewObserver.observe(preview);
   });
   listen(document,'visibilitychange',()=>visiblePreviews.forEach(updatePreviewPlayback));
   cleanups.push(()=>{previewObserver.disconnect();visiblePreviews.clear();});
   activateHash();
-  dispose=()=>{controller.abort();document.querySelectorAll<HTMLVideoElement>('.showcase-scene video').forEach(v=>v.pause());if(video){video.pause();video.removeAttribute('src');}if(dialog?.open)dialog.close();if(posterImg)posterImg.removeAttribute('src');if(posterDialog?.open)posterDialog.close();if(videoObjectUrl)URL.revokeObjectURL(videoObjectUrl);cleanups.reverse().forEach(fn=>fn());};
+  dispose=()=>{controller.abort();document.querySelectorAll<HTMLVideoElement>('.showcase-scene video').forEach(unloadPreview);if(video){video.pause();video.removeAttribute('src');}if(dialog?.open)dialog.close();if(posterImg)posterImg.removeAttribute('src');if(posterDialog?.open)posterDialog.close();if(videoObjectUrl)URL.revokeObjectURL(videoObjectUrl);cleanups.reverse().forEach(fn=>fn());};
 }
 
 function ensureMounted(){

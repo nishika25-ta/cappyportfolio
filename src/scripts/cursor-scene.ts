@@ -46,8 +46,24 @@ export function createCursorScene(listen:Listen,bounds:(element:Element)=>DOMRec
     const spin=gsap.quickTo(cursor,'rotation',{duration:.5,ease:'power3.out'});
     const visibility=gsap.quickSetter(cursor,'autoAlpha');
     let lastX=0;
-    listen(document,'pointermove',(raw)=>{const e=raw as PointerEvent;x(e.clientX);y(e.clientY);spin(gsap.utils.clamp(-25,25,(e.clientX-lastX)*.3));lastX=e.clientX;visibility(1);});
-    listen(document,'pointerout',(raw)=>{if(!(raw as PointerEvent).relatedTarget)visibility(0);});
-    listen(document,'pointerover',(raw)=>{const target=(raw.target as Element).closest('button,a,input');cursor.classList.toggle('is-interactive',!!target);});
+    let isVisible=false;
+    let isInteractive=false;
+    listen(document,'pointermove',(raw)=>{
+      const e=raw as PointerEvent;
+      x(e.clientX);
+      y(e.clientY);
+      const dx=e.clientX-lastX;
+      if(Math.abs(dx)>.5)spin(gsap.utils.clamp(-25,25,dx*.3));
+      lastX=e.clientX;
+      if(!isVisible){isVisible=true;visibility(1);}
+    });
+    listen(document,'pointerout',(raw)=>{if(!(raw as PointerEvent).relatedTarget&&isVisible){isVisible=false;visibility(0);}});
+    listen(document,'pointerover',(raw)=>{
+      const nextInteractive=Boolean((raw.target as Element).closest?.('button,a,input'));
+      if(nextInteractive!==isInteractive){
+        isInteractive=nextInteractive;
+        cursor.classList.toggle('is-interactive',nextInteractive);
+      }
+    });
   }
 }

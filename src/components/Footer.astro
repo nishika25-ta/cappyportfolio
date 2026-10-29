@@ -4,8 +4,34 @@ import Icon from './Icon.astro';
 import {enquiryUrl} from '../data/site.mjs';
 ---
 <footer id="contact" class="site-footer">
-  <div class="wrap contact-top"><a class="back-top" href="#top">Back to top ↑</a></div>
-  <div class="wrap contact-main"><div><h2>Ready to start<br/>a project<span class="coral-text">?</span></h2><p>Send a message on WhatsApp for a quick quote.</p><a class="button button-dark" href={enquiryUrl()} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp"/> Chat on WhatsApp <Icon name="diagonal"/></a></div><div class="contact-cat"><span class="hand-note">say hello ↙</span><Cat variant="orange"/></div></div>
+  <div class="wrap contact-top">
+    <span class="contact-status-pill"><span class="status-dot"></span> Booking open · Miri, Sarawak &amp; Remote</span>
+    <a class="back-top" href="#top">Back to top ↑</a>
+  </div>
+  <div class="wrap">
+    <div class="contact-main">
+      <div class="contact-copy">
+        <span class="contact-kicker"><Icon name="paw"/> Start a conversation</span>
+        <h2>Ready to start<br/>a project<span class="coral-text">?</span></h2>
+        <p>Send a quick message on WhatsApp with what you need—websites, portfolios, résumés, or food visuals—and get an upfront RM quote.</p>
+        <div class="contact-perks" aria-label="Enquiry highlights">
+          <span><Icon name="check"/> Fast WhatsApp reply</span>
+          <span><Icon name="check"/> Upfront RM pricing</span>
+          <span><Icon name="check"/> Direct 1-on-1 with Cappy</span>
+        </div>
+        <div class="contact-actions">
+          <a class="button button-dark" href={enquiryUrl()} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp"/> Chat on WhatsApp <Icon name="diagonal"/></a>
+          <a class="button button-outline" href="/#pricing">View packages <Icon name="arrow"/></a>
+        </div>
+      </div>
+      <div class="contact-cat">
+        <div class="contact-cat-card">
+          <span class="hand-note">say hello ↙</span>
+          <Cat variant="orange"/>
+          <span class="contact-cat-badge"><Icon name="star"/> Friendly studio service</span>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="wrap footer-bottom"><a class="wordmark" href="/"><Icon name="paw"/>CappyTheDev.</a><p>Independent creative services · Miri, Sarawak</p><span>© {new Date().getFullYear()} CappyTheDev</span></div>
 </footer>
-<style>.contact-top{justify-content:flex-end}</style>

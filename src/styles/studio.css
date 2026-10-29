@@ -94,9 +94,109 @@
 .pricing-section .addon-price-pill{display:inline-flex;align-items:center;justify-content:center;margin:0;padding:6px 14px;border-radius:99px;border:1.5px solid var(--ink);background:var(--butter);font-family:Bricolage,sans-serif;font-size:14px;font-weight:800;line-height:1.1;letter-spacing:-.02em;color:var(--ink);white-space:nowrap;text-align:center;box-shadow:2px 2px 0 var(--ink)}
 #pricing-portfolios .addon-price-pill,#pricing-food .addon-price-pill{background:var(--scene-pink)}
 .pricing-section .addon-price-sub{display:block;font-size:10px;font-weight:600;line-height:1.2;color:#252820b5;padding-right:4px;white-space:nowrap}
-.about-postcard{border:1px solid #25282050;box-shadow:7px 10px 0 #25282016}
-.faq-list details{transition:background .3s}
-.faq-list details[open]{background:#f8e5a730}
+/* About section redesigned as a tactile studio dossier card. */
+.about-section{display:block;padding-block:clamp(70px,8vw,120px)}
+.about-card{position:relative;border:1.5px solid var(--ink);border-radius:32px;background:radial-gradient(#25282012 1px,transparent 1px),linear-gradient(155deg,#fffefa 0%,#f5f0df 100%);background-size:18px 18px,100% 100%;box-shadow:8px 10px 0 #2528201e;overflow:hidden}
+.about-card-topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 28px;background:var(--butter);border-bottom:1.5px solid var(--ink);font-size:10px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--ink)}
+.about-window-dots{display:flex;gap:6px;align-items:center}
+.about-window-dots i{display:block;width:9px;height:9px;border:1px solid var(--ink);border-radius:50%;background:var(--coral)}
+.about-window-dots i:nth-child(2){background:var(--paper)}
+.about-window-dots i:nth-child(3){background:var(--scene-green)}
+.about-window-label{display:inline-flex;align-items:center;gap:7px}
+.about-window-label .icon{width:14px;height:14px;rotate:-10deg}
+.about-window-status{display:inline-flex;align-items:center;gap:7px;padding:4px 11px;border-radius:99px;border:1px solid var(--ink);background:var(--paper);font-size:9px;letter-spacing:.08em}
+.about-window-status .status-dot{width:6px;height:6px;background:#2b9a5b}
+.about-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(32px,5vw,68px);align-items:center;padding:clamp(34px,4.8vw,64px) clamp(26px,4.5vw,60px)}
+.about-art{position:relative;padding:18px 14px 12px}
+.about-art>.hand-note{position:absolute;left:18px;top:-6px;z-index:4;padding:5px 13px;background:var(--scene-pink);border:1.5px solid var(--ink);border-radius:99px;font-size:13px;font-weight:700;rotate:-6deg;box-shadow:2px 3px 0 var(--ink)}
+.about-postcard{position:relative;display:block;padding:14px 14px 16px;background:#fffefa;border:1.5px solid var(--ink);border-radius:20px;rotate:-2.5deg;box-shadow:6px 8px 0 var(--ink);transition:rotate .45s var(--ease),translate .45s var(--ease),box-shadow .45s var(--ease)}
+.about-tape{position:absolute;top:-11px;left:50%;translate:-50% 0;width:82px;height:22px;background:#f8e5a7d9;border-inline:1.5px dashed #25282045;rotate:3deg;z-index:3;pointer-events:none}
+.about-postcard-frame{border-radius:12px;border:1px solid #25282025;overflow:hidden;background:#f3efe0}
+.about-postcard img{width:100%;height:auto;display:block;border-radius:0}
+.about-postcard-caption{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 4px 2px;font-size:11px;font-weight:600;color:var(--ink)}
+.about-postcard-caption>span:first-child{display:inline-flex;align-items:center;gap:6px}
+.about-postcard-caption>span:first-child .icon{width:14px;height:14px;color:#b65442;rotate:-10deg}
+.about-expand-pill{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid var(--ink);border-radius:99px;background:var(--butter);font-size:10px;font-weight:700;letter-spacing:.02em;transition:background .25s,translate .25s var(--ease)}
+.about-expand-pill .icon{width:12px;height:12px}
+.postcard-stamp{background:var(--coral);color:var(--ink);border:1.5px solid var(--ink);box-shadow:3px 4px 0 var(--ink);position:absolute;right:0;bottom:-4px;z-index:4;width:92px;height:92px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;font-weight:800;letter-spacing:.05em;rotate:12deg;pointer-events:none}
+.postcard-stamp .icon{width:24px;height:24px;margin-top:5px}
+.about-copy{min-width:0}
+.about-kicker{display:inline-flex;align-items:center;gap:7px;padding:6px 14px;border:1.5px solid var(--ink);border-radius:99px;background:var(--butter);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;box-shadow:2px 3px 0 #2528201f;margin-bottom:18px}
+.about-kicker .icon{width:14px;height:14px;color:#b65442}
+.about-copy h2{font-size:clamp(42px,4.4vw,64px);line-height:1;letter-spacing:-.05em}
+.about-copy p{font-size:15.5px;color:var(--muted);line-height:1.72;margin-top:16px;max-width:540px}
+.about-copy .about-lead{font-size:clamp(17px,1.45vw,20px);color:var(--ink);font-weight:500;line-height:1.55;margin-top:20px}
+.about-copy .about-lead strong{background:linear-gradient(transparent 58%,var(--butter) 58%);padding-inline:2px;font-weight:700}
+.about-tags{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:26px}
+.about-tag-card{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--paper);border:1.5px solid var(--ink);border-radius:16px;box-shadow:3px 4px 0 #25282016;transition:translate .25s var(--ease),box-shadow .25s var(--ease)}
+.about-tags .about-tag-icon{width:38px;height:38px;padding:0;border-radius:12px;border:1.5px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:2px 2px 0 var(--ink);line-height:0}
+.about-tags .about-tag-icon .icon{width:18px;height:18px;display:block;margin:0}
+.tag-butter{background:var(--butter)}
+.tag-pink{background:var(--scene-pink)}
+.tag-sky{background:var(--sky)}
+.tag-green{background:var(--scene-green)}
+.about-tag-card strong{display:block;font-family:Bricolage,sans-serif;font-size:14px;font-weight:700;line-height:1.2;color:var(--ink);letter-spacing:-.02em}
+.about-tag-card small{display:block;font-size:11.5px;color:var(--muted);line-height:1.35;margin-top:2px}
+.about-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:28px}
+.about-actions .button{min-height:50px;padding:12px 22px;font-size:13px;gap:12px;box-shadow:3px 4px 0 #25282020}
+.about-actions .button-outline{background:var(--paper)}
+/* FAQ section redesigned with tactile studio cards and a mascot help desk. */
+.faq-section{grid-template-columns:.9fr 1.25fr;gap:clamp(36px,5.5vw,76px);align-items:start;padding-block:clamp(50px,6vw,95px) clamp(85px,8vw,125px);overflow:visible}
+.faq-intro{position:relative;display:flex;flex-direction:column;align-items:flex-start;min-height:530px}
+.faq-kicker{display:inline-flex;align-items:center;gap:7px;padding:6px 14px;border:1.5px solid var(--ink);border-radius:99px;background:var(--scene-pink);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;box-shadow:2px 3px 0 #2528201f;margin-bottom:14px}
+.faq-kicker .icon{width:14px;height:14px;rotate:-12deg}
+.faq-section h2{font-size:clamp(42px,4.5vw,62px);line-height:.98;letter-spacing:-.05em}
+.faq-subtitle{font-size:14.5px;color:var(--muted);line-height:1.6;margin-top:10px;max-width:390px}
+.faq-helper-card{margin-top:18px;flex:1;display:flex;flex-direction:column;width:100%;max-width:420px;border:1.5px solid var(--ink);border-radius:24px;background:#fffefa;box-shadow:6px 8px 0 #25282018;overflow:hidden}
+.faq-helper-stage{position:relative;flex:1;background:radial-gradient(#25282014 1px,transparent 1px),var(--butter);background-size:14px 14px;border-bottom:1.5px solid var(--ink);padding:12px 18px 0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.faq-speech-bubble{position:relative;display:inline-block;padding:5px 13px;background:var(--paper);border:1.5px solid var(--ink);border-radius:99px;font-family:Bricolage,sans-serif;font-size:11.5px;font-weight:700;color:var(--ink);rotate:-3deg;box-shadow:2px 3px 0 #25282020;margin-bottom:4px;z-index:2}
+.faq-helper-stage .faq-cat{position:relative;width:130px;height:auto;margin:0 auto -6px;right:auto;bottom:auto}
+.faq-helper-body{padding:14px 20px 16px;background:var(--paper)}
+.faq-helper-body strong{display:block;font-family:Bricolage,sans-serif;font-size:18px;font-weight:800;letter-spacing:-.03em;color:var(--ink)}
+.faq-helper-body p{font-size:12.5px;color:var(--muted);line-height:1.48;margin-top:4px}
+.faq-whatsapp-btn{margin-top:11px;width:100%;min-height:44px;padding:9px 16px;font-size:12px;gap:10px;justify-content:center;box-shadow:3px 4px 0 #25282020}
+.faq-list{border-top:0;margin-top:0;display:grid;gap:16px}
+.faq-list details.faq-item{border:1.5px solid var(--ink);border-radius:20px;background:#fffefa;box-shadow:4px 5px 0 #25282016;overflow:hidden;transition:translate .28s var(--ease),box-shadow .28s var(--ease),background .28s}
+.faq-list details.faq-item[open]{background:linear-gradient(180deg,#fffdf4 0%,#fbf8ed 100%);box-shadow:5px 7px 0 #25282024}
+.faq-list summary{padding:18px 22px;min-height:72px;gap:16px;font-size:19px;line-height:1.25;transition:background .25s}
+.faq-list summary:focus-visible{outline:2px solid var(--ink);outline-offset:-4px;border-radius:18px}
+.faq-list details.faq-item[open] summary{background:var(--butter);border-bottom:1.5px dashed #25282040}
+.faq-question-wrap{display:flex;align-items:center;gap:14px;min-width:0}
+.faq-index{display:inline-flex;align-items:center;justify-content:center;padding:0;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--ink);background:var(--butter);font-family:Bricolage,sans-serif;font-size:11px;font-weight:800;line-height:1;color:var(--ink);flex-shrink:0;box-shadow:2px 2px 0 var(--ink);transition:background .25s}
+.faq-list details.faq-item[open] .faq-index{background:var(--scene-pink)}
+.faq-question-text{min-width:0}
+.faq-plus{position:relative;width:36px;height:36px;padding:0;border-radius:50%;border:1.5px solid var(--ink);background:var(--paper);color:var(--ink);display:inline-flex;align-items:center;justify-content:center;font-size:0;line-height:0;flex-shrink:0;box-shadow:2px 2px 0 var(--ink);transition:rotate .35s var(--ease),background .25s,color .25s,box-shadow .25s}
+.faq-plus::before,.faq-plus::after{content:'';position:absolute;left:50%;top:50%;translate:-50% -50%;background:currentColor;border-radius:2px}
+.faq-plus::before{width:13px;height:2px}
+.faq-plus::after{width:2px;height:13px}
+.faq-list details.faq-item[open] .faq-plus{rotate:45deg;background:var(--ink);color:var(--paper);box-shadow:2px 2px 0 #25282028}
+.faq-answer{padding:18px 24px 20px}
+.faq-list details .faq-answer p{font-size:15px;line-height:1.75;color:var(--ink);padding:0;max-width:620px}
+/* Footer contact CTA redesigned as a tactile studio launchpad card while keeping .footer-bottom intact. */
+.site-footer{padding-top:42px;background:radial-gradient(ellipse at 50% 0%,#90b4bc45,transparent 65%),var(--scene-sky)}
+.contact-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px}
+.contact-status-pill{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border:1.5px solid var(--ink);border-radius:99px;background:var(--paper);font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--ink);box-shadow:2px 3px 0 #25282022}
+.contact-status-pill .status-dot{width:7px;height:7px;background:#2b9a5b}
+.back-top{display:inline-flex;align-items:center;gap:6px;padding:7px 15px;border:1.5px solid var(--ink);border-radius:99px;background:var(--butter);font-size:11px;font-weight:700;color:var(--ink);box-shadow:2px 3px 0 var(--ink);transition:translate .25s var(--ease),background .25s,box-shadow .25s}
+.contact-main{display:grid;grid-template-columns:1.3fr .9fr;gap:clamp(28px,4.5vw,56px);align-items:center;padding:clamp(34px,4.5vw,56px) clamp(28px,4.5vw,56px);margin-bottom:48px;border:1.5px solid var(--ink);border-radius:32px;background:radial-gradient(#25282012 1px,transparent 1px),linear-gradient(145deg,#fffefa 0%,#f7f1df 100%);background-size:18px 18px,100% 100%;box-shadow:8px 10px 0 var(--ink);color:var(--ink);position:relative;overflow:hidden}
+.contact-copy{min-width:0}
+.contact-kicker{display:inline-flex;align-items:center;gap:7px;padding:6px 14px;border:1.5px solid var(--ink);border-radius:99px;background:var(--butter);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;box-shadow:2px 3px 0 #2528201f;margin-bottom:18px}
+.contact-kicker .icon{width:14px;height:14px;rotate:-12deg;color:#b65442}
+.contact-main h2{font-size:clamp(48px,5.8vw,86px);line-height:.95;letter-spacing:-.06em;color:var(--ink)}
+.site-footer .contact-main .coral-text{color:#b65442}
+.contact-main p{font-size:16px;color:var(--muted);line-height:1.68;margin-top:18px;max-width:520px}
+.contact-perks{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.contact-perks span{display:inline-flex;align-items:center;gap:7px;padding:6px 13px;border:1.5px solid var(--ink);border-radius:99px;background:var(--paper);font-size:12px;font-weight:600;color:var(--ink);box-shadow:2px 2px 0 #25282016}
+.contact-perks .icon{width:14px;height:14px;color:#2b9a5b}
+.contact-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:26px}
+.contact-actions .button{margin-top:0;min-height:52px;padding:13px 24px;font-size:13.5px;gap:12px;box-shadow:3px 4px 0 #25282022}
+.contact-actions .button-outline{background:var(--paper)}
+.contact-cat{position:relative;align-self:stretch;display:flex;align-items:center;justify-content:center}
+.contact-cat-card{position:relative;width:100%;max-width:360px;padding:24px 20px 18px;border:1.5px solid var(--ink);border-radius:26px;background:radial-gradient(circle at 50% 42%,#fff9 0%,transparent 62%),var(--butter);box-shadow:5px 7px 0 var(--ink);display:flex;flex-direction:column;align-items:center;rotate:2deg}
+.contact-cat .hand-note{display:inline-block;padding:5px 13px;background:var(--scene-pink);border:1.5px solid var(--ink);border-radius:99px;font-size:13px;font-weight:700;color:var(--ink);rotate:-6deg;box-shadow:2px 3px 0 var(--ink);margin-bottom:4px;z-index:2}
+.contact-cat-card>.cat{width:100%;max-width:255px;height:auto;margin-inline:auto;rotate:5deg}
+.contact-cat-badge{display:inline-flex;align-items:center;gap:6px;margin-top:6px;padding:5px 12px;border:1.5px solid var(--ink);border-radius:99px;background:var(--paper);font-size:10.5px;font-weight:700;letter-spacing:.03em;color:var(--ink);box-shadow:2px 2px 0 var(--ink)}
+.contact-cat-badge .icon{width:13px;height:13px;color:#b65442}
 .poster-dialog{padding:20px 22px 22px;border:2px solid var(--ink);border-radius:26px;background:var(--paper);width:min(1060px,94vw);max-height:92dvh;box-shadow:0 24px 60px #00000045,6px 8px 0 var(--ink);overflow:hidden}
 .poster-dialog .dialog-top{margin-bottom:14px;padding-bottom:12px;border-bottom:1.5px dashed #25282035}
 .poster-dialog .dialog-close{background:var(--butter);border:1.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink);font-weight:700;display:grid;place-items:center}
@@ -108,8 +208,26 @@
  .services-section .service-cat:hover{background:#fbf8ed55;border-color:var(--ink);box-shadow:5px 8px 0 #25282022}
  .pricing-section .package:hover{border-color:var(--ink);box-shadow:5px 9px 0 #25282018}
  .work-section .showcase-tabs button:hover{translate:0 -3px;box-shadow:0 3px 0 #fbf8ed35}
+ .about-postcard:hover{rotate:-1deg;translate:0 -4px;box-shadow:9px 12px 0 var(--ink)}
+ .about-postcard:hover .about-expand-pill{background:var(--scene-pink);translate:2px -1px}
+ .about-tag-card:hover{translate:0 -2px;box-shadow:4px 6px 0 #25282024}
+ .faq-list details.faq-item:hover:not([open]){translate:0 -2px;box-shadow:6px 7px 0 #25282025}
+ .faq-list summary:hover .faq-plus{background:var(--scene-pink);rotate:90deg}
+ .faq-list details.faq-item[open] summary:hover .faq-plus{background:var(--ink);color:var(--paper);rotate:135deg}
+ .back-top:hover{translate:0 -2px;background:var(--scene-pink);box-shadow:3px 5px 0 var(--ink)}
 }
 @media(min-width:601px) and (max-width:1100px){
+ .contact-main{grid-template-columns:1fr;gap:30px}
+ .contact-cat-card{max-width:340px;rotate:0deg}
+ .about-grid{grid-template-columns:1fr;gap:36px}
+ .about-art{max-width:580px;margin-inline:auto;width:100%}
+ .about-copy p{max-width:none}
+ .faq-section{grid-template-columns:1fr;gap:36px}
+ .faq-intro{min-height:0}
+ .faq-helper-card{flex:none;max-width:100%;display:grid;grid-template-columns:200px 1fr;align-items:center}
+ .faq-helper-stage{border-bottom:0;border-right:1.5px solid var(--ink);height:100%;justify-content:flex-end;padding-top:16px}
+ .faq-subtitle{max-width:520px}
+ .faq-list{height:auto}
  .hero .miri-stamp{width:86px;height:86px;padding:8px 5px;gap:4px}
  .hero .miri-stamp>span{font-size:9px}
  .hero .miri-stamp>small{font-size:5px}
@@ -166,4 +284,62 @@
  .poster-dialog .dialog-top{margin-bottom:10px;padding-bottom:10px}
  .poster-dialog-body{padding:4px;max-height:calc(90dvh - 80px)}
  #dialog-poster{max-height:calc(90dvh - 92px);border-radius:9px}
+ .about-section{padding-block:55px}
+ .about-card{border-radius:24px;box-shadow:5px 7px 0 #2528201e}
+ .about-card-topbar{padding:11px 16px;font-size:8.5px;gap:10px}
+ .about-window-status{display:none}
+ .about-grid{grid-template-columns:1fr;gap:28px;padding:24px 18px 26px}
+ .about-art{max-width:100%;padding:12px 4px 8px}
+ .about-art>.hand-note{left:10px;top:-4px;font-size:11px;padding:4px 10px}
+ .about-postcard{padding:10px 10px 12px;border-radius:16px;rotate:-1.5deg;box-shadow:4px 6px 0 var(--ink)}
+ .about-postcard-caption{font-size:10px;padding-top:10px}
+ .about-expand-pill{font-size:9px;padding:3px 8px}
+ .postcard-stamp{width:76px;height:76px;right:-2px;bottom:-6px;font-size:7.5px}
+ .postcard-stamp .icon{width:19px;height:19px;margin-top:3px}
+ .about-kicker{font-size:10px;padding:5px 12px;margin-bottom:14px}
+ .about-copy h2{font-size:clamp(36px,9.5vw,44px)}
+ .about-copy .about-lead{font-size:15.5px;margin-top:14px}
+ .about-copy p{font-size:13.5px;margin-top:12px}
+ .about-tags{grid-template-columns:1fr;gap:10px;margin-top:20px}
+ .about-tag-card{padding:10px 12px;border-radius:14px}
+ .about-tag-card strong{font-size:13px}
+ .about-tag-card small{font-size:11px}
+ .about-actions{margin-top:22px;gap:10px}
+ .about-actions .button{width:100%;justify-content:center;min-height:48px;font-size:12px}
+ .faq-section{grid-template-columns:1fr;gap:26px;padding-block:45px 65px}
+ .faq-intro{min-height:0}
+ .faq-kicker{font-size:10px;padding:5px 12px;margin-bottom:14px}
+ .faq-section h2{font-size:clamp(36px,9.5vw,44px)}
+ .faq-subtitle{font-size:13.5px;margin-top:12px}
+ .faq-helper-card{flex:none;margin-top:20px;border-radius:20px;max-width:100%}
+ .faq-helper-stage{flex:none;padding:16px 14px 0}
+ .faq-speech-bubble{font-size:11px;padding:5px 12px}
+ .faq-helper-stage .faq-cat{position:relative;width:136px;right:auto;bottom:auto;margin:0 auto -6px}
+ .faq-helper-body{padding:16px}
+ .faq-helper-body strong{font-size:17px}
+ .faq-helper-body p{font-size:12.5px}
+ .faq-list{height:auto;gap:11px}
+ .faq-list details.faq-item{border-radius:16px;box-shadow:3px 4px 0 #25282018}
+ .faq-list summary{padding:15px 16px;min-height:60px;font-size:16px;gap:12px}
+ .faq-question-wrap{gap:10px}
+ .faq-index{width:26px;height:26px;font-size:10px}
+ .faq-plus{width:32px;height:32px;font-size:0}
+ .faq-answer{padding:14px 16px 16px}
+ .faq-list details .faq-answer p{font-size:13.5px;line-height:1.68}
+ .site-footer{padding-top:32px}
+ .contact-top{margin-bottom:16px;gap:10px;align-items:center}
+ .contact-status-pill{font-size:9.5px;padding:5px 11px;gap:6px}
+ .back-top{font-size:10px;padding:6px 12px}
+ .contact-main{display:grid;grid-template-columns:1fr;gap:24px;padding:24px 18px 24px;margin-bottom:32px;border-radius:24px;box-shadow:5px 7px 0 var(--ink)}
+ .contact-kicker{font-size:10px;padding:5px 12px;margin-bottom:14px}
+ .contact-main h2{font-size:clamp(38px,10.5vw,52px);line-height:.98}
+ .contact-main p{font-size:13.5px;margin-top:12px}
+ .contact-perks{gap:7px;margin-top:16px}
+ .contact-perks span{font-size:11px;padding:5px 10px}
+ .contact-actions{margin-top:20px;gap:10px}
+ .contact-actions .button{width:100%;justify-content:center;min-height:48px;font-size:12.5px}
+ .contact-cat{width:100%;margin:0}
+ .contact-cat-card{max-width:100%;padding:18px 16px 14px;border-radius:20px;rotate:0deg}
+ .contact-cat .hand-note{translate:0 0;rotate:-4deg;font-size:11.5px}
+ .contact-cat-card>.cat{max-width:190px;rotate:4deg}
 }

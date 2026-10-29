@@ -33,7 +33,8 @@ export function createChoreography(listen:Listen) {
     for(const entry of entries){
       const actor=actors.get(entry.target);
       if(actor){
-        const isHidden=Boolean(entry.target.closest('[hidden]'));
+        const orbit=entry.target.closest<HTMLElement>('.hero-orbit');
+        const isHidden=Boolean(entry.target.closest('[hidden]'))||(orbit!==null&&getComputedStyle(orbit).visibility==='hidden');
         actor.visible=entry.isIntersecting&&!isHidden;
         actor.timeline.paused(!actor.visible||document.hidden);
         entry.target.classList.toggle('is-in-view',actor.visible&&!document.hidden);
@@ -154,7 +155,7 @@ export function createChoreography(listen:Listen) {
     // A three-beat sticker carousel replaces the oversized character zoom.
     gsap.set('.hero-orbit',{autoAlpha:0});
     gsap.set('.orbit-center',{autoAlpha:0,y:32,scale:.9});
-    gsap.set('.universe-mascot,.universe-note,.universe-footer',{scale:.88,autoAlpha:0});
+    gsap.set('.universe-mascot,.universe-note',{scale:.88,autoAlpha:0});
     const orbitScene=document.querySelector<HTMLElement>('.hero')!;
     let orbitWidth=orbitScene.clientWidth,orbitHeight=orbitScene.clientHeight;
     const orbitTurn={value:0};
@@ -169,7 +170,10 @@ export function createChoreography(listen:Listen) {
       y:gsap.quickSetter(el,'y','px'),
       rotation:gsap.quickSetter(el,'rotation','deg'),
     }));
-    const renderOrbit=()=>{
+    let lastOrbitTurn=NaN;
+    const renderOrbit=(force=false)=>{
+      if(!force&&orbitTurn.value===lastOrbitTurn)return;
+      lastOrbitTurn=orbitTurn.value;
       const current=getCreativeOrbitLayout(orbitWidth,orbitHeight,orbitTurn.value);
       current.forEach((position,i)=>{
         const base=baseOrbit[i]??position;
@@ -179,18 +183,37 @@ export function createChoreography(listen:Listen) {
       });
     };
     const refreshOrbit=()=>{
-      orbitWidth=orbitScene.clientWidth;
-      orbitHeight=orbitScene.clientHeight;
+      const nextWidth=orbitScene.clientWidth;
+      const nextHeight=orbitScene.clientHeight;
+      if(nextWidth===orbitWidth&&nextHeight===orbitHeight&&!Number.isNaN(lastOrbitTurn))return;
+      orbitWidth=nextWidth;
+      orbitHeight=nextHeight;
       baseOrbit=getCreativeOrbitLayout(orbitWidth,orbitHeight,0);
-      renderOrbit();
+      renderOrbit(true);
     };
     listen(window,'resize',refreshOrbit);
+    const heroOrbitLoops:gsap.core.Animation[]=[];
+    const universeMascotCat=document.querySelector<SVGSVGElement>('.universe-mascot .cat');
+    if(universeMascotCat){
+      const mascotActor=actors.get(universeMascotCat);
+      if(mascotActor){
+        mascotActor.timeline.pause();
+        heroOrbitLoops.push(mascotActor.timeline);
+      }
+    }
     let heroCovered=false;
+    let heroOrbitActive=false;
     const syncHeroPhase=(progress:number)=>{
       const covered=progress>.34;
-      if(covered===heroCovered)return;
-      heroCovered=covered;
-      heroOnlyLoops.forEach(loop=>loop.paused(covered||document.hidden));
+      if(covered!==heroCovered){
+        heroCovered=covered;
+        heroOnlyLoops.forEach(loop=>loop.paused(covered||document.hidden));
+      }
+      const orbitActive=progress>=.18;
+      if(orbitActive!==heroOrbitActive){
+        heroOrbitActive=orbitActive;
+        heroOrbitLoops.forEach(loop=>loop.paused(!orbitActive||document.hidden));
+      }
     };
     // Read the phone scene before a smooth, reversible handoff.
     const heroTransition=gsap.timeline({scrollTrigger:{
@@ -217,13 +240,15 @@ export function createChoreography(listen:Listen) {
       .to('.orbit-web',{x:0,y:0,scale:1,rotation:()=>orbitPosition(0).rotation,autoAlpha:1,duration:.42,ease:'power2.out'},.46)
       .to('.orbit-resume',{x:0,y:0,scale:1,rotation:()=>orbitPosition(1).rotation,autoAlpha:1,duration:.42,ease:'power2.out'},.54)
       .to('.orbit-food',{x:0,y:0,scale:1,rotation:()=>orbitPosition(2).rotation,autoAlpha:1,duration:.42,ease:'power2.out'},.62)
-      .to('.universe-note,.universe-footer',{scale:1,autoAlpha:1,duration:.38,stagger:.05,ease:'power2.out'},.64)
+      .to('.universe-note',{scale:1,autoAlpha:1,duration:.38,ease:'power2.out'},.64)
       .to(orbitTurn,{value:118,duration:.68,ease:'sine.inOut',onUpdate:renderOrbit},.56)
       .to('.orbit-track',{rotation:-22,duration:.82,ease:'none'},.46)
       // Brief hold so the finished universe is readable before releasing into services.
       .to('.hero-orbit',{autoAlpha:1,duration:.16},1.24);
     if(innerWidth<=800)heroTransition.to('.hero-cast',{autoAlpha:0,duration:.36,ease:'power2.inOut'},.08);
-    sceneLoop('.hero',gsap.to('.orbit-center em',{rotation:2,scale:1.015,duration:2.4,repeat:-1,yoyo:true,ease:'sine.inOut'}));
+    const orbitEmLoop=gsap.to('.orbit-center em',{rotation:2,scale:1.015,duration:2.4,repeat:-1,yoyo:true,ease:'sine.inOut',paused:true});
+    loops.push(orbitEmLoop);
+    heroOrbitLoops.push(orbitEmLoop);
     }
 
     if(document.querySelector('.service-cats'))gsap.from('.service-illustration',{y:55,scale:.9,autoAlpha:0,duration:.75,stagger:.1,ease:'back.out(1.4)',scrollTrigger:{trigger:'.service-cats',start:'top 88%',once:true}});
@@ -247,7 +272,8 @@ export function createChoreography(listen:Listen) {
 
     if(matchMedia('(hover:hover) and (pointer:fine)').matches){
       document.querySelectorAll<HTMLElement>('.hero,.services-section,.playground-section,.site-footer,.faq-section,.about-page-hero').forEach(scene=>{
-        const pupils=scene.querySelectorAll('.pupil');
+        const pupils=scene.classList.contains('hero')?scene.querySelectorAll('.hero-cat .pupil'):scene.querySelectorAll('.pupil');
+        if(!pupils.length)return;
         const x=gsap.quickTo(pupils,'x',{duration:.35,ease:'power3.out'});
         const y=gsap.quickTo(pupils,'y',{duration:.35,ease:'power3.out'});
         listen(scene,'pointermove',(raw)=>{const e=raw as PointerEvent;const r=geometry.read(scene);x(((e.clientX-r.left)/r.width-.5)*13);y(((e.clientY-r.top)/r.height-.5)*9);});

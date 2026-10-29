@@ -1,6 +1,6 @@
 /* Cappy's living poster: shared desktop and mobile stage composition. */
 .hero.hero-stage{height:100svh;min-height:700px;max-height:1080px;padding:0;background:var(--scene-sky);overflow:clip}
-.hero-paper{position:absolute;inset:98px 30px 28px;border:1.5px solid var(--ink);border-radius:30px;background:#f2eedf;box-shadow:7px 9px 0 #25282032;overflow:hidden;z-index:0;transform-origin:50% 50%;will-change:transform}
+.hero-paper{position:absolute;inset:98px 30px 28px;border:1.5px solid var(--ink);border-radius:30px;background:#f2eedf;box-shadow:7px 9px 0 #25282032;overflow:hidden;z-index:0;transform-origin:50% 50%}
 .hero-paper-grid{position:absolute;inset:0;background-image:linear-gradient(#2528200a 1px,transparent 1px),linear-gradient(90deg,#2528200a 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(#000,transparent 90%)}
 .hero-dais{position:absolute;bottom:-70px;width:380px;height:335px;border:1px solid #25282030}
 .hero-dais-left{left:1%;border-radius:50% 50% 0 0;background:#f2b6cb;rotate:-12deg}
@@ -13,7 +13,7 @@
 .hero-window-dots i{display:block;width:8px;height:8px;border:1px solid var(--ink);border-radius:50%;background:var(--coral)}
 .hero-window-dots i:nth-child(2){background:var(--butter)}
 .hero-window-dots i:nth-child(3){background:var(--scene-green)}
-.hero-stage .hero-type{position:relative;padding:clamp(146px,17.2svh,180px) 40px 0;margin:0;z-index:3;will-change:transform,opacity;backface-visibility:hidden}
+.hero-stage .hero-type{position:relative;padding:clamp(146px,17.2svh,180px) 40px 0;margin:0;z-index:3;backface-visibility:hidden}
 .hero-stage h1{font-size:clamp(62px,min(7.2vw,11.2svh),122px);line-height:1.03;letter-spacing:-.065em;color:var(--ink);text-shadow:none}
 .hero-stage h1>.hero-title-small{font-size:.87em;font-weight:650;letter-spacing:-.055em}
 .hero-stage h1>.hero-title-big{display:flex;align-items:baseline;justify-content:center;gap:.16em;margin-top:10px;white-space:nowrap}
@@ -21,7 +21,7 @@
 .hero-stage .personality{display:inline-block;isolation:isolate;background:var(--scene-green);color:var(--ink);border:1.5px solid var(--ink);border-radius:14px;padding:0 .12em .065em;rotate:-2deg;box-shadow:4px 5px 0 #25282025;line-height:.99}
 .hero-stage .personality>svg{color:var(--ink);opacity:.6;bottom:-14px;height:18px;left:4%;width:92%}
 .hero-stage .hero-period{color:var(--ink)}
-.hero-stage .hero-actions{position:relative;margin:clamp(22px,3.4svh,38px) auto 0;max-width:500px;gap:12px;z-index:7;will-change:transform,opacity}
+.hero-stage .hero-actions{position:relative;margin:clamp(22px,3.4svh,38px) auto 0;max-width:500px;gap:12px;z-index:7}
 .hero-stage .hero-actions .button{min-width:185px;min-height:52px;padding:13px 24px;font-size:13px;box-shadow:3px 4px 0 #25282025}
 .hero-stage .hero-actions .button-outline{background:var(--paper)}
 .hero-stage .hero-actions .button-dark{background:var(--ink);color:var(--paper)}
@@ -40,7 +40,7 @@
 .hero-stage .miri-stamp>small{font-size:5.5px}
 
 /* Two characters inhabit their own coloured paper sets. */
-.hero-stage .hero-cat{width:clamp(240px,min(23vw,34svh),350px);bottom:48px;z-index:4;will-change:transform,opacity;backface-visibility:hidden}
+.hero-stage .hero-cat{width:clamp(240px,min(23vw,34svh),350px);bottom:48px;z-index:4;backface-visibility:hidden}
 .hero-stage .hero-cat-left{left:4%;rotate:-6deg}
 .hero-stage .hero-cat-right{right:4%;rotate:5deg}
 .hero-wiggle{width:100%;transform-origin:50% 90%}
@@ -123,7 +123,7 @@
  .hero-stage .hero-actions .button{min-width:0;min-height:44px;padding:10px 14px;font-size:12px;gap:10px;flex:1;max-width:185px;box-shadow:2px 3px 0 #25282020}
  .hero-stage .hero-actions .icon{width:15px;height:15px}
  /* A little comic scene: the coder leans in, then the orange cat answers. */
- .hero-stage .hero-cast{display:flex;flex-direction:column;justify-content:center;gap:clamp(6px,1.1svh,10px);position:relative;z-index:4;width:calc(100% - 42px);max-width:500px;margin:clamp(8px,1.6svh,18px) auto auto;flex:1;min-height:0;padding:2px 0 6px;will-change:opacity,transform}
+ .hero-stage .hero-cast{display:flex;flex-direction:column;justify-content:center;gap:clamp(6px,1.1svh,10px);position:relative;z-index:4;width:calc(100% - 42px);max-width:500px;margin:clamp(8px,1.6svh,18px) auto auto;flex:1;min-height:0;padding:2px 0 6px}
  .hero-stage .hero-cast .hero-cat{position:relative;width:100%;left:auto;right:auto;top:auto;bottom:auto;rotate:0deg;min-width:0}
  .hero-stage .hero-cast .cursor-rig{position:relative;display:grid;grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);align-items:center;gap:10px;isolation:isolate}
  .hero-stage .hero-cast .cursor-rig::before{content:'';position:absolute;z-index:-1;left:-10px;bottom:6px;width:45%;height:82%;background:#f2b6cb;border:1px solid #25282025;border-radius:48% 52% 38% 62%;rotate:-16deg}
