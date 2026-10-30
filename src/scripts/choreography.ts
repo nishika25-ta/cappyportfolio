@@ -216,12 +216,16 @@ export function createChoreography(listen:Listen) {
       }
     };
     // Read the phone scene before a smooth, reversible handoff.
+    // On mobile screens (touch-driven scroll), scrub: 0.2 provides momentum decoupling so
+    // rapid swipe events don't stall the main thread with synchronous reflows.
+    const isMobileViewport = innerWidth <= 800;
     const heroTransition=gsap.timeline({scrollTrigger:{
       trigger:'.hero',
       start:()=>orbitScene.clientHeight>innerHeight+2?'bottom bottom':'top top',
-      end:()=>`+=${Math.round(innerHeight*(innerWidth<=800?.52:.64))}`,
+      end:()=>`+=${Math.round(innerHeight*(isMobileViewport?.48:.64))}`,
       pin:true,
-      scrub:true,
+      anticipatePin:isMobileViewport?1:0,
+      scrub:isMobileViewport?0.2:true,
       invalidateOnRefresh:true,
       onRefresh:refreshOrbit,
       onUpdate:self=>syncHeroPhase(self.progress),
