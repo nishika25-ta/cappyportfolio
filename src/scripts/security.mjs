@@ -1,8 +1,9 @@
 const ALLOWED_SERVICE_IDS = Object.freeze(['websites', 'portfolios', 'resumes', 'food']);
 const ALLOWED_SHOWCASE_IDS = Object.freeze(['websites', 'business', 'pro', 'portfolios', 'resumes', 'food']);
+const ALLOWED_MEME_IDS = Object.freeze(['meme-1', 'meme-2', 'meme-3', 'meme-4', 'meme-5', 'meme-6', 'meme-7', 'meme-8', 'meme-9', 'meme-10']);
 const ALLOWED_VIDEO_TYPES = Object.freeze(['video/mp4', 'video/webm', 'video/quicktime']);
-const SAFE_VIDEO_PATH_RE = /^\/videos\/[a-zA-Z0-9_-]+\.(mp4|webm|mov)$/i;
-const SAFE_ARTWORK_PATH_RE = /^\/artwork\/[a-zA-Z0-9_-]+\.(webp|png|jpg|jpeg)$/i;
+const SAFE_VIDEO_PATH_RE = /^\/(?:videos|memes)\/[a-zA-Z0-9_-]+\.(mp4|webm|mov)$/i;
+const SAFE_ARTWORK_PATH_RE = /^\/(?:artwork|memes)\/[a-zA-Z0-9_-]+\.(webp|png|jpg|jpeg)$/i;
 const SAFE_HASH_RE = /^#[a-zA-Z0-9_-]{1,64}$/;
 const CONTROL_AND_BIDI_RE = /[\u0000-\u001F\u007F-\u009F\u202A-\u202E\u2066-\u2069<>]/g;
 
@@ -118,6 +119,13 @@ export function isAllowedServiceId(id) {
  */
 export function isAllowedShowcaseId(id) {
   return typeof id === 'string' && ALLOWED_SHOWCASE_IDS.includes(id);
+}
+
+/**
+ * Strictly validates meme identifiers against an allowlist.
+ */
+export function isAllowedMemeId(id) {
+  return typeof id === 'string' && ALLOWED_MEME_IDS.includes(id);
 }
 
 /**

@@ -83,14 +83,17 @@ test('allowlist validators block DOM selector injection and unsafe video URLs', 
   assert.equal(isSafeAnchorHash('#<img src=x onerror=alert(1)>'), false);
 
   assert.equal(isAllowedVideoSource('/videos/kitty-starter.mp4', false), true);
+  assert.equal(isAllowedVideoSource('/memes/meme-1.mp4', false), true);
   assert.equal(isAllowedVideoSource('javascript:alert(1)', false), false);
   assert.equal(isAllowedVideoSource('https://evil.example/video.mp4', false), false);
   assert.equal(isAllowedVideoSource('//evil.example/video.mp4', false), false);
   assert.equal(isAllowedVideoSource('/videos/../../secret.mp4', false), false);
+  assert.equal(isAllowedVideoSource('/memes/../../secret.mp4', false), false);
   assert.equal(isAllowedVideoSource('blob:https://example.com/1234-5678', true), true);
   assert.equal(isAllowedVideoSource('javascript:alert(1)', true), false);
 
   assert.equal(isAllowedArtworkSource('/artwork/portfolios.webp'), true);
+  assert.equal(isAllowedArtworkSource('/memes/meme-1.jpg'), true);
   assert.equal(isAllowedArtworkSource('/artwork/portfolio-price.webp'), true);
   assert.equal(isAllowedArtworkSource('javascript:alert(1)'), false);
   assert.equal(isAllowedArtworkSource('https://evil.example/poster.webp'), false);

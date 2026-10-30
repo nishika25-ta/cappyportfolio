@@ -8,6 +8,7 @@ import {createFrameCoalescer} from './frame-coalescer.mjs';
 import {getEnergyState} from './energy-state.mjs';
 import {parseServiceRoute,serviceForShowcase} from './service-navigation.mjs';
 import {createPointerQueue} from './motion-performance.mjs';
+import {initCosmicMemeVault} from './cosmic-memes';
 import {
   isAllowedArtworkSource,
   isAllowedServiceId,
@@ -335,6 +336,8 @@ function mountPage() {
   });
   choreography=createChoreography(listen);
   cleanups.push(()=>choreography?.destroy());
+  const cosmicVault = initCosmicMemeVault();
+  if (cosmicVault) cleanups.push(() => cosmicVault.destroy());
   cleanups.push(()=>context.revert());
   const previewObserver=new IntersectionObserver(entries=>{
     for(const entry of entries){

@@ -6,6 +6,7 @@ import Icon from '../components/Icon.astro';
 import CatPitch from '../components/CatPitch.astro';
 import HeroDetails from '../components/HeroDetails.astro';
 import CreativeUniverse from '../components/CreativeUniverse.astro';
+import CosmicMemeVault from '../components/CosmicMemeVault.astro';
 import {services,faqs,enquiryUrl} from '../data/site.mjs';
 import {showcase} from '../data/showcase';
 ---
@@ -16,7 +17,19 @@ import {showcase} from '../data/showcase';
       <svg class="studio-orbits" viewBox="0 0 1400 820" preserveAspectRatio="xMidYMid slice"><g fill="none" stroke="currentColor"><ellipse cx="700" cy="410" rx="620" ry="280" transform="rotate(-16 700 410)"/><ellipse cx="700" cy="410" rx="500" ry="365" transform="rotate(24 700 410)" stroke-dasharray="2 12"/></g><g class="studio-orbit-stars" fill="currentColor"><path d="M160 280l5 15 15 5-15 5-5 15-5-15-15-5 15-5zM1190 530l4 12 12 4-12 4-4 12-4-12-12-4 12-4z"/><circle cx="1145" cy="170" r="4"/><circle cx="290" cy="675" r="4"/></g></svg>
     </div>
     <div class="hero-type"><h1 id="hero-title"><span class="hero-title-small">Small business.</span><span class="hero-title-big"><span class="hero-big-word">Big</span> <span class="personality">purr-sonality<span class="hero-period">.</span><svg viewBox="0 0 700 38" aria-hidden="true"><path d="M5 23C180 0 457 0 692 15M104 32c159-14 365-16 505-10" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"/></svg></span></span></h1><p class="hero-mobile-intro">Websites, portfolios, résumés &amp; food visuals.<br/>From RM15 in Miri, Sarawak.</p></div>
-    <div class="hero-actions"><a class="button button-dark hero-button" href="#pricing">See pricing <Icon name="arrow"/></a><a class="button button-outline hero-button" href="#work">View work <Icon name="arrow"/></a></div>
+    <div class="hero-actions">
+      <div class="hero-actions-row">
+        <a class="button button-dark hero-button" href="#pricing">See pricing <Icon name="arrow"/></a>
+        <a class="button button-outline hero-button" href="#work">View work <Icon name="arrow"/></a>
+      </div>
+      <a class="button button-meme hero-button-meme" href="#cosmic-memes" aria-label="Explore out of this world memes">
+        <span class="hero-meme-avatar" aria-hidden="true">
+          <img src="/memes/meme-cat-icon.png" alt="" width="38" height="38" class="hero-meme-cat-img" loading="eager" decoding="async" />
+        </span>
+        <span class="hero-meme-text">...or u need some meme?</span>
+        <Icon name="arrow"/>
+      </a>
+    </div>
     <div class="hero-cast">
     <div class="hero-cat hero-cat-left" data-cat-scene><div class="cat-entry"><div class="hero-wiggle"><div class="cursor-rig" data-cursor-depth="-1"><Cat variant="developer"/><CatPitch speaker="developer"/></div></div></div></div>
     <div class="hero-cat hero-cat-right" data-cat-scene><div class="cat-entry"><div class="hero-wiggle"><div class="cursor-rig" data-cursor-depth="1"><Cat variant="orange"/><CatPitch speaker="orange"/></div></div></div><span class="purr-heart" aria-hidden="true">♡</span></div>
@@ -81,8 +94,10 @@ import {showcase} from '../data/showcase';
     <div class="artwork-gallery">{services.map(service=><a class="artwork-card" href={service.artwork} data-poster-src={service.artwork} data-poster-title={`${service.title} — Studio poster`}><div class="artwork-image"><img src={service.artwork} alt={`${service.title} service artwork with cat characters and package overview`} width="1200" height="800" loading="lazy" decoding="async"/></div><span>{service.title}<Icon name="diagonal"/></span></a>)}</div>
   </section>
 
+  <CosmicMemeVault/>
+
   <section id="pricing" class="pricing-section" aria-labelledby="pricing-title"><div class="wrap">
-    <div class="section-heading"><div><span class="section-kicker">Pricing</span><h2 id="pricing-title">Simple, upfront<br/>packages<span class="coral-text">.</span></h2></div><div><p>Pick a package and message me on WhatsApp.</p><span class="currency-note">All prices in Malaysian Ringgit (RM)</span></div></div>
+    <div class="section-heading"><div><span class="section-kicker">Pricing</span><h2 id="pricing-title">Simple, upfront<br/>packages<span class="coral-text">.</span></h2></div><div><p>Pick a package and message me on WhatsApp.</p></div></div>
     <div class="pricing-tabs" role="tablist" aria-label="Service pricing">{services.map((service,i)=><button id={`pricing-tab-${service.id}`} role="tab" aria-selected={i===0?'true':'false'} aria-controls={`pricing-${service.id}`} tabindex={i===0?0:-1} data-service-tab={service.id}><Icon name={service.icon}/>{service.title}<span class="tab-from">from RM{service.from}</span></button>)}</div>
     {services.map((service,i)=><div class="pricing-panel" id={`pricing-${service.id}`} role="tabpanel" aria-labelledby={`pricing-tab-${service.id}`} hidden={i!==0}>
       <div class="pricing-intro"><h3>{service.label}</h3>{service.id!=='websites'&&<p>{service.description}</p>}</div>
@@ -98,7 +113,6 @@ import {showcase} from '../data/showcase';
       <div class="about-card-topbar" aria-hidden="true">
         <span class="about-window-dots"><i></i><i></i><i></i></span>
         <span class="about-window-label"><Icon name="paw"/> CAPPY’S STUDIO DOSSIER · MIRI, SARAWAK</span>
-        <span class="about-window-status"><span class="status-dot"></span> TAKING NEW PROJECTS</span>
       </div>
       <div class="about-grid">
         <div class="about-art">

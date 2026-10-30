@@ -1,0 +1,441 @@
+---
+import { cosmicMemes } from '../data/memes';
+import Icon from './Icon.astro';
+---
+<section id="cosmic-memes" class="cosmic-vault-section wrap" aria-labelledby="cosmic-vault-title">
+  <!-- Cosmic Background Glows & Stardust Atmosphere -->
+  <div class="cosmic-atmosphere" aria-hidden="true">
+    <div class="nebula-blob nebula-green"></div>
+    <div class="nebula-blob nebula-pink"></div>
+    <div class="nebula-blob nebula-sky"></div>
+    <svg class="cosmic-orbits-svg" viewBox="0 0 1440 600" fill="none" preserveAspectRatio="none">
+      <ellipse cx="720" cy="300" rx="680" ry="240" stroke="currentColor" stroke-dasharray="4 16" opacity="0.25"/>
+      <ellipse cx="720" cy="300" rx="520" ry="180" stroke="currentColor" stroke-dasharray="2 8" opacity="0.35"/>
+      <ellipse cx="720" cy="300" rx="340" ry="110" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+      <g fill="currentColor" opacity="0.8">
+        <circle cx="160" cy="180" r="3"/>
+        <circle cx="320" cy="460" r="2.5"/>
+        <circle cx="1180" cy="150" r="3.5"/>
+        <circle cx="1320" cy="420" r="2"/>
+        <path d="M720 30l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/>
+        <path d="M1260 270l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Section Heading -->
+  <div class="section-heading cosmic-heading">
+    <div>
+      <h2 id="cosmic-vault-title">
+        Out of this<br/>world memes<span class="coral-text">.</span>
+      </h2>
+    </div>
+  </div>
+
+  <!-- The Interstellar Holo-Terminal -->
+  <div class="cosmic-terminal" id="cosmic-terminal-root" data-active-meme="meme-1">
+    
+    <!-- Flight Console Header -->
+    <div class="terminal-topbar">
+      <div class="terminal-status-group">
+        <span class="terminal-lamp lamp-green" aria-hidden="true"></span>
+        <span class="terminal-brand">
+          <Icon name="paw"/>
+          <strong>ORBITAL TERMINAL MK-V</strong>
+          <small class="terminal-callsign">CAPPY-DEEP-SPACE</small>
+        </span>
+      </div>
+      
+      <div class="terminal-actions">
+        <button type="button" class="terminal-btn btn-audio" id="btn-toggle-audio" aria-pressed="false" aria-label="Toggle audio transmission">
+          <span class="audio-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span id="audio-label">Muted</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Holo-Stage Screen & Cockpit Split -->
+    <div class="terminal-body">
+      
+      <!-- Retro CRT Monitor Stage -->
+      <div class="terminal-screen-container crt-scanlines-active" id="terminal-screen">
+        
+        <!-- Retro CRT Stage with Monitor Chassis and Heavy Pedestal Stand -->
+        <div class="retro-crt-stage">
+          
+          <div class="retro-crt-monitor" id="retro-crt-monitor">
+            
+            <!-- Top Heat Dissipation Louvers (Cooling slots) -->
+            <div class="crt-top-louvers" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+
+            <!-- Top Hardware: Cat Ears, Cat Sleeper Loaf & Antenna -->
+            <div class="crt-top-hardware" aria-hidden="true">
+              <div class="crt-cat-ear ear-left">
+                <span class="ear-shape"></span>
+                <span class="ear-inner-cushion"></span>
+              </div>
+
+              <!-- Cute Sleeping Cat Loaf warming up on top of the CRT vents -->
+              <div class="crt-cat-sleeper" title="Sleeping on the warm CRT monitor">
+                <span class="cat-zzzs">z Z z</span>
+                <svg class="cat-sleeper-svg" viewBox="0 0 130 42" fill="none" aria-hidden="true">
+                  <!-- Soft underside shadow -->
+                  <ellipse cx="65" cy="39" rx="55" ry="3.5" fill="rgba(37,40,32,0.22)" />
+                  <!-- Main Ginger Loaf Body -->
+                  <path d="M14 36 C12 16, 36 8, 68 8 C98 8, 120 18, 118 36 C116 38, 16 38, 14 36 Z" fill="url(#cat-fur-grad)" stroke="#22251d" stroke-width="2.5" stroke-linejoin="round"/>
+                  <!-- Tabby Fur Stripes -->
+                  <path d="M52 10 Q50 18 46 22" stroke="#d0883e" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.8"/>
+                  <path d="M64 9 Q63 18 61 24" stroke="#d0883e" stroke-width="3.2" stroke-linecap="round" fill="none" opacity="0.8"/>
+                  <path d="M78 10 Q80 18 84 22" stroke="#d0883e" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.8"/>
+                  <path d="M92 13 Q96 20 102 24" stroke="#d0883e" stroke-width="2.8" stroke-linecap="round" fill="none" opacity="0.8"/>
+                  <!-- Sleeping Head -->
+                  <circle cx="28" cy="24" r="15" fill="url(#cat-fur-grad)" stroke="#22251d" stroke-width="2.5"/>
+                  <!-- Head Tabby Marking 'M' -->
+                  <path d="M22 13 L25 17 L28 13 L31 17 L34 13" stroke="#d0883e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                  <!-- Ears with Pink Fluff -->
+                  <polygon points="16,16 21,7 26,15" fill="#f6cca0" stroke="#22251d" stroke-width="2" stroke-linejoin="round"/>
+                  <polygon points="18,15 21,9 24,14" fill="#f4afc4"/>
+                  <polygon points="30,15 35,7 40,16" fill="#f6cca0" stroke="#22251d" stroke-width="2" stroke-linejoin="round"/>
+                  <polygon points="32,14 35,9 38,15" fill="#f4afc4"/>
+                  <!-- Sleeping Closed Eyes (Satisfied purr curves) -->
+                  <path d="M20 25 Q23 29 27 25" stroke="#22251d" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+                  <path d="M29 25 Q32 29 36 25" stroke="#22251d" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+                  <!-- Cute Pink Nose & Mouth -->
+                  <polygon points="27,28 29,28 28,30" fill="#e88973"/>
+                  <path d="M28 30 Q26 33 24 32 M28 30 Q30 33 32 32" stroke="#22251d" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+                  <!-- Whiskers -->
+                  <path d="M16 26 L8 25 M16 28 L9 29" stroke="#5a5243" stroke-width="1.2" stroke-linecap="round"/>
+                  <path d="M38 26 L46 25 M38 28 L45 29" stroke="#5a5243" stroke-width="1.2" stroke-linecap="round"/>
+                  <!-- Tucked White Paws -->
+                  <ellipse cx="44" cy="36" rx="7" ry="4.5" fill="#fffdf7" stroke="#22251d" stroke-width="2"/>
+                  <path d="M42 36 L42 39 M46 36 L46 39" stroke="#d5cebe" stroke-width="1.2" stroke-linecap="round"/>
+                  <ellipse cx="55" cy="37" rx="7" ry="4.5" fill="#fffdf7" stroke="#22251d" stroke-width="2"/>
+                  <path d="M53 37 L53 40 M57 37 L57 40" stroke="#d5cebe" stroke-width="1.2" stroke-linecap="round"/>
+                  <!-- Curled Tail resting on chassis -->
+                  <path d="M112 34 C122 34, 126 24, 120 18 C114 13, 107 20, 105 26" stroke="#22251d" stroke-width="5" stroke-linecap="round" fill="none"/>
+                  <path d="M112 34 C122 34, 126 24, 120 18 C114 13, 107 20, 105 26" stroke="#f6cca0" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+                  <!-- Defs for Gradient -->
+                  <defs>
+                    <linearGradient id="cat-fur-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stop-color="#fae2b8"/>
+                      <stop offset="60%" stop-color="#f6cca0"/>
+                      <stop offset="100%" stop-color="#e8af70"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+
+              <div class="crt-cat-ear ear-right">
+                <span class="ear-shape"></span>
+                <span class="ear-inner-cushion"></span>
+              </div>
+
+              <!-- Vintage Wire Antenna -->
+              <div class="crt-antenna">
+                <span class="antenna-rod"></span>
+                <span class="antenna-ball">✦</span>
+              </div>
+            </div>
+
+            <!-- Waving Cat Tail on the Side of the Monitor -->
+            <div class="crt-side-tail" aria-hidden="true">
+              <svg viewBox="0 0 54 110" fill="none">
+                <path class="tail-outline" d="M12 15 Q45 45 35 78 Q24 102 46 106" stroke="#252820" stroke-width="9" stroke-linecap="round"/>
+                <path class="tail-fill" d="M12 15 Q45 45 35 78 Q24 102 46 106" stroke="#f8e5a7" stroke-width="5" stroke-linecap="round"/>
+              </svg>
+            </div>
+
+            <!-- Main Plastic Bezel Housing -->
+            <div class="crt-plastic-bezel">
+
+              <!-- Decorative Retro Enamel Pins & Badges -->
+              <div class="crt-pin-collection" aria-hidden="true">
+                <!-- Pin 1: Retro Sardine / Tuna Can Pin -->
+                <div class="retro-pin pin-can" title="100% Cat Tuna Can Enamel Pin" tabindex="0" role="button" aria-label="Tuna can pin">
+                  <div class="pin-can-body">
+                    <span class="pin-gold-rim"></span>
+                    <span class="pin-can-label"><span class="pin-fish-icon">🐟</span> <b>CAT TUNA</b></span>
+                    <span class="pin-pull-tab"><i class="pull-hole"></i></span>
+                  </div>
+                </div>
+
+                <!-- Pin 2: Round Enamel Cat Badge -->
+                <div class="retro-pin pin-badge" title="Meow Club 1999 Gold Enamel Pin" tabindex="0" role="button" aria-label="Meow club pin">
+                  <div class="pin-badge-inner">
+                    <span class="pin-badge-gold-rim"></span>
+                    <span class="pin-badge-icon">🐾</span>
+                    <span class="pin-badge-label">MEOW-99</span>
+                  </div>
+                </div>
+
+                <!-- Pin 3: Holographic Glitter Star Pin -->
+                <div class="retro-pin pin-star" title="Interstellar Hologram Pin" tabindex="0" role="button" aria-label="Hologram star pin">
+                  <span class="pin-star-rim"></span>
+                  <span class="pin-star-glyph">✦</span>
+                  <span class="pin-star-glint"></span>
+                </div>
+
+                <!-- Pin 4: Cute Washi-taped Sticky Note -->
+                <div class="retro-sticky-note" title="Studio Memo Note" tabindex="0" role="button" aria-label="Sticky note memo">
+                  <span class="washi-tape"></span>
+                  <div class="sticky-paper">
+                    <p class="sticky-title">FEED MEOW!</p>
+                    <p class="sticky-heart">♡ ♡ ♡</p>
+                    <small class="sticky-sub">URGENT</small>
+                  </div>
+                </div>
+
+                <!-- Pin 5: Retro Paw Enamel Pin -->
+                <div class="retro-pin pin-paw" title="Paw-OK Certified Enamel Pin" tabindex="0" role="button" aria-label="Paw-OK pin">
+                  <span class="pin-metal-edge"></span>
+                  <span class="pin-paw-text">PAW-OK</span>
+                </div>
+              </div>
+
+              <!-- Outer Bezel Stepped Frame & Rubber Tube Gasket -->
+              <div class="crt-tube-bezel-frame">
+                <div class="crt-rubber-gasket">
+                  <!-- Recessed Inner Glass Screen Frame -->
+                  <div class="crt-glass-recess">
+                    <div class="crt-glass-glare" aria-hidden="true"></div>
+                    <div class="crt-glass-glare-secondary" aria-hidden="true"></div>
+                    <div class="crt-overlay" aria-hidden="true"></div>
+                    <div class="crt-vignette" aria-hidden="true"></div>
+
+                    <!-- 90s OSD (On-Screen Display) -->
+                    <div class="crt-osd-channel" aria-hidden="true">
+                      <span class="osd-play-glyph">▶</span>
+                      <span class="osd-text" id="crt-osd-text">AV-1 STEREO // 7777 MHz</span>
+                    </div>
+
+                    <!-- The 5 Meme Video Panels -->
+                    <div class="meme-scenes-viewport">
+                      {cosmicMemes.map((meme, idx) => (
+                        <div
+                          class="meme-scene"
+                          id={`meme-scene-${meme.id}`}
+                          role="tabpanel"
+                          aria-labelledby={`channel-tab-${meme.id}`}
+                          hidden={idx !== 0}
+                          data-meme-id={meme.id}
+                        >
+                          <div class="meme-video-frame">
+                            <video
+                              class="meme-video"
+                              id={`video-${meme.id}`}
+                              data-meme-src={meme.videoSrc}
+                              poster={meme.posterSrc}
+                              preload="metadata"
+                              playsinline
+                              loop
+                              muted
+                              width="720"
+                              height="720"
+                            ></video>
+                            
+                            <!-- HUD telemetry overlay -->
+                            <div class="video-hud-overlay" aria-hidden="true">
+                              <div class="hud-top">
+                                <span class="hud-badge hud-channel">{meme.channel}</span>
+                                <span class="hud-badge hud-threat">{meme.stats.threatLevel}</span>
+                              </div>
+                              <div class="hud-bottom">
+                                <span class="hud-tag">{meme.codeName}</span>
+                                <span class="hud-power">{meme.stats.power}</span>
+                              </div>
+                            </div>
+
+                            <!-- Play/Pause Indicator -->
+                            <button
+                              type="button"
+                              class="video-play-indicator"
+                              data-toggle-playback={meme.id}
+                              aria-label={`Play or pause ${meme.codeName}`}
+                            >
+                              <Icon name="play"/>
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <!-- Floating Cosmic Blast FX Layer -->
+                    <div class="cosmic-fx-layer" id="cosmic-fx-canvas" aria-hidden="true"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bottom Hardware Control Bar on Monitor Face -->
+              <div class="crt-bottom-hardware">
+                <!-- Vintage Dual Speaker Grilles -->
+                <div class="crt-speaker-grille" aria-hidden="true">
+                  <i></i><i></i><i></i><i></i><i></i><i></i>
+                  <i></i><i></i><i></i><i></i><i></i><i></i>
+                  <i></i><i></i><i></i><i></i><i></i><i></i>
+                </div>
+
+                <!-- Vintage Model Nameplate with Retro 3-color stripe -->
+                <div class="crt-brand-plate">
+                  <span class="brand-stripes" aria-hidden="true">
+                    <b class="stripe-coral"></b>
+                    <b class="stripe-butter"></b>
+                    <b class="stripe-green"></b>
+                  </span>
+                  <div class="brand-text-col">
+                    <span class="brand-title">NEKO-TRON</span>
+                    <small class="brand-model">COLOR CRT-7777 · HIGH RES</small>
+                  </div>
+                </div>
+
+                <!-- Hardware Knobs & Switches -->
+                <div class="crt-hardware-controls">
+                  <div class="crt-rotary-group" aria-hidden="true">
+                    <div class="crt-knob">
+                      <span class="knob-tick"></span>
+                    </div>
+                    <small>BRT</small>
+                  </div>
+
+                  <div class="crt-rotary-group" aria-hidden="true">
+                    <div class="crt-knob">
+                      <span class="knob-tick knob-rotated"></span>
+                    </div>
+                    <small>VOL</small>
+                  </div>
+
+                  <!-- Clickable Degauss Button -->
+                  <button type="button" class="crt-degauss-btn" id="btn-crt-degauss" title="Trigger CRT Degauss Screen Wobble" aria-label="Degauss screen">
+                    <span class="degauss-icon" aria-hidden="true">⚡</span>
+                    <span>DEGAUSS</span>
+                  </button>
+
+                  <!-- Power Indicator & Switch -->
+                  <div class="crt-power-group">
+                    <span class="crt-power-led" aria-hidden="true" title="System Power On"></span>
+                    <button type="button" class="crt-power-switch" id="btn-crt-power" title="Screen Power Mode" aria-label="Toggle CRT Screen Power">
+                      <Icon name="paw"/>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Heavy Vintage Swivel Tilt Pedestal Stand -->
+          <div class="crt-pedestal-assembly" aria-hidden="true">
+            <div class="crt-pedestal-neck"></div>
+            <div class="crt-pedestal-foot">
+              <span class="pedestal-trim"></span>
+            </div>
+            <div class="crt-desk-shadow"></div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Cockpit Control Deck & Lore Readout -->
+      <div class="terminal-cockpit">
+        
+        <!-- Channels Selector (Frequency Tuner) -->
+        <div class="cockpit-group">
+          <div class="cockpit-group-header">
+            <span class="cockpit-label">
+              <Icon name="star"/> INTERGALACTIC CHANNELS
+            </span>
+            <span class="cockpit-channel-counter" id="active-channel-counter">01 / {String(cosmicMemes.length).padStart(2, '0')}</span>
+          </div>
+
+          <div class="channel-tuner-list" role="tablist" aria-label="Select Cosmic Meme Transmission" data-lenis-prevent>
+            {cosmicMemes.map((meme, idx) => (
+              <button
+                type="button"
+                id={`channel-tab-${meme.id}`}
+                class="channel-btn"
+                role="tab"
+                aria-selected={idx === 0 ? 'true' : 'false'}
+                aria-controls={`meme-scene-${meme.id}`}
+                tabindex={idx === 0 ? 0 : -1}
+                data-channel-meme={meme.id}
+                style={`--channel-accent: ${meme.accentColor}`}
+              >
+                <span class="channel-btn-lamp" aria-hidden="true"></span>
+                <span class="channel-btn-num">{meme.channel}</span>
+                <span class="channel-btn-name">{meme.codeName}</span>
+                <span class="channel-btn-status">{meme.stats.vibe}</span>
+                <span class="channel-btn-arrow" aria-hidden="true"><Icon name="diagonal"/></span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <!-- Live Lore Telemetry Card -->
+        <div class="cockpit-lore-card">
+          {cosmicMemes.map((meme, idx) => (
+            <div
+              class="lore-panel"
+              id={`lore-${meme.id}`}
+              hidden={idx !== 0}
+            >
+              <div class="lore-header">
+                <span class="lore-codename">{meme.codeName}</span>
+                <span class="lore-vibe-tag">{meme.stats.vibe}</span>
+              </div>
+              <h3 class="lore-title">{meme.title}</h3>
+              <p class="lore-tagline">“{meme.tagline}”</p>
+              <p class="lore-desc">{meme.lore}</p>
+
+              <!-- Radar Stats Matrix -->
+              <div class="lore-stats-grid">
+                <div class="stat-cell">
+                  <span class="stat-name">ENERGY VIBE</span>
+                  <strong class="stat-val">{meme.stats.vibe}</strong>
+                </div>
+                <div class="stat-cell">
+                  <span class="stat-name">COMBAT POWER</span>
+                  <strong class="stat-val">{meme.stats.power}</strong>
+                </div>
+                <div class="stat-cell">
+                  <span class="stat-name">THREAT CLASSIFICATION</span>
+                  <strong class="stat-val">{meme.stats.threatLevel}</strong>
+                </div>
+                <div class="stat-cell">
+                  <span class="stat-name">ORIGIN SATELLITE</span>
+                  <strong class="stat-val">{meme.stats.originSector}</strong>
+                </div>
+              </div>
+
+              <!-- Action buttons & Pinterest Source Link -->
+              <div class="lore-actions">
+                <button
+                  type="button"
+                  class="button button-dark transmit-beam-btn"
+                  data-beam-meme={meme.id}
+                  aria-label={`Beam cosmic hearts for ${meme.codeName}`}
+                >
+                  <Icon name="paw"/> Transmit Meow Stardust
+                </button>
+                <a
+                  class="button button-outline pinterest-origin-btn"
+                  href={meme.pinUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`View original pin ${meme.codeName} on Pinterest`}
+                >
+                  <span>Pinterest Pin</span>
+                  <Icon name="diagonal"/>
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</section>

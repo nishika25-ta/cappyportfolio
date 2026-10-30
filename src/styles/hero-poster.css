@@ -21,10 +21,19 @@
 .hero-stage .personality{display:inline-block;isolation:isolate;background:var(--scene-green);color:var(--ink);border:1.5px solid var(--ink);border-radius:14px;padding:0 .12em .065em;rotate:-2deg;box-shadow:4px 5px 0 #25282025;line-height:.99}
 .hero-stage .personality>svg{color:var(--ink);opacity:.6;bottom:-14px;height:18px;left:4%;width:92%}
 .hero-stage .hero-period{color:var(--ink)}
-.hero-stage .hero-actions{position:relative;margin:clamp(22px,3.4svh,38px) auto 0;max-width:500px;gap:12px;z-index:7}
-.hero-stage .hero-actions .button{min-width:185px;min-height:52px;padding:13px 24px;font-size:13px;box-shadow:3px 4px 0 #25282025}
+.hero-stage .hero-actions{position:relative;margin:clamp(18px,2.8svh,32px) auto 0;max-width:520px;gap:10px;z-index:7;display:flex;flex-direction:column;align-items:center}
+.hero-actions-row{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px;width:100%}
+.hero-stage .hero-actions .hero-button{min-width:185px;min-height:52px;padding:13px 24px;font-size:13px;box-shadow:3px 4px 0 #25282025}
 .hero-stage .hero-actions .button-outline{background:var(--paper)}
 .hero-stage .hero-actions .button-dark{background:var(--ink);color:var(--paper)}
+.hero-button-meme{display:inline-flex!important;align-items:center;justify-content:center;gap:12px;min-height:52px!important;min-width:0!important;padding:6px 24px 6px 8px!important;font-size:14px!important;font-weight:750;border-radius:999px!important;background:var(--butter)!important;color:var(--ink)!important;border:1.8px solid var(--ink)!important;box-shadow:3px 5px 0 #25282025!important;rotate:-1deg;text-decoration:none;transition:all .25s ease}
+.hero-button-meme:hover{background:#37ed89!important;rotate:1.5deg;translate:0 -3px;box-shadow:4px 7px 0 #25282035!important}
+.hero-meme-avatar{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;overflow:hidden;border:2px solid var(--ink);background:#fff;box-shadow:1px 2px 0 rgba(37,40,32,0.25);flex-shrink:0}
+.hero-meme-cat-img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .3s ease}
+.hero-button-meme:hover .hero-meme-cat-img{transform:scale(1.15) rotate(-3deg)}
+.hero-meme-text{white-space:nowrap;letter-spacing:-.01em}
+.hero-button-meme .icon{width:16px;height:16px;transition:transform .25s ease}
+.hero-button-meme:hover .icon{transform:translate(3px, 2px)}
 
 /* The little price ticket is a real shortcut into the website packages. */
 .hero-ticket{position:absolute;z-index:5;left:6%;top:clamp(154px,18.5svh,188px);width:137px;background:var(--butter);border:1.5px solid var(--ink);border-radius:3px 3px 13px 13px;padding:18px 13px 11px;text-align:left;rotate:-9deg;box-shadow:3px 4px 0 #25282020;transition:box-shadow .3s,translate .3s}
@@ -119,8 +128,10 @@
  .hero-stage .personality{padding:1px .12em .07em;border-radius:9px;rotate:-2deg;box-shadow:3px 4px 0 #25282025}
  .hero-stage .personality>svg{bottom:-10px;height:11px;opacity:.35}
  .hero-mobile-intro{display:block;position:relative;z-index:3;max-width:335px;margin:clamp(6px,1.2svh,14px) auto 0;padding:0 12px;font-size:clamp(11.5px,1.6svh,13px);line-height:1.45;color:var(--muted)}
- .hero-stage .hero-actions{width:100%;flex:none;max-width:410px;margin:clamp(8px,1.5svh,16px) auto 0;padding-inline:24px;gap:10px}
- .hero-stage .hero-actions .button{min-width:0;min-height:44px;padding:10px 14px;font-size:12px;gap:10px;flex:1;max-width:185px;box-shadow:2px 3px 0 #25282020}
+ .hero-stage .hero-actions{width:100%;flex:none;max-width:410px;margin:clamp(8px,1.5svh,16px) auto 0;padding-inline:24px;gap:8px}
+ .hero-stage .hero-actions .hero-button{min-width:0;min-height:44px;padding:10px 14px;font-size:12px;gap:10px;flex:1;max-width:185px;box-shadow:2px 3px 0 #25282020}
+ .hero-stage .hero-actions .hero-button-meme{flex:none!important;max-width:none!important;min-height:46px!important;padding:5px 18px 5px 7px!important;font-size:12.5px!important}
+ .hero-stage .hero-actions .hero-button-meme .hero-meme-avatar{width:34px;height:34px}
  .hero-stage .hero-actions .icon{width:15px;height:15px}
  /* A little comic scene: the coder leans in, then the orange cat answers. */
  .hero-stage .hero-cast{display:flex;flex-direction:column;justify-content:center;gap:clamp(6px,1.1svh,10px);position:relative;z-index:4;width:calc(100% - 42px);max-width:500px;margin:clamp(8px,1.6svh,18px) auto auto;flex:1;min-height:0;padding:2px 0 6px}

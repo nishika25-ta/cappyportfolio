@@ -10,6 +10,7 @@
 .site-header .nav-link::after{display:none}
 .site-header .nav-services{background:var(--butter)}
 .site-header .nav-work{background:var(--scene-pink);rotate:-2deg}
+.site-header .nav-memes{background:#fed7aa;rotate:1.5deg}
 .site-header .nav-pricing{background:#c6edd1;rotate:2deg}
 .site-header .nav-about{background:#d2e4e6}
 .site-header .nav-link[aria-current=page]{border-color:var(--ink);box-shadow:2px 3px 0 var(--ink)}
