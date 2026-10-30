@@ -154,7 +154,7 @@ export function createChoreography(listen:Listen) {
 
     // A three-beat sticker carousel replaces the oversized character zoom.
     gsap.set('.hero-orbit',{autoAlpha:0});
-    gsap.set('.orbit-center',{autoAlpha:0,y:32,scale:.9});
+    gsap.set('.orbit-center',{autoAlpha:0,xPercent:-50,y:32,scale:.9});
     gsap.set('.universe-mascot,.universe-note',{scale:.88,autoAlpha:0});
     const orbitScene=document.querySelector<HTMLElement>('.hero')!;
     let orbitWidth=orbitScene.clientWidth,orbitHeight=orbitScene.clientHeight;
@@ -239,7 +239,7 @@ export function createChoreography(listen:Listen) {
       .to('.hero-paper',{scale:.985,duration:.42,ease:'power2.inOut'},.04)
       .to('.hero-ground',{scaleY:2.2,yPercent:-15,transformOrigin:'50% 100%',duration:.42,ease:'power2.inOut'},.06)
       .to('.hero-orbit',{autoAlpha:1,duration:.26,ease:'power2.inOut'},.22)
-      .to('.orbit-center',{autoAlpha:1,y:0,scale:1,duration:.42,ease:'power2.out'},.38)
+      .to('.orbit-center',{autoAlpha:1,xPercent:-50,y:0,scale:1,duration:.42,ease:'power2.out'},.38)
       .to('.universe-mascot',{scale:1,autoAlpha:1,duration:.44,ease:'power2.out'},.4)
       .to('.orbit-web',{x:0,y:0,scale:1,rotation:()=>orbitPosition(0).rotation,autoAlpha:1,duration:.42,ease:'power2.out'},.46)
       .to('.orbit-resume',{x:0,y:0,scale:1,rotation:()=>orbitPosition(1).rotation,autoAlpha:1,duration:.42,ease:'power2.out'},.54)

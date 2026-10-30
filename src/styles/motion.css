@@ -50,12 +50,8 @@ html[data-motion=reduced] .hero-satellite,html[data-motion=reduced] .hero-float,
 html[data-motion=reduced] .service-cat:hover .cat{rotate:0}
 @media(max-width:600px){
  .hero{min-height:min(790px,max(680px,calc(100svh - 90px)))}
- .orbit-center{width:min(160px,42vw);top:47%}
- .orbit-center p{font-size:clamp(22px,6.8vw,27px);line-height:1;white-space:normal;text-wrap:balance}
 }
 @media(min-width:601px) and (max-width:800px){
- .orbit-center{width:190px}
- .orbit-center p{font-size:38px;white-space:normal;text-wrap:balance}
  .orbit-item{width:130px}
  .orbit-sticker{min-height:120px}
  .orbit-sticker strong{font-size:20px}
